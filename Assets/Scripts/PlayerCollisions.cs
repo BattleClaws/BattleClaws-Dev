@@ -1,0 +1,25 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerCollisions : MonoBehaviour
+{
+    private PlayerController _controller;
+
+    private void Awake()
+    {
+        _controller = transform.parent.GetComponent<PlayerController>();
+    }
+
+    // This script is on the model, and passes the fact theres been a collision to the controller script
+    private void OnTriggerEnter(Collider other)
+    {
+        print("Collision!");
+        if (other.CompareTag("Player"))
+        {
+            print("P!");
+            _controller.KnockBack(other.transform.parent.transform, true);
+        }
+    }
+}
