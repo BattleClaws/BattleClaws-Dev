@@ -6,211 +6,120 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Build.Content;
+using System.Linq;
 
 public class RoundManager : MonoBehaviour
 {
+    private static  int currentRoundNumber;
+    private static int maxNumberOfRounds;
+    private static bool roundEnded;
+    
     // Create a dictionary to store points for each player for the current round
-    private Dictionary<int, int> playerPoints = new Dictionary<int, int>();
-
+    private static Dictionary<int, int> playerPointsThisRound = new Dictionary<int, int>();
 
     // additional dictionary that stores total points and gets added to each round ( see accumulate total points)
-    private Dictionary<int, int> playerTotalScores = new Dictionary<int, int>(); 
+    private static Dictionary<int, int> playerTotalScores = new Dictionary<int, int>();
 
-    private int roundsRemaining; // rounds left in the game
-    private int currentRound; // current round Number
-    private bool roundEnded; // is the round over
-    private bool isDrawRound; // is the current round a draw round
-    private bool scoreTied; // is there a tied score 
-    //public GameUtils gameUtilityScript; // the script that has a function for getting the active players count
-    [SerializeField] private GameObject ResultsPanel;
-    public SceneChanger sceneChangingScript;
+    private GameObject endRoundPanel;
+    
+
+    
 
     void Start()
     {
-        sceneChangingScript = new SceneChanger();
-        ResultsPanel.SetActive(false);
-        //gameUtilityScript = FindObjectOfType<GameUtils>();
+        DontDestroyOnLoad(gameObject); // preserve this object across scenes and all static variables 
+        endRoundPanel.SetActive(false);
+        
+
+        // get the round number from PP
+        currentRoundNumber = PlayerPrefs.GetInt("RoundNumber");
+
+        //if there's nothing in the PP for RoundNumber (it returns 0)
+        if(currentRoundNumber == 0)
+        {
+            // initialize player scores to 0 by getting the active players
+            List<PlayerController> activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).ToList();
+            foreach(PlayerController player in activePlayers)
+            {
+                playerTotalScores[player.Properties.PlayerNum] = 0;
+            }
+
+            currentRoundNumber = 1; // note that its the first round
+            PlayerPrefs.SetInt("RoundNumber", 1); // update the PP again 
+        }
+
+        maxNumberOfRounds = Player.amountOfPlayers - 1;
     }
 
     void Update()
     {
-    
-        if (ResultsPanel.activeSelf) // if the player is looking at the results of the round (player scores) and they press a button 
+        if (roundEnded) // Have the timer logic set roundEnded to true to end the round
         {
-            
-            if (Input.GetKeyDown(KeyCode.A)) // placeholder input (CHANGE ME)
-            {
-                if (isDrawRound)
-                {
-                    // if the next round should be a draw round, load the draw round scene
-                    sceneChangingScript.loadChosenSceneWithDelay("Draw");
-                }
-
-                else
-                {
-                    //if the next round should be a regular round // load the round scene
-                    sceneChangingScript.loadChosenSceneWithDelay("Round");
-                }
-            }
+            EndRound();
         }
-    }
-
-    public void ManageRounds()
-    {
        
-        if(PlayerPrefs.GetInt("TotalRounds") !=0)
-        {
-            roundsRemaining = PlayerPrefs.GetInt("TotalRounds");
-        }
-
-        else
-        {
-           // var numberOfRemainingPlayers = gameUtilityScript.GetActivePlayers().Count;
-            //roundsRemaining = numberOfRemainingPlayers - 1;
-        }
-
-        if (PlayerPrefs.GetInt("CurrentRoundNumber") != 0)
-        {
-            currentRound = PlayerPrefs.GetInt("CurrentRoundNumber") + 1;
-        }
-
-        if (currentRound > roundsRemaining)
-        {
-            //Go to end game logic
-          //  SceneManager.LoadScene("");
-        }
     }
-
-
-
-    public int GetPointsForPlayers(int playerID)
-    {
-        if (playerTotalScores.ContainsKey(playerID))
-        {
-            return playerTotalScores[playerID];
-        }
-        else
-        {
-            return 0;
-        }
-    }
-    private void AccumulateTotalScores()
-    {
-        // Loop through the current round scores and update the total scores dictionary
-        foreach (var kvp in playerPoints)
-        {
-            int playerID = kvp.Key;
-            int roundScore = kvp.Value;
-
-            // If the player is not in the total scores dictionary, add them with the round score
-            if (!playerTotalScores.ContainsKey(playerID))
-            {
-                playerTotalScores[playerID] = roundScore;
-            }
-            else
-            {
-                // If the player is already in the total scores dictionary, update their total score
-                playerTotalScores[playerID] += roundScore;
-            }
-        }
-    }
-
-    public string CompareScores()
-    {
-        List<string> activePlayers;
-        activePlayers = PlayerPrefs.GetString("RemainingPlayers").Split(',').ToList();
-
-        // initialize variables to track lowest score and respective player
-        int lowestScore = int.MaxValue; // Initialize with a value higher than the possible scores.
-        string playerWithLowestScore = "";
-
-        //list to store players with identical scores
-        List<int> playersWithIdenticalLowestScores = new List<int>();
-
-        foreach (int playerID in playerPoints.Keys)
-        {
-            int playerScore = GetPointsForPlayers(playerID);
-
-            if (playerScore < lowestScore)
-            {
-                lowestScore = playerScore;
-                playerWithLowestScore = playerID.ToString();
-
-                // Reset the list of players with identical lowest scores.
-                playersWithIdenticalLowestScores.Clear();
-                playersWithIdenticalLowestScores.Add(playerID);
-            }
-            else if (playerScore == lowestScore)
-            {
-                // Add the player to the list of players with identical lowest scores.
-                playersWithIdenticalLowestScores.Add(playerID);
-
-                PlayerPrefs.SetString("DrawingPlayers", string.Join(",", playersWithIdenticalLowestScores));
-            }
-        }
-
-        if (playersWithIdenticalLowestScores.Count >= 2)
-        {
-            PlayerPrefs.SetString("isDraw", "true");
-            
-            isDrawRound = true;
-            return "Tie among players: " + string.Join(", ", playersWithIdenticalLowestScores);
-        }
-    
-        else
-        {
-            PlayerPrefs.SetString("isDraw", "false");
-            // Return the playerID with the lowest score.
-            return playerWithLowestScore;
-        }
-    }
-
-
 
     public void EndRound()
     {
-        AccumulateTotalScores(); // add totals before comparing
 
-        CompareScores(); // check total scores for a loser or a draw
+        ManagePoints(); // tally up round and total points
+        IncreaseRoundNumber();
 
-        if (!isDrawRound) 
+
+    }
+
+
+
+    public void ManagePoints()
+    {
+        //get the list of active players at the end of the round
+        List<PlayerController> activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).ToList();
+        // for each active player, add up their points this round, and then add that to their total points across the game so far
+        foreach (PlayerController player in activePlayers)
         {
-            // if theres no draw, eliminate the losing player 
-            EliminateLowestScorer();
-            PushRoundData();
-            ManageRounds();
+            playerPointsThisRound.Add(player.Properties.PlayerNum, player.Properties.Points);
+
+            playerTotalScores[player.Properties.PlayerNum] += player.Properties.Points;
+        }
+    }
+
+    public void DisplayScores()
+    {
+        endRoundPanel.SetActive(true);
+        
+        
+    }
+
+    public void IncreaseRoundNumber()
+    {
+        currentRoundNumber++;
+        PlayerPrefs.SetInt("RoundNumber", currentRoundNumber); 
+    }
+
+    public void ReadyNextRound()
+    {
+        if(currentRoundNumber > maxNumberOfRounds)
+        {
+            SceneManager.LoadScene("EndGame");
         }
 
         else
         {
-            // add draw logic here to create the list of drawn players and ready up the next round (see void update )
-
-            
-        }
-
-      roundEnded = true; // mark that the round is ended 
-      ResultsPanel.SetActive(true); // activate the results panel so the players can see their scores
-    }
-
-
-    public void EliminateLowestScorer()
-    {
-        string playerWithLowestScore = CompareScores(); // Get the player with the lowest score.
-        // Check that there is no tied scores and if so, remove the player with the lowest score from the list of remaining players.
-        if (playerWithLowestScore != "" && !scoreTied)
-        {
-            List<string> activePlayers = PlayerPrefs.GetString("RemainingPlayers").Split(',').ToList();
-            activePlayers.Remove(playerWithLowestScore);
-
-            PlayerPrefs.SetString("RemainingPlayers", string.Join(",", activePlayers)); // Update PlayerPrefs with the modified active players list.
+            // reload the scene and other stuff for next round
         }
     }
+
+
+
+
+
 
     private void PushRoundData()
     {
         Debug.Log("Pushing Info!");
-        PlayerPrefs.SetInt("TotalRounds", roundsRemaining);
-        PlayerPrefs.SetInt("CurrentRoundNumber", currentRound);
+       // PlayerPrefs.SetInt("TotalRounds", roundsRemaining);
+       // PlayerPrefs.SetInt("CurrentRoundNumber", currentRound);
     }
 
 }

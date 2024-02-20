@@ -7,7 +7,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Allows newly spawned claws to know their id
-    private static int _amountOfPlayers = 0;
+    public static int amountOfPlayers = 0;
+    
     
     // Properties
     public int PlayerNum { get; private set; }
@@ -41,12 +42,14 @@ public class Player : MonoBehaviour
         heldObject = this.gameObject;
         
         PlayerSetup();
+
+       
     }
 
     private void PlayerSetup()
     {
-        _amountOfPlayers++;
-        PlayerNum = _amountOfPlayers;
+        amountOfPlayers++;
+        PlayerNum = amountOfPlayers;
         PlayerColor = playerColours[PlayerNum - 1];
         
         // Assign model claw tips colour
