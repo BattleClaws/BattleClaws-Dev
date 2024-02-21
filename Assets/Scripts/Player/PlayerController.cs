@@ -3,6 +3,7 @@ using System.Collections;
 using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private GameObject _handle;
     private bool _isDropped;
     private bool _knockback;
+
+    public bool eliminated = false;
 
     // Allows for other scripts to access the Player class without calling it again
     public Player Properties { get; set; }
@@ -24,8 +27,8 @@ public class PlayerController : MonoBehaviour
     #region Move Input & Response
 
     // New input system, for more info see hierarchy + input folder in Assets
-    public void OnMove(InputAction.CallbackContext ctx) => _input = ctx.ReadValue<Vector2>();
-    
+    void OnMove(InputAction.CallbackContext ctx) => _input = ctx.ReadValue<Vector2>();
+
     private void Move()
     {
         if(!_isDropped)
@@ -144,10 +147,23 @@ public class PlayerController : MonoBehaviour
     {
         Properties = GetComponent<Player>();
         _handle = transform.Find("AnchorPoint").gameObject;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
         Move();
+        
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            SceneManager.LoadScene("Round 1");
+        }
+    }
+
+    public void Eliminate()
+    {
+        eliminated = true;
+        GetComponent<PlayerInput>().enabled = false;
+        Properties.Model.SetActive(false);
     }
 }

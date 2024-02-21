@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed8e011431c16764b895f2183c5a6062
+guid: b99ef07748fd58b469d3e2de473fa467
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Karmatic Arcade
+  - Commodore 64 Pixelized
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

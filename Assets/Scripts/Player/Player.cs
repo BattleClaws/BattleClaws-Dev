@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class Player : MonoBehaviour
 {
@@ -14,8 +17,13 @@ public class Player : MonoBehaviour
     public int PlayerNum { get; private set; }
     public Color PlayerColor { get; private set; }
     public int Speed { get; private set; }
-    public int Points { get; private set; }
+    public int Points { get; set; }
+    public int LegacyPoints { get; private set; }
     public int Multiplier { get; private set; }
+    public GameObject ScorePanel { get; private set; }
+
+    public TMP_Text ScoreDisplay { get; set; }
+
     public GameObject Model
     {
         get => transform.Find("Arcade Grabber").gameObject;
@@ -51,11 +59,26 @@ public class Player : MonoBehaviour
         amountOfPlayers++;
         PlayerNum = amountOfPlayers;
         PlayerColor = playerColours[PlayerNum - 1];
-        
+
         // Assign model claw tips colour
         List<Renderer> ChildrenRenderer = GetComponentsInChildren<Renderer>(true).Where(ren => ren.material.name.Contains("Tips")).ToList();
         ChildrenRenderer.ForEach(ren => ren.material.color = playerColours[PlayerNum - 1]);
         
+        SpawnPointstracker();
+        
+    }
+
+    private void SpawnPointstracker()
+    {
+        var scorePrefab = Resources.Load<GameObject>("Prefabs/Score");
+        ScorePanel = Instantiate(scorePrefab, GameUtils.UICanvas.transform);
+        ScoreDisplay = ScorePanel.transform.Find("Score").GetComponent<TMP_Text>();
+
+        ScorePanel.GetComponent<RectTransform>().anchoredPosition = GameUtils.ScorePosition(PlayerNum);
+
+        var _PlayerNumDisplay = ScorePanel.transform.Find("Player").GetComponent<TMP_Text>();
+        _PlayerNumDisplay.text = PlayerNum.ToString();
+        _PlayerNumDisplay.color = playerColours[PlayerNum - 1];
     }
 
     public IEnumerator SpeedEffect(int amount, float length)
@@ -72,8 +95,16 @@ public class Player : MonoBehaviour
         Multiplier = 1;
     }
 
-    public void AddPoints(int amount)
+    public int AddPoints(int amount)
     {
         Points += amount * Multiplier;
+        return amount * Multiplier;
+    }
+
+    public void RoundReset()
+    {
+        LegacyPoints += Points;
+        Points = 0;
+        heldObject = null;
     }
 }
