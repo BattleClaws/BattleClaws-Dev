@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Collectable
   - UI
+  - DropZone
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Collectables
   - 
   - 
   - 

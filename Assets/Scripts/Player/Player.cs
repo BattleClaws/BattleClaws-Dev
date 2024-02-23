@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
+        print("Spawn");
         Speed = _baseSpeed;
         Multiplier = 1;
         heldObject = this.gameObject;
@@ -59,6 +61,8 @@ public class Player : MonoBehaviour
         amountOfPlayers++;
         PlayerNum = amountOfPlayers;
         PlayerColor = playerColours[PlayerNum - 1];
+
+        transform.position = GameUtils.RequestSpawnLocation(PlayerNum).position;
 
         // Assign model claw tips colour
         List<Renderer> ChildrenRenderer = GetComponentsInChildren<Renderer>(true).Where(ren => ren.material.name.Contains("Tips")).ToList();
@@ -98,7 +102,13 @@ public class Player : MonoBehaviour
     public int AddPoints(int amount)
     {
         Points += amount * Multiplier;
+        UpdateScoreDisplay();
         return amount * Multiplier;
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        ScoreDisplay.text = Points.ToString().PadLeft(6, '0');
     }
 
     public void RoundReset()
@@ -106,5 +116,10 @@ public class Player : MonoBehaviour
         LegacyPoints += Points;
         Points = 0;
         heldObject = null;
+    }
+
+    private void OnDestroy()
+    {
+        print("Destroy");
     }
 }

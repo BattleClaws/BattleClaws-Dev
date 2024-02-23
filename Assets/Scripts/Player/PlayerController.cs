@@ -93,7 +93,10 @@ public class PlayerController : MonoBehaviour
     {
         print("check");
         RaycastHit hit;
-        if (Physics.SphereCast(Position + new Vector3(0, 1f, 0), 1f, Vector3.down + new Vector3(0, -50, 0), out hit) &&
+
+        int collectableMask = 1 << 7;
+        
+        if (Physics.SphereCast(Position + new Vector3(0, 1f, 0), 0.15f, Vector3.down + new Vector3(0, -70, 0),out hit, Mathf.Infinity,collectableMask) &&
             hit.collider.CompareTag("Collectable"))
         {
             print("hit!");
@@ -102,6 +105,8 @@ public class PlayerController : MonoBehaviour
             target.transform.SetParent(Properties.Model.transform);
             target.GetComponent<Rigidbody>().useGravity = false;
             target.GetComponent<Rigidbody>().isKinematic = true;
+            target.GetComponent<Collectable>().Holder = this;
+            StartCoroutine(GameUtils.LerpToLocalPosition(target, Vector3.zero - new Vector3(0, 0.1f, 0), 0.02f));
             Properties.heldObject = target;
         }
     }
@@ -141,6 +146,13 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+    #region Utils
+
+
+
+
+    #endregion
     
     // Set some values
     private void Awake()
@@ -158,10 +170,13 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("Round 1");
         }
+        
+        Debug.DrawLine(Position + new Vector3(0, 10f, 0), Position + Vector3.down + new Vector3(0, -70, 0), Color.red);
     }
 
     public void Eliminate()
     {
+        print("eliminate");
         eliminated = true;
         GetComponent<PlayerInput>().enabled = false;
         Properties.Model.SetActive(false);
