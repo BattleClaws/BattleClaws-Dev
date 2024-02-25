@@ -92,6 +92,16 @@ public class Player : MonoBehaviour
         Speed = _baseSpeed;
     }
 
+    public void ApplySpeed(int amount, float length)
+    {
+        StartCoroutine(SpeedEffect(amount, length));
+    }
+    
+    public void ApplyMultiplier(int amount, float length)
+    {
+        StartCoroutine(MultiplierEffect(amount, length));
+    }
+
     public IEnumerator MultiplierEffect(int amount, float length)
     {
         Multiplier *= amount;

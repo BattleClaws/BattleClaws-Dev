@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool _knockback;
 
     public bool eliminated = false;
-
+    
     // Allows for other scripts to access the Player class without calling it again
     public Player Properties { get; set; }
 
@@ -31,8 +31,20 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if(!_isDropped)
-            _handle.transform.Translate(new Vector3(_input.x, 0, _input.y) * Properties.Speed * Time.deltaTime);
+        if (!_isDropped && _input != Vector2.zero)
+        {
+            Vector3 movement = new Vector3(_input.x, 0, _input.y) * Properties.Speed * Time.fixedDeltaTime;
+            Vector3 newPosition = _handle.GetComponent<Rigidbody>().position + movement;
+            
+            RaycastHit hit;
+            if (Physics.Raycast(_handle.GetComponent<Rigidbody>().position, movement.normalized, out hit, movement.magnitude))
+            {
+                newPosition = hit.point - movement.normalized * 0.05f;
+                StartCoroutine(Properties.SpeedEffect(0, 0.1f));
+            }
+            
+            _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
+        }
     }
 
     #endregion
@@ -127,7 +139,7 @@ public class PlayerController : MonoBehaviour
     // This actually handles the knockback
     public void KnockBack(Transform other, bool isPlayer)
     {
-        var otherPosition = (isPlayer) ? other.GetComponent<PlayerController>().Position : other.transform.position;
+        var otherPosition = (isPlayer) ? other.GetComponent<PlayerController>().Position : other.position;
         var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
 
         var particles = Resources.Load<GameObject>("Prefabs/Sparks");
@@ -138,10 +150,10 @@ public class PlayerController : MonoBehaviour
         
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
-
-        Instantiate(particles, midPoint, Quaternion.identity);
+        if(isPlayer) Instantiate(particles, midPoint, Quaternion.identity);
         
         // Then i just force it away :3
+        var force = (isPlayer) ? Direction * -5 : Vector3.Reflect(Direction, Vector3.up) * 10;
         GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);
     }
 
@@ -164,14 +176,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Move();
-        
         if (Input.GetKeyDown(KeyCode.U))
         {
             SceneManager.LoadScene("Round 1");
         }
         
         Debug.DrawLine(Position + new Vector3(0, 10f, 0), Position + Vector3.down + new Vector3(0, -70, 0), Color.red);
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     public void Eliminate()

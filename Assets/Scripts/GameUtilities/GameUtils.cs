@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameUtils : MonoBehaviour
 {
@@ -21,6 +24,8 @@ public class GameUtils : MonoBehaviour
 
     private static List<GameObject> _dropZones = new List<GameObject>();
 
+    private static List<string> _effects = new List<string>() { "LockDown", "DoublePoints", "SpeedBoost", "ShuffleZones", "FreezeMetal" }; 
+
     private void Awake()
     {
         _zoneScale = zoneScale;
@@ -35,16 +40,80 @@ public class GameUtils : MonoBehaviour
         ScoreIndicator = Resources.Load<GameObject>("Prefabs/Score Indicator");
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         
-        InitDropZones();
+        InitDropZones(true);
+        Repeat(200, InitCollectables);
+        
+    }
+    
+    public static void Repeat(int count, Action action)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            action();
+        }
     }
 
     public static void InitCollectables()
     {
-        
+        var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
+        Vector3 randomLoc = Random.insideUnitCircle;
+        randomLoc = new Vector3(randomLoc.x, 0.3f, randomLoc.y) * 7;
+        Instantiate(collectable, randomLoc, Quaternion.identity);
     }
 
-    public static void InitDropZones()
+    public static void SpecialAction(PlayerController user)
     {
+        var effect = _effects[Random.Range(0, _effects.Count)];
+
+        print(effect);
+        switch (effect)
+        {
+            case "DoublePoints":
+                user.Properties.ApplyMultiplier(2, 10);
+                break;
+            case "SpeedBoost":
+                user.Properties.ApplySpeed(8, 10);
+                break;
+            case "ShuffleZones":
+                InitDropZones(false);
+                break;
+            case "FreezeMetal":
+                FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList()
+                    .ForEach(p=> p.Properties.ApplySpeed(1, 2));
+                break;
+            case "LockDown":
+                var Zones = GameObject.FindGameObjectsWithTag("DropZone").ToList();
+                var ZoneToLock = Zones[Random.Range(0, Zones.Count)];
+                
+                FindObjectOfType<GameUtils>().LockZone(ZoneToLock);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void LockZone(GameObject zone)
+    {
+        StartCoroutine(LockZoneInstance(zone));
+    }
+
+    private IEnumerator LockZoneInstance(GameObject zone)
+    {
+        Color originalColor = zone.GetComponent<Renderer>().material.color;
+        zone.GetComponent<Renderer>().material.color = Color.gray;
+        yield return new WaitForSeconds(10f);
+        zone.GetComponent<Renderer>().material.color = originalColor;
+    }
+
+    public static void InitDropZones(bool isStart)
+    {
+        if (!isStart)
+        {
+            GameObject.FindGameObjectsWithTag("DropZone").ToList().ForEach(Destroy);
+            //Randomise the colours so the dropzones actually shuffle :3
+            _enteredColors = _enteredColors.OrderBy(_ => Guid.NewGuid()).ToList();
+        }
+
         for(int i = 0; i < _dropZoneSpawns.Count; i++){
             var newZone = GameObject.CreatePrimitive(PrimitiveType.Cube);
             newZone.transform.localScale = _zoneScale;
@@ -88,7 +157,6 @@ public class GameUtils : MonoBehaviour
     
     public static Color RequestColor()
     {
-        print(_enteredColors[1]);
         return _enteredColors[Random.Range(0, _enteredColors.Count)];
     }
 
