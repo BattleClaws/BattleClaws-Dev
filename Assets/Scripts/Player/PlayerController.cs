@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private GameObject _handle;
     private bool _isDropped;
     private bool _knockback;
+    public bool _roundActive = true;
 
     public bool eliminated = false;
     
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (!_isDropped && _input != Vector2.zero)
+        if (!_isDropped && _input != Vector2.zero && _roundActive)
         {
             Vector3 movement = new Vector3(_input.x, 0, _input.y) * Properties.Speed * Time.fixedDeltaTime;
             Vector3 newPosition = _handle.GetComponent<Rigidbody>().position + movement;
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator Drop()
     {
-        if (!_isDropped)
+        if (!_isDropped && _roundActive)
         {
             _isDropped = true;
             if (Properties.heldObject != Properties.gameObject)

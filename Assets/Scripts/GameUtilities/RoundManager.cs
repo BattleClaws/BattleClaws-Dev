@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,65 +11,91 @@ public class RoundManager : MonoBehaviour
     private static bool roundEnded;
     private GameObject endRoundPanel;
 
+    public GameObject Timer { get; private set; }
+    private float secondsRemaining = 0;
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject); // preserve this object across scenes and all static variables 
-        endRoundPanel.SetActive(false);
+        DontDestroyOnLoad(gameObject); // preserve this object across scenes
+        
+        currentRoundNumber = 1;
+        maxNumberOfRounds = 4 - 1;
+        print($"current: {currentRoundNumber} | max: {maxNumberOfRounds}");
+        SceneReload();
+    }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneReload();
+        print("Scene Loaded");
+    }
 
-        // get the round number from PP
-        currentRoundNumber = 0;
+    private void SceneReload()
+    {
+        if (currentRoundNumber > maxNumberOfRounds) SceneManager.LoadScene("EndGame");
+        Timer = GameObject.Find("Time");
+        secondsRemaining = 10;  //60 - (currentRoundNumber -1 * 10);
+        InvokeRepeating(nameof(UpdateTimer), 1f, 1f);
+        
+        var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
+            .Where(player => player.eliminated == false).ToList();
+        activePlayers.ForEach(p => p._roundActive = true);
+    }
 
-        //if there's nothing in the PP for RoundNumber (it returns 0)
-        if (currentRoundNumber == 0)
+    private void UpdateTimer()
+    {
+        secondsRemaining--;
+        var formatTime = $"{Mathf.Floor(secondsRemaining / 60):0}:{secondsRemaining % 60:00}";
+        Timer.GetComponent<TMP_Text>().text = formatTime;
+
+        if (secondsRemaining <= 0)
         {
-            currentRoundNumber = 1; // note that its the first round
-            PlayerPrefs.SetInt("RoundNumber", 1); // update the PP again 
+            StartCoroutine(EndRound());
+            CancelInvoke(nameof(UpdateTimer));
         }
-
-        maxNumberOfRounds = Player.amountOfPlayers - 1;
     }
 
-    private void Update()
-    {
-        if (roundEnded) // Have the timer logic set roundEnded to true to end the round
-            EndRound();
-    }
 
-    public void EndRound()
+    private IEnumerator EndRound()
     {
-        EndPlayers();
-        currentRoundNumber++;
-    }
-
-    public void EndPlayers()
-    {
-        // Get all active players and order them by score.
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
             .Where(player => player.eliminated == false).ToList();
         var playersByScore = activePlayers.OrderBy(player => player.Properties.Points).ToList();
+        activePlayers.ForEach(p => p._roundActive = false);
 
         var playerToElim = playersByScore.Last();
 
+        yield return new WaitForSeconds(1f);
+        yield return ZoomToPlayer(playerToElim);
+
+        var NoticePrefab = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
+        var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
+        noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "Eliminated";
+        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Player " + playerToElim.Properties.PlayerNum;
+        
+        yield return new WaitForSeconds(2f);
+        
         if (playerToElim.Properties.Points == playersByScore[-2].Properties.Points)
         {
             // do draw logic
         }
-
+        
         activePlayers.ForEach(player => player.Properties.RoundReset());
-        Destroy(playerToElim.gameObject);
+        playerToElim.Eliminate();
+
+        SceneManager.LoadScene("Round");
     }
 
-
-    public void DisplayScores()
+    private IEnumerator ZoomToPlayer(PlayerController player)
     {
-        endRoundPanel.SetActive(true);
-    }
-
-    public void ReadyNextRound()
-    {
-        if (currentRoundNumber > maxNumberOfRounds) SceneManager.LoadScene("EndGame");
-        // reload the scene and other stuff for next round
+        var baseLoc = Camera.main.transform.position;
+        var goalLoc = player.Position + new Vector3(0, 1, -4);
+        
+        for(float i = 0; i < 1.1f; i += 0.17f)
+        {
+            var newPosition = Vector3.Lerp(baseLoc, goalLoc, i);
+            Camera.main.transform.position = newPosition;
+            yield return new WaitForSeconds(0.02f);
+        }
     }
 }
