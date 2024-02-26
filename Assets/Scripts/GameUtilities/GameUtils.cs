@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,6 +16,8 @@ public class GameUtils : MonoBehaviour
     private static List<Color> _enteredColors;
     private static List<Transform> _playerSpawns;
     private static GameObject ScoreIndicator;
+    private static GameObject EffectIndicator;
+    private static GameObject DropParticles;
 
     [Space] [Header("DropZone Properties")]
     public Vector3 zoneScale;
@@ -38,6 +41,8 @@ public class GameUtils : MonoBehaviour
     private void Start()
     {
         ScoreIndicator = Resources.Load<GameObject>("Prefabs/Score Indicator");
+        EffectIndicator = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
+        DropParticles = Resources.Load<GameObject>("Prefabs/DropZone Particles");
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         
         InitDropZones(true);
@@ -66,6 +71,7 @@ public class GameUtils : MonoBehaviour
         var effect = _effects[Random.Range(0, _effects.Count)];
 
         print(effect);
+        EffectNotification(effect, user.Properties.PlayerNum);
         switch (effect)
         {
             case "DoublePoints":
@@ -82,7 +88,7 @@ public class GameUtils : MonoBehaviour
                     .ForEach(p=> p.Properties.ApplySpeed(1, 2));
                 break;
             case "LockDown":
-                var Zones = GameObject.FindGameObjectsWithTag("DropZone").ToList();
+                var Zones = _dropZones;
                 var ZoneToLock = Zones[Random.Range(0, Zones.Count)];
                 
                 FindObjectOfType<GameUtils>().LockZone(ZoneToLock);
@@ -92,17 +98,37 @@ public class GameUtils : MonoBehaviour
         }
     }
 
+    public static void EffectNotification(string effect, int player)
+    {
+        var newNotificationObj = Instantiate(EffectIndicator, UICanvas.transform);
+        var EffectText = newNotificationObj.transform.GetChild(0).GetComponent<TMP_Text>();
+        EffectText.text = effect.Prettify();
+
+        EffectText.transform.GetChild(0).GetComponent<TMP_Text>().text = "Player " + player.ToString() + " Activated";
+    }
+
     public void LockZone(GameObject zone)
     {
         StartCoroutine(LockZoneInstance(zone));
+    }
+
+    private static void ZoneParticles(GameObject zone)
+    {
+        var pSystem = Instantiate(DropParticles, zone.transform);
+        var systemMain = pSystem.GetComponent<ParticleSystem>().main;
+        systemMain.startColor = zone.GetComponent<Renderer>().material.color + new Color(0,0,0,1);
+        pSystem.GetComponent<ParticleSystem>().Play();
+        print("played");
     }
 
     private IEnumerator LockZoneInstance(GameObject zone)
     {
         Color originalColor = zone.GetComponent<Renderer>().material.color;
         zone.GetComponent<Renderer>().material.color = Color.gray;
+        ZoneParticles(zone);
         yield return new WaitForSeconds(10f);
         zone.GetComponent<Renderer>().material.color = originalColor;
+        ZoneParticles(zone);
     }
 
     public static void InitDropZones(bool isStart)
@@ -112,6 +138,7 @@ public class GameUtils : MonoBehaviour
             GameObject.FindGameObjectsWithTag("DropZone").ToList().ForEach(Destroy);
             //Randomise the colours so the dropzones actually shuffle :3
             _enteredColors = _enteredColors.OrderBy(_ => Guid.NewGuid()).ToList();
+            _dropZones = new List<GameObject>();
         }
 
         for(int i = 0; i < _dropZoneSpawns.Count; i++){
@@ -120,6 +147,8 @@ public class GameUtils : MonoBehaviour
             newZone.transform.position = _dropZoneSpawns[i].position;
             newZone.GetComponent<Renderer>().material.color = _enteredColors[i];
             newZone.tag = "DropZone";
+            
+            ZoneParticles(newZone);
             
             _dropZones.Add(newZone);
         }

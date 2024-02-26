@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 public class Player : MonoBehaviour
 {
@@ -39,11 +36,12 @@ public class Player : MonoBehaviour
     
     // Base speed, not the active speed, but the one the claw will return to after an effect
     [SerializeField] private int _baseSpeed = 5;
-    
+    private Material charge;
+    private bool effectActive = false;
     
     public GameObject heldObject = null;
     private List<Color> playerColours = new List<Color>() { Color.red, Color.blue, Color.magenta, Color.green };
-    
+
     private void Awake()
     {
         print("Spawn");
@@ -53,7 +51,9 @@ public class Player : MonoBehaviour
         
         PlayerSetup();
 
-       
+        charge = Resources.Load<Material>("Materials/SuperCharge");
+
+
     }
 
     private void PlayerSetup()
@@ -72,6 +72,19 @@ public class Player : MonoBehaviour
         
     }
 
+    private IEnumerator MultiplierGlow(Renderer renderer, Color color, float length)
+    {
+        effectActive = true;
+        var originalMaterial = renderer.material;
+        renderer.material = charge;
+        renderer.material.color = color;
+
+        yield return new WaitForSeconds(length);
+
+        renderer.material = originalMaterial;
+        effectActive = false;
+    }
+
     private void SpawnPointstracker()
     {
         var scorePrefab = Resources.Load<GameObject>("Prefabs/Score");
@@ -88,6 +101,8 @@ public class Player : MonoBehaviour
     public IEnumerator SpeedEffect(int amount, float length)
     {
         Speed = amount;
+        if(!effectActive)
+            GetComponentsInChildren<Renderer>(true).ToList().ForEach(x=> StartCoroutine(MultiplierGlow(x, Color.blue, length)));
         yield return new WaitForSeconds(length);
         Speed = _baseSpeed;
     }
@@ -105,6 +120,8 @@ public class Player : MonoBehaviour
     public IEnumerator MultiplierEffect(int amount, float length)
     {
         Multiplier *= amount;
+        if(!effectActive)
+            GetComponentsInChildren<Renderer>(true).ToList().ForEach(x=> StartCoroutine(MultiplierGlow(x, Color.yellow, length)));
         yield return new WaitForSeconds(length);
         Multiplier = 1;
     }
