@@ -7,7 +7,7 @@ public class TomatoManager : MonoBehaviour
 {
 
     public GameObject tomatoPrefab;
-    public GameObject tomatoSpawn;
+    
  
 
     // Start is called before the first frame update
