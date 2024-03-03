@@ -11,6 +11,7 @@ public class SceneChanger : MonoBehaviour
 
     private string currentSceneName;
     private bool isSplash = false;
+    private bool isCredits = false;
 
     private void Start()
     {
@@ -22,6 +23,11 @@ public class SceneChanger : MonoBehaviour
             isSplash = true;
            
         }
+        if(currentSceneName == "Credits")
+        {
+            isCredits = true;
+        }
+       
     }
 
     // Update is called once per frame
@@ -31,7 +37,14 @@ public class SceneChanger : MonoBehaviour
         if(isSplash && Input.GetKeyDown(KeyCode.A))
         {
 
-            audioScript.playChosenClip("Select");
+           // audioScript.playChosenClip("Select");
+            StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+
+        }
+        
+        if(isCredits && Input.GetKeyDown(KeyCode.A))
+        {
+           // audioScript.playChosenClip("Select");
             StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
         }
     }

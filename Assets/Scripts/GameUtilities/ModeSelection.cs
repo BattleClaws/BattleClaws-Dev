@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.WSA;
 
 
 
@@ -19,7 +20,11 @@ public class ModeSelection : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StatusText; // the text at the top of the screen
     [SerializeField] private GameObject SliderHolder; // the slider that controls the image fill for the logo
     [SerializeField] private bool ModeSelected; // flag for if the majority have players have selected a mode or not 
-    [SerializeField] private GameObject particleObject;
+    [SerializeField] private string ModeNameString;
+    [SerializeField] private string ModeSceneToLoad;
+    [SerializeField] private int requiredPlayers;
+  
+   
 
     
     
@@ -27,8 +32,9 @@ public class ModeSelection : MonoBehaviour
 
     private void Start()
     {
+        UpdateTextDisplay();
         SliderHolder.SetActive(false); // turn the slider off on start
-        particleObject.SetActive(false);
+     
     }
 
 
@@ -51,11 +57,15 @@ public class ModeSelection : MonoBehaviour
     {
         if(other.CompareTag("Collectable"))
         {
-            votesForThisMode++;
-            VoteDisplay.text = ("Votes: " + votesForThisMode).ToString();
-            checkVotes();
-        }
+            if (ModeNameString != "Coming Soon")
+            {
+                votesForThisMode++;
+                
+                checkVotes();
+            }
 
+            UpdateTextDisplay();
+        }
     }
 
     public void OnTriggerExit(Collider other) // if a player removes their vote, minus the vote and check to see if there is still a majority 
@@ -63,14 +73,16 @@ public class ModeSelection : MonoBehaviour
         if (other.CompareTag("Collectable"))
         {
             votesForThisMode--;
-            VoteDisplay.text = ("Votes: " + votesForThisMode).ToString();
-            checkVotes();
+          
+          
+           checkVotes();
+           UpdateTextDisplay();
         }
     }
 
     public void checkVotes()
     {
-        possibleMaxVotes = 1; // this should be _amountOfPlayers but that variable is set to private (CHANGE ME)
+        possibleMaxVotes = Player.amountOfPlayers; 
         NumReqForMajority = possibleMaxVotes / 2 + 1;
 
         if(votesForThisMode >= NumReqForMajority) // if any given mode has enough votes for a majority 
@@ -79,34 +91,31 @@ public class ModeSelection : MonoBehaviour
             ModeSelected = true;
             SliderHolder.SetActive(true); 
             ManageSlider(); // update the slider value
+            UpdateTextDisplay();
         } 
+     
         else
         {
             ModeSelected=false; 
             ManageSlider(); // reset the slider value 
+            UpdateTextDisplay();
         }
-
-       
     }
 
     public void ManageSlider()
     {
         Slider BeginningSlider = SliderHolder.GetComponent<Slider>();
-        if(ModeSelected)
+        if(ModeSelected && Player.amountOfPlayers >= requiredPlayers)
         {
-            StatusText.text = "Starting Game...";
             InvokeRepeating("FillSlider", 0.1f, 0.05f);
-            particleObject.SetActive(true);
-            
         }
 
         else if (!ModeSelected) // if a mode is not selected any more = stop filling the slider
         {
+            UpdateTextDisplay();
             CancelInvoke("FillSlider"); // stop filling the slider 
-            particleObject.SetActive(false);
             BeginningSlider.value = 0;
             SliderHolder.SetActive(false); // turn the slider off again
-            StatusText.text = "Choose your Game Mode";
         }
     }
 
@@ -124,10 +133,43 @@ public class ModeSelection : MonoBehaviour
 
         if (BeginningSlider.value >= BeginningSlider.maxValue) // start the game with the selected mode when the slider is full 
         {
-            SceneManager.LoadScene("Round");
+            SceneManager.LoadScene(ModeSceneToLoad);
         }
-
-
     }
 
+    public void UpdateTextDisplay()
+    {
+        if (ModeSelected && Player.amountOfPlayers < requiredPlayers && ModeNameString != "Coming Soon" )
+        {
+            StatusText.text = requiredPlayers + " or more Players required";
+        }
+        else if (ModeSelected && ModeNameString != "Coming Soon")
+        {
+            StatusText.text = "Starting " + ModeNameString + " ...";
+        }
+        else if (!ModeSelected && ModeNameString != "Coming Soon")
+        {
+            StatusText.text = "Choose your Game Mode";
+        }
+
+        else if (ModeNameString == "Coming Soon")
+        {
+            StatusText.text = "More Game Modes Coming Soon!";
+           // ComingSoonInfo();
+        }
+    }
+
+    //public void ComingSoonInfo()
+   // {
+       // Animator panelAnim = FutureModesInfo.GetComponent<Animator>();
+       // FutureModesInfo.SetActive(true);
+           // if (panelAnim == null)
+           // {
+             //   panelAnim.SetTrigger("Activate");
+          //  }
+          //  else
+         //   {
+//panelAnim.SetTrigger("DeActivate");
+         //   }
+   // }
 }
