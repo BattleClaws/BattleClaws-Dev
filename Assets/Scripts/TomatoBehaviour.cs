@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class TomatoBehaviour : MonoBehaviour
 {
-    private float tomatoSpeed = 1f;
-    public GameObject SplatParticles;
+    private float tomatoSpeed = 1f; //speed od the moving tomato
+    public GameObject SplatParticles; // splat particle prefab 
 
-   
-    // Start is called before the first frame update
     void Start()
     {
+        // if the tomato hits nothing within 5 seconds, destroy tomato
         Destroy(this.gameObject, 5f);
     }
 

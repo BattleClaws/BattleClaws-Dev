@@ -5,17 +5,12 @@ using UnityEngine;
 
 public class TomatoManager : MonoBehaviour
 {
+    //Attach this script to a gameobject placed at the point you want the tomatos to spawn. 
+    //This script controls instantiating the tomatos (currently you have to press T) 
 
-    public GameObject tomatoPrefab;
+    public GameObject tomatoPrefab; 
     
- 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+  
     // Update is called once per frame
     void Update()
     {
@@ -34,7 +29,6 @@ public class TomatoManager : MonoBehaviour
     {
         // spawn the tomato
         Instantiate(tomatoPrefab, transform.position, transform.rotation);
-       
     }
 
    
