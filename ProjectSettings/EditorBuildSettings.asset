@@ -6,9 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Splash.unity
+    guid: d06a72b0e6ebc472caf77aa0e1089f94
+  - enabled: 1
+    path: Assets/Scenes/PlayerSelect.unity
+    guid: 7a45fd8bf24c155488e3aa34d8c47a9b
+  - enabled: 1
     path: Assets/Scenes/Round.unity
     guid: bcb639bca74e4214bb1cdfe329b10630
   - enabled: 1
     path: Assets/Scenes/Draw.unity
     guid: fe69cd5624062224c9607453d26db7bd
+  - enabled: 1
+    path: Assets/Scenes/EndGame.unity
+    guid: 99f0aae2601a6ee40a6df464377a6db5
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 39056a9b124ede14c8cc0028846fbf3c
   m_configObjects: {}
