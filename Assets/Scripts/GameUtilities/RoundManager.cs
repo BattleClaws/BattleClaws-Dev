@@ -11,11 +11,14 @@ public class RoundManager : MonoBehaviour
     private static bool roundEnded;
     private GameObject endRoundPanel;
 
+    public bool draw = false;
+
     public GameObject Timer { get; private set; }
     private float secondsRemaining = 0;
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         DontDestroyOnLoad(gameObject); // preserve this object across scenes
         
         currentRoundNumber = 1;
@@ -32,9 +35,11 @@ public class RoundManager : MonoBehaviour
 
     private void SceneReload()
     {
+        if (!draw)
+            currentRoundNumber++;
         if (currentRoundNumber > maxNumberOfRounds) SceneManager.LoadScene("EndGame");
         Timer = GameObject.Find("Time");
-        secondsRemaining = 10;  //60 - (currentRoundNumber -1 * 10);
+        secondsRemaining = (draw)? 15 : 10;  //60 - (currentRoundNumber -1 * 10);
         InvokeRepeating(nameof(UpdateTimer), 1f, 1f);
         
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
@@ -63,25 +68,40 @@ public class RoundManager : MonoBehaviour
         var playersByScore = activePlayers.OrderBy(player => player.Properties.Points).ToList();
         activePlayers.ForEach(p => p._roundActive = false);
 
-        var playerToElim = playersByScore.Last();
-
-        yield return new WaitForSeconds(1f);
-        yield return ZoomToPlayer(playerToElim);
-
+        var lowestScoring = playersByScore
+            .Where(x => x.Properties.Points == playersByScore.First().Properties.Points).ToList();
+        
         var NoticePrefab = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
-        var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
-        noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "Eliminated";
-        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Player " + playerToElim.Properties.PlayerNum;
-        
-        yield return new WaitForSeconds(2f);
-        
-        if (playerToElim.Properties.Points == playersByScore[-2].Properties.Points)
+        if (lowestScoring.Count > 1)
         {
-            // do draw logic
+            yield return new WaitForSeconds(1f);
+            var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
+            noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "DRAW!";
+            var drawingPlayers = "| ";
+            lowestScoring.ForEach(x=> drawingPlayers += "Player " + x.Properties.PlayerNum + " | ");
+            noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = drawingPlayers;
+            yield return new WaitForSeconds(2f);
+
+            draw = true;
+            SceneManager.LoadScene("Draw");
         }
+        else
+        {
+            var playerToElim = lowestScoring[0];
+            yield return new WaitForSeconds(1f);
+            yield return ZoomToPlayer(playerToElim);
+            
+            var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
+            noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "Eliminated";
+            noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Player " + playerToElim.Properties.PlayerNum;
         
+            yield return new WaitForSeconds(2f);
+            playerToElim.Eliminate();
+            draw = false;
+        }
+
         activePlayers.ForEach(player => player.Properties.RoundReset());
-        playerToElim.Eliminate();
+        
 
         SceneManager.LoadScene("Round");
     }

@@ -49,6 +49,9 @@ public class Player : MonoBehaviour
         Multiplier = 1;
         heldObject = this.gameObject;
         
+        amountOfPlayers++;
+        PlayerNum = amountOfPlayers;
+        PlayerColor = playerColours[PlayerNum - 1];
         PlayerSetup();
 
         charge = Resources.Load<Material>("Materials/SuperCharge");
@@ -58,10 +61,6 @@ public class Player : MonoBehaviour
 
     private void PlayerSetup()
     {
-        amountOfPlayers++;
-        PlayerNum = amountOfPlayers;
-        PlayerColor = playerColours[PlayerNum - 1];
-
         transform.position = GameUtils.RequestSpawnLocation(PlayerNum).position;
 
         // Assign model claw tips colour
@@ -143,6 +142,7 @@ public class Player : MonoBehaviour
         LegacyPoints += Points;
         Points = 0;
         heldObject = null;
+        PlayerSetup();
     }
 
     private void OnDestroy()
