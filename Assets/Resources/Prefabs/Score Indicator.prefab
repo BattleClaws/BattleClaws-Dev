@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4035724477356800119}
   - component: {fileID: 5854792112861570250}
   - component: {fileID: 3375632810887847236}
+  - component: {fileID: 7337762261835052151}
   m_Layer: 5
   m_Name: Score Indicator
   m_TagString: Untagged
@@ -138,6 +139,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countDown: -1
+--- !u!114 &7337762261835052151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822141377026362370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998c039c28a93724697dd72db97d568b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5421994381175689136
 GameObject:
   m_ObjectHideFlags: 0

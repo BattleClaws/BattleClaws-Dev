@@ -63,6 +63,10 @@ public class Player : MonoBehaviour
     {
         transform.position = GameUtils.RequestSpawnLocation(PlayerNum).position;
 
+        TMP_Text playerNum = transform.GetComponentInChildren<TMP_Text>();
+        playerNum.text = "P" + PlayerNum;
+        playerNum.color = PlayerColor;
+        
         // Assign model claw tips colour
         List<Renderer> ChildrenRenderer = GetComponentsInChildren<Renderer>(true).Where(ren => ren.material.name.Contains("Tips")).ToList();
         ChildrenRenderer.ForEach(ren => ren.material.color = playerColours[PlayerNum - 1]);

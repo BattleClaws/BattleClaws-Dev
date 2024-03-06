@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 6011060504439501638}
   - component: {fileID: 8036777701883744627}
   - component: {fileID: 3780353314816811908}
+  - component: {fileID: 3258365334386733303}
   m_Layer: 5
   m_Name: Score Indicator 1
   m_TagString: Untagged
@@ -172,7 +173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -2.87, y: -0.922}
+  m_AnchoredPosition: {x: -2.869995, y: -0.9219971}
   m_SizeDelta: {x: 2.705, y: 2.0096}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3448600390981170978
@@ -220,7 +221,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6011060504439501638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,3 +273,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countDown: -1
+--- !u!114 &3258365334386733303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6491179001964481980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998c039c28a93724697dd72db97d568b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
