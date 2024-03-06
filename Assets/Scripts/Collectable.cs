@@ -24,6 +24,14 @@ public class Collectable : MonoBehaviour
 
     private void CollectableSetup()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity) && hit.transform.CompareTag("DropZone"))
+        {
+            GameUtils.InitCollectables();
+            Destroy(gameObject);
+            return;
+        }
+
         if (UnityEngine.Random.Range(0, 100) < specialPercent)
         {
             Special = true;

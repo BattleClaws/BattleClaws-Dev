@@ -46,7 +46,7 @@ public class GameUtils : MonoBehaviour
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         
         InitDropZones(true);
-        Repeat(200, InitCollectables);
+        Repeat(130, InitCollectables);
         
     }
     
@@ -62,7 +62,7 @@ public class GameUtils : MonoBehaviour
     {
         var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
         Vector3 randomLoc = Random.insideUnitCircle;
-        randomLoc = new Vector3(randomLoc.x, 0.3f, randomLoc.y) * 7;
+        randomLoc = new Vector3(randomLoc.x, 0.3f, randomLoc.y) * 5;
         Instantiate(collectable, randomLoc, Quaternion.identity);
     }
 
