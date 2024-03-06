@@ -12,8 +12,11 @@ public class PlayerController : MonoBehaviour
     private bool _isDropped;
     private bool _knockback;
     public bool _roundActive = true;
-
     public bool eliminated = false;
+    public bool isDrawRound;
+    public bool isWinningPlayer; 
+    
+
     
     // Allows for other scripts to access the Player class without calling it again
     public Player Properties { get; set; }
@@ -121,6 +124,13 @@ public class PlayerController : MonoBehaviour
             target.GetComponent<Collectable>().Holder = this;
             StartCoroutine(GameUtils.LerpToLocalPosition(target, Vector3.zero - new Vector3(0, 0.1f, 0), 0.02f));
             Properties.heldObject = target;
+
+
+            if (isDrawRound)
+            {
+                isWinningPlayer = true;
+            }
+            
         }
     }
 
@@ -130,6 +140,11 @@ public class PlayerController : MonoBehaviour
         Properties.heldObject.GetComponent<Rigidbody>().useGravity = true;
         Properties.heldObject.GetComponent<Rigidbody>().isKinematic = false;
         Properties.heldObject = Properties.gameObject;
+
+        if (isDrawRound)
+        {
+            isWinningPlayer = false;
+        }
     }
 
 

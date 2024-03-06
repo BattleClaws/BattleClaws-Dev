@@ -10,8 +10,10 @@ public class RoundManager : MonoBehaviour
     private static int maxNumberOfRounds;
     private static bool roundEnded;
     private GameObject endRoundPanel;
-
     public bool draw = false;
+
+    
+
 
     public GameObject Timer { get; private set; }
     private float secondsRemaining = 0;
@@ -29,9 +31,12 @@ public class RoundManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
         SceneReload();
+        
         print("Scene Loaded");
     }
+
 
     private void SceneReload()
     {
@@ -45,6 +50,11 @@ public class RoundManager : MonoBehaviour
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
             .Where(player => player.eliminated == false).ToList();
         activePlayers.ForEach(p => p._roundActive = true);
+
+        if (draw) 
+        {
+            activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p._roundActive = false);
+        }
     }
 
     private void UpdateTimer()
@@ -55,8 +65,17 @@ public class RoundManager : MonoBehaviour
 
         if (secondsRemaining <= 0)
         {
-            StartCoroutine(EndRound());
-            CancelInvoke(nameof(UpdateTimer));
+            if (draw)
+            {
+                StartCoroutine(EndRoundDraw());
+                CancelInvoke(nameof(UpdateTimer));
+            }
+
+            else
+            {
+                StartCoroutine(EndRound());
+                CancelInvoke(nameof(UpdateTimer));
+            }
         }
     }
 
@@ -82,8 +101,12 @@ public class RoundManager : MonoBehaviour
             noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = drawingPlayers;
             yield return new WaitForSeconds(2f);
 
+            activePlayers.ForEach(player => player.Properties.RoundReset());
+            lowestScoring.ForEach(player => player.Properties.isDrawPlayer = true);
+
             draw = true;
             SceneManager.LoadScene("Draw");
+            yield return null;
         }
         else
         {
@@ -101,7 +124,8 @@ public class RoundManager : MonoBehaviour
         }
 
         activePlayers.ForEach(player => player.Properties.RoundReset());
-        
+        activePlayers.ForEach(player => player.Properties.isDrawPlayer = false);
+
 
         SceneManager.LoadScene("Round");
     }
@@ -117,5 +141,25 @@ public class RoundManager : MonoBehaviour
             Camera.main.transform.position = newPosition;
             yield return new WaitForSeconds(0.02f);
         }
+    }
+
+    private IEnumerator EndRoundDraw()
+    {
+        var NoticePrefab = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
+
+        var drawnPlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).Where(player => player.Properties.isDrawPlayer).ToList();
+        var winningPlayer = drawnPlayers.First(player => player.isWinningPlayer);
+
+        drawnPlayers.ForEach(player => player.Properties.isDrawPlayer = false);
+        drawnPlayers.Remove(winningPlayer);
+
+        yield return new WaitForSeconds(1f);
+        var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
+        noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "ROUND END!";
+        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Winner: Player " + winningPlayer;
+        yield return new WaitForSeconds(2f);
+        drawnPlayers.ForEach(player => player.Eliminate());
+        draw = false;
+        SceneManager.LoadScene("Round");
     }
 }

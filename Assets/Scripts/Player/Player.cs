@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public int goalSliderValue;
+    public bool isDrawPlayer;
+    public Slider playerSlider;
     // Allows newly spawned claws to know their id
     public static int amountOfPlayers = 0;
     
@@ -131,10 +135,11 @@ public class Player : MonoBehaviour
 
     public int AddPoints(int amount)
     {
-        Points += amount * Multiplier;
-        UpdateScoreDisplay();
-        return amount * Multiplier;
+         Points += amount * Multiplier;
+         UpdateScoreDisplay();
+         return amount * Multiplier;
     }
+
 
     private void UpdateScoreDisplay()
     {
