@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour
     private bool _isDropped;
     private bool _knockback;
     public bool _roundActive = true;
-    public bool eliminated = false;
-    public bool isDrawRound;
     public bool isWinningPlayer; 
     
 
@@ -43,8 +41,8 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(_handle.GetComponent<Rigidbody>().position, movement.normalized, out hit, movement.magnitude))
             {
-                newPosition = hit.point - movement.normalized * 0.05f;
-                StartCoroutine(Properties.SpeedEffect(0, 0.1f));
+                if(hit.collider.CompareTag("Constraint"))
+                    newPosition = hit.point - movement.normalized * 0.05f;
             }
             
             _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
@@ -58,7 +56,9 @@ public class PlayerController : MonoBehaviour
     {
         StartCoroutine(Drop());
     }
-    
+
+     
+
     private IEnumerator Drop()
     {
         if (!_isDropped && _roundActive)
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
             Properties.heldObject = target;
 
 
-            if (isDrawRound)
+            if (RoundManager.draw)
             {
                 isWinningPlayer = true;
             }
@@ -136,12 +136,16 @@ public class PlayerController : MonoBehaviour
 
     private void DropCollectable()
     {
-        Properties.heldObject.transform.parent = null;
-        Properties.heldObject.GetComponent<Rigidbody>().useGravity = true;
-        Properties.heldObject.GetComponent<Rigidbody>().isKinematic = false;
-        Properties.heldObject = Properties.gameObject;
+        if (Properties.heldObject != null && Properties.heldObject != Properties.gameObject)
+        {
+            Properties.heldObject.transform.parent = null;
+            SceneManager.MoveGameObjectToScene(Properties.heldObject, SceneManager.GetActiveScene());
+            Properties.heldObject.GetComponent<Rigidbody>().useGravity = true;
+            Properties.heldObject.GetComponent<Rigidbody>().isKinematic = false;
+            Properties.heldObject = Properties.gameObject;
+        }
 
-        if (isDrawRound)
+        if (RoundManager.draw)
         {
             isWinningPlayer = false;
         }
@@ -155,21 +159,21 @@ public class PlayerController : MonoBehaviour
     // This actually handles the knockback
     public void KnockBack(Transform other, bool isPlayer)
     {
-        var otherPosition = (isPlayer) ? other.GetComponent<PlayerController>().Position : other.position;
+        var otherPosition = (isPlayer) ? other.GetComponent<PlayerController>().Position : other.transform.position;
         var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
 
         var particles = Resources.Load<GameObject>("Prefabs/Sparks");
         
         // Here, im getting the normalised position between the current claw and the collider, getting a direction to move away from
         Vector3 Direction = Vector3.Normalize(otherPosition - Position);
-        StartCoroutine(Properties.SpeedEffect(0, 0.5f));
+        StartCoroutine(Properties.SpeedEffect(0, 0.2f, false));
         
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
-        if(isPlayer) Instantiate(particles, midPoint, Quaternion.identity);
+
+        Instantiate(particles, midPoint, Quaternion.identity);
         
         // Then i just force it away :3
-        var force = (isPlayer) ? Direction * -5 : Vector3.Reflect(Direction, Vector3.up) * 10;
         GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);
     }
 
@@ -177,6 +181,10 @@ public class PlayerController : MonoBehaviour
 
     #region Utils
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(Drop());
+    }
 
 
 
@@ -208,8 +216,9 @@ public class PlayerController : MonoBehaviour
     public void Eliminate()
     {
         print("eliminate");
-        eliminated = true;
+        Properties.eliminated = true;
         GetComponent<PlayerInput>().enabled = false;
+        GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
         Properties.Model.SetActive(false);
     }
 }

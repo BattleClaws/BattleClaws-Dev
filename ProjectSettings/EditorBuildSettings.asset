@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 39056a9b124ede14c8cc0028846fbf3c
+  - enabled: 1
+    path: Assets/Scenes/DrawTutorial.unity
+    guid: 5dd28698ef40d4842b7cd070e511172b
   m_configObjects: {}

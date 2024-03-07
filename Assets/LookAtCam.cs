@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class LookAtCam : MonoBehaviour
 {
+    public GameObject lookAtObj;
     private Camera mainCamera;
-
     void Start()
     {
-        // locate the main camera in the scene
-        mainCamera = Camera.main;
+        if (lookAtObj == null)
+        {
+            mainCamera = Camera.main;
+        }
     }
 
     void Update()
+    {
+        if (lookAtObj == null)
+        {
+            LookTowardsCam();
+        }
+        else
+        {
+            LookTowardsObj();
+        }
+    }
+
+    void LookTowardsCam()
     {
         if (mainCamera != null)
         {
@@ -23,5 +37,10 @@ public class LookAtCam : MonoBehaviour
             // Invert the rotation to face the correct way
             transform.Rotate(0f, 180f, 0f);
         }
+    }
+
+    void LookTowardsObj()
+    {
+        gameObject.transform.LookAt(lookAtObj.transform);
     }
 }

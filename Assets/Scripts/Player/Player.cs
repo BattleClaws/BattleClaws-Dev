@@ -8,9 +8,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public int goalSliderValue;
     public bool isDrawPlayer;
-    public Slider playerSlider;
     // Allows newly spawned claws to know their id
     public static int amountOfPlayers = 0;
     
@@ -25,6 +23,8 @@ public class Player : MonoBehaviour
     public GameObject ScorePanel { get; private set; }
 
     public TMP_Text ScoreDisplay { get; set; }
+
+    public GameObject CamAnchor { get; set; }
 
     public GameObject Model
     {
@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int _baseSpeed = 5;
     private Material charge;
     private bool effectActive = false;
+    public bool eliminated = false;
+    private PlayerController _controller;
     
     public GameObject heldObject = null;
     private List<Color> playerColours = new List<Color>() { Color.red, Color.blue, Color.magenta, Color.green };
@@ -56,16 +58,20 @@ public class Player : MonoBehaviour
         amountOfPlayers++;
         PlayerNum = amountOfPlayers;
         PlayerColor = playerColours[PlayerNum - 1];
+        _controller = GetComponent<PlayerController>();
         PlayerSetup();
+        
 
         charge = Resources.Load<Material>("Materials/SuperCharge");
+        CamAnchor = transform.GetChild(0).Find("Cam Anchor").gameObject;
 
 
     }
 
     private void PlayerSetup()
     {
-        transform.position = GameUtils.RequestSpawnLocation(PlayerNum).position;
+        _controller.Position = GameUtils.RequestSpawnLocation(PlayerNum).position;
+        print("Position: " + GameUtils.RequestSpawnLocation(PlayerNum).position);
 
         TMP_Text playerNum = transform.GetComponentInChildren<TMP_Text>();
         playerNum.text = "P" + PlayerNum;
@@ -75,7 +81,8 @@ public class Player : MonoBehaviour
         List<Renderer> ChildrenRenderer = GetComponentsInChildren<Renderer>(true).Where(ren => ren.material.name.Contains("Tips")).ToList();
         ChildrenRenderer.ForEach(ren => ren.material.color = playerColours[PlayerNum - 1]);
         
-        SpawnPointstracker();
+        if(!RoundManager.draw && !eliminated)
+            SpawnPointstracker();
         
     }
 
@@ -105,10 +112,10 @@ public class Player : MonoBehaviour
         _PlayerNumDisplay.color = playerColours[PlayerNum - 1];
     }
 
-    public IEnumerator SpeedEffect(int amount, float length)
+    public IEnumerator SpeedEffect(int amount, float length, bool colorEffect)
     {
         Speed = amount;
-        if(!effectActive)
+        if(!effectActive && colorEffect)
             GetComponentsInChildren<Renderer>(true).ToList().ForEach(x=> StartCoroutine(MultiplierGlow(x, Color.blue, length)));
         yield return new WaitForSeconds(length);
         Speed = _baseSpeed;
@@ -116,7 +123,7 @@ public class Player : MonoBehaviour
 
     public void ApplySpeed(int amount, float length)
     {
-        StartCoroutine(SpeedEffect(amount, length));
+        StartCoroutine(SpeedEffect(amount, length, true));
     }
     
     public void ApplyMultiplier(int amount, float length)
@@ -150,7 +157,7 @@ public class Player : MonoBehaviour
     {
         LegacyPoints += Points;
         Points = 0;
-        heldObject = null;
+        heldObject = gameObject;
         PlayerSetup();
     }
 

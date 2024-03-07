@@ -4,20 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class GameUtils : MonoBehaviour
 {
     public static GameObject UICanvas;
     
-    [SerializeField] private List<Color> colors = new List<Color>();
-    [SerializeField] private List<Transform> PlayerSpawns = new List<Transform>();
+    [SerializeField] private List<Color> colors;
+    [SerializeField] private List<Transform> PlayerSpawns;
     private static List<Color> _enteredColors;
     private static List<Transform> _playerSpawns;
     private static GameObject ScoreIndicator;
     private static GameObject EffectIndicator;
     private static GameObject DropParticles;
+
+    public static GameUtils live;
+    
 
     [Space] [Header("DropZone Properties")]
     public Vector3 zoneScale;
@@ -35,7 +42,10 @@ public class GameUtils : MonoBehaviour
         _enteredColors = colors;
         _playerSpawns = PlayerSpawns;
         _dropZoneSpawns = dropZoneSpawns;
+        UICanvas = GameObject.FindGameObjectWithTag("UI");
         Collectable.SetValue(100);
+
+        live = this;
     }
     
     private void Start()
@@ -44,10 +54,13 @@ public class GameUtils : MonoBehaviour
         EffectIndicator = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
         DropParticles = Resources.Load<GameObject>("Prefabs/DropZone Particles");
         UICanvas = GameObject.FindGameObjectWithTag("UI");
-        
-        InitDropZones(true);
-        Repeat(130, InitCollectables);
-        
+
+        if (!RoundManager.draw)
+        {
+            InitDropZones(true);
+            Repeat(130, InitCollectables);
+        }
+
     }
     
     public static void Repeat(int count, Action action)
@@ -62,7 +75,7 @@ public class GameUtils : MonoBehaviour
     {
         var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
         Vector3 randomLoc = Random.insideUnitCircle;
-        randomLoc = new Vector3(randomLoc.x, 0.3f, randomLoc.y) * 5;
+        randomLoc = new Vector3(randomLoc.x, -1.3f, randomLoc.y) * 5;
         Instantiate(collectable, randomLoc, Quaternion.identity);
     }
 
@@ -183,7 +196,35 @@ public class GameUtils : MonoBehaviour
             _ => Vector2.zero
         };
     }
+
+    public IEnumerator ChangeScene(string scene)
+    {
+        var pane = GameObject.Find("Darkening").gameObject;
+
+        for (float i = 0; i <= 1.0f; i += 0.05f)
+        {
+            pane.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, i);
+            yield return new WaitForFixedUpdate();
+        }
+        pane.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 1);
+
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(scene);
+    }
     
+    public IEnumerator OpenedScene()
+    {
+        var pane = GameObject.Find("Darkening").gameObject;
+        pane.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 1);
+        yield return new WaitForSeconds(0.5f);
+        for (float i = 1; i > 0.0f; i -= 0.05f)
+        {
+            pane.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, i);
+            yield return new WaitForFixedUpdate();
+        }
+        yield return new WaitForSeconds(0.1f);
+    }
+
     public static Color RequestColor()
     {
         return _enteredColors[Random.Range(0, _enteredColors.Count)];

@@ -32,14 +32,17 @@ public class Collectable : MonoBehaviour
             return;
         }
 
-        if (UnityEngine.Random.Range(0, 100) < specialPercent)
+        if (UnityEngine.Random.Range(0, 100) < specialPercent && !RoundManager.draw)
         {
             Special = true;
             Mesh.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Collectableglint");
         }
-        
-        Color = GameUtils.RequestColor();
-        Mesh.GetComponent<Renderer>().material.color = Color;
+
+        if (!RoundManager.draw)
+        {
+            Color = GameUtils.RequestColor();
+            Mesh.GetComponent<Renderer>().material.color = Color;
+        }
     }
 
     public static void SetValue(int value)
