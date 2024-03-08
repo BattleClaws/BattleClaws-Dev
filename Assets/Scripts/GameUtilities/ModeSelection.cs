@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.WSA;
+using Unity.VisualScripting;
 
 
 
@@ -13,7 +14,8 @@ public class ModeSelection : MonoBehaviour
     private int votesForThisMode; 
     private int possibleMaxVotes;
     private int NumReqForMajority;
-    private Player playerCountScript; // attach logic later to get the active player count for determining max votes
+    private Player playerCountScript; // attach logic  to get the active player count for determining max votes
+    public GameObject audioPrefab;
 
 
     [SerializeField] private TextMeshProUGUI VoteDisplay; // text over the Mode Chute to indicate votes applied
@@ -23,19 +25,17 @@ public class ModeSelection : MonoBehaviour
     [SerializeField] private string ModeNameString;
     [SerializeField] private string ModeSceneToLoad;
     [SerializeField] private int requiredPlayers;
-  
-   
 
-    
-    
+    public List<GameObject> ballsInMode;
+
 
 
     private void Start()
     {
         UpdateTextDisplay();
         SliderHolder.SetActive(false); // turn the slider off on start
-     
     }
+
 
 
     void Update()
@@ -57,12 +57,16 @@ public class ModeSelection : MonoBehaviour
     {
         if(other.CompareTag("Collectable"))
         {
-            if (ModeNameString != "Coming Soon")
-            {
-                votesForThisMode++;
-                
+            if (!ballsInMode.Contains(other.gameObject) && ModeNameString != "Coming Soon")
+            { 
+                ballsInMode.Add(other.gameObject);
+                AudioManager audioScript = audioPrefab.GetComponent<AudioManager>();
+                audioScript.playChosenClip("Score");
+
                 checkVotes();
             }
+
+         
 
             UpdateTextDisplay();
         }
@@ -70,9 +74,12 @@ public class ModeSelection : MonoBehaviour
 
     public void OnTriggerExit(Collider other) // if a player removes their vote, minus the vote and check to see if there is still a majority 
     {
-        if (other.CompareTag("Collectable"))
+        if (other.CompareTag("Collectable") && ModeNameString != "Coming Soon")
         {
-            votesForThisMode--;
+            if (ballsInMode.Contains(other.gameObject))
+            {
+                ballsInMode.Remove(other.gameObject);
+            }
           
           
            checkVotes();
@@ -84,6 +91,8 @@ public class ModeSelection : MonoBehaviour
     {
         possibleMaxVotes = Player.amountOfPlayers; 
         NumReqForMajority = possibleMaxVotes / 2 + 1;
+
+        votesForThisMode = ballsInMode.Count;
 
         if(votesForThisMode >= NumReqForMajority) // if any given mode has enough votes for a majority 
         {
@@ -155,21 +164,9 @@ public class ModeSelection : MonoBehaviour
         else if (ModeNameString == "Coming Soon")
         {
             StatusText.text = "More Game Modes Coming Soon!";
-           // ComingSoonInfo();
+       
         }
     }
 
-    //public void ComingSoonInfo()
-   // {
-       // Animator panelAnim = FutureModesInfo.GetComponent<Animator>();
-       // FutureModesInfo.SetActive(true);
-           // if (panelAnim == null)
-           // {
-             //   panelAnim.SetTrigger("Activate");
-          //  }
-          //  else
-         //   {
-//panelAnim.SetTrigger("DeActivate");
-         //   }
-   // }
+  
 }
