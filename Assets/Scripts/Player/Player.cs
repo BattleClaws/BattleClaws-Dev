@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         _controller.Position = GameUtils.RequestSpawnLocation(PlayerNum).position;
         print("Position: " + GameUtils.RequestSpawnLocation(PlayerNum).position);
 
-        TMP_Text playerNum = transform.GetComponentInChildren<TMP_Text>();
+        TMP_Text playerNum = transform.GetComponentInChildren<TMP_Text>(true);
         playerNum.text = "P" + PlayerNum;
         playerNum.color = PlayerColor;
         

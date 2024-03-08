@@ -20,6 +20,11 @@ public class PlayerCollisions : MonoBehaviour
             _controller.KnockBack(other.transform.parent.transform, true);
         }
 
-        
+        if (other.CompareTag("Constraint"))
+        {
+            _controller.hold();
+        }
+
+
     }
 }

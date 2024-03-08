@@ -48,15 +48,20 @@ public class RoundManager : MonoBehaviour
         
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
             .Where(player => player.Properties.eliminated == false).ToList();
-        activePlayers.ForEach(p => p._roundActive = true);
-        activePlayers.ForEach(player => player.Properties.RoundReset());
-        
+        foreach (var playerController in activePlayers)
+        {
+            playerController._roundActive = true;
+            playerController.Properties.RoundReset();
+            playerController.Invisible(false);
+        }
+
         print(currentRoundNumber);
         if ((currentRoundNumber > maxNumberOfRounds || activePlayers.Count <=1) && currentRoundNumber > 1) SceneManager.LoadScene("EndGame");
 
         if (draw) 
         {
             activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p._roundActive = false);
+            activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p.Invisible(true));
         }
     }
 
@@ -129,6 +134,15 @@ public class RoundManager : MonoBehaviour
             
             StartCoroutine(GameUtils.live.ChangeScene("Round"));
         }
+        
+        foreach (var playerController in activePlayers)
+        {
+            if (playerController.Properties.heldObject != playerController.gameObject)
+            {
+                Destroy(playerController.Properties.heldObject.gameObject);
+                playerController.Properties.heldObject = playerController.gameObject;
+            }
+        }
     }
 
     private IEnumerator ZoomToPlayer(PlayerController player)
@@ -152,7 +166,14 @@ public class RoundManager : MonoBehaviour
         var NoticePrefab = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
 
         var drawnPlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).Where(player => player.Properties.isDrawPlayer).ToList();
-        var winningPlayer = drawnPlayers.First(player => player.isWinningPlayer);
+        PlayerController winningPlayer = null;
+        try
+        {
+            winningPlayer = drawnPlayers.First(player => player.isWinningPlayer);
+        }
+        catch {
+            // Empty
+        }
 
         drawnPlayers.ForEach(player => player.Properties.isDrawPlayer = false);
         drawnPlayers.Remove(winningPlayer);
@@ -161,12 +182,16 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
         noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "ROUND END!";
-        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Winner: Player " + winningPlayer;
+        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = (winningPlayer == null)? "NO WINNER":"Winner: Player " + winningPlayer;
         yield return new WaitForSeconds(2f);
         drawnPlayers.ForEach(player => player.Eliminate());
         draw = false;
-        Destroy(winningPlayer.Properties.heldObject);
-        winningPlayer.Properties.heldObject = winningPlayer.Properties.gameObject;
+        if (winningPlayer != null)
+        {
+            Destroy(winningPlayer.Properties.heldObject);
+            winningPlayer.Properties.heldObject = winningPlayer.Properties.gameObject;
+        }
+
         StartCoroutine(GameUtils.live.ChangeScene("Round"));
     }
 }

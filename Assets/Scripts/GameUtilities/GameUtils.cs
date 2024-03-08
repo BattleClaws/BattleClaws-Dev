@@ -55,7 +55,7 @@ public class GameUtils : MonoBehaviour
         DropParticles = Resources.Load<GameObject>("Prefabs/DropZone Particles");
         UICanvas = GameObject.FindGameObjectWithTag("UI");
 
-        if (!RoundManager.draw)
+        if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round")
         {
             InitDropZones(true);
             Repeat(130, InitCollectables);
@@ -160,6 +160,7 @@ public class GameUtils : MonoBehaviour
             newZone.transform.position = _dropZoneSpawns[i].position;
             newZone.GetComponent<Renderer>().material.color = _enteredColors[i];
             newZone.tag = "DropZone";
+            newZone.layer = LayerMask.NameToLayer("Collectables");
             
             ZoneParticles(newZone);
             

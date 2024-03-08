@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     private bool _isDropped;
     private bool _knockback;
     public bool _roundActive = true;
-    public bool isWinningPlayer; 
+    public bool isWinningPlayer;
+    private Vector3 parentPosition;
+    private Vector3 moveDelta;
     
 
     
@@ -36,7 +38,7 @@ public class PlayerController : MonoBehaviour
         if (!_isDropped && _input != Vector2.zero && _roundActive)
         {
             Vector3 movement = new Vector3(_input.x, 0, _input.y) * Properties.Speed * Time.fixedDeltaTime;
-            Vector3 newPosition = _handle.GetComponent<Rigidbody>().position + movement;
+            Vector3 newPosition = _handle.GetComponent<Rigidbody>().position + movement + moveDelta;
             
             RaycastHit hit;
             if (Physics.Raycast(_handle.GetComponent<Rigidbody>().position, movement.normalized, out hit, movement.magnitude))
@@ -47,6 +49,12 @@ public class PlayerController : MonoBehaviour
             
             _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
         }
+    }
+
+    public void hold()
+    {
+        var newPosition = Position - _handle.GetComponent<Rigidbody>().velocity.normalized * 0.05f;
+        _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
     }
 
     #endregion
@@ -172,8 +180,8 @@ public class PlayerController : MonoBehaviour
             DropCollectable();
 
         Instantiate(particles, midPoint, Quaternion.identity);
-        
         // Then i just force it away :3
+        
         GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);
     }
 
@@ -193,9 +201,12 @@ public class PlayerController : MonoBehaviour
     // Set some values
     private void Awake()
     {
+        if(GetComponentInChildren<Projector>(true).enabled == false)
+            Invisible(false);
         Properties = GetComponent<Player>();
         _handle = transform.Find("AnchorPoint").gameObject;
         DontDestroyOnLoad(gameObject);
+        Properties.Model.transform.position = _handle.transform.position - new Vector3(0, 1, 0);
     }
 
     private void Update()
@@ -208,9 +219,17 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(Position + new Vector3(0, 10f, 0), Position + Vector3.down + new Vector3(0, -70, 0), Color.red);
     }
 
+    void checkDelta()
+    {
+        moveDelta = transform.position - parentPosition;
+        parentPosition = transform.position;
+    }
+
     private void FixedUpdate()
     {
+        checkDelta();
         Move();
+        
     }
 
     public void Eliminate()
@@ -218,7 +237,14 @@ public class PlayerController : MonoBehaviour
         print("eliminate");
         Properties.eliminated = true;
         GetComponent<PlayerInput>().enabled = false;
-        GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
-        Properties.Model.SetActive(false);
+        Invisible(true);
+    }
+
+    public void Invisible(bool active)
+    {
+        GetComponentInChildren<Projector>(true).enabled = !active;
+        Properties.Model.transform.localScale = (active) ? Vector3.zero : new Vector3(1, 1, 1);
+        GetComponentInChildren<Canvas>(true).gameObject.SetActive(!active);
+        
     }
 }
