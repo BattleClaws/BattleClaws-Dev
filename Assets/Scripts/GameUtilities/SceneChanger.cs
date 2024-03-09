@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
@@ -30,23 +32,16 @@ public class SceneChanger : MonoBehaviour
        
     }
 
+    public void OnDrop(InputAction.CallbackContext ctx)
+    {
+        loadChosenSceneWithDelay(destinationSceneName);
+    }
+
     // Update is called once per frame
     void Update()
     {
         
-        if(isSplash && Input.GetKeyDown(KeyCode.A))
-        {
-
-           // audioScript.playChosenClip("Select");
-            StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
-
-        }
         
-        if(isCredits && Input.GetKeyDown(KeyCode.A))
-        {
-           // audioScript.playChosenClip("Select");
-            StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
-        }
     }
 
     public IEnumerator loadChosenSceneWithDelay(string SceneName) 

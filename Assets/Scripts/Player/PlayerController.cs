@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     #region Drop Input & Coroutine
     public void OnDrop(InputAction.CallbackContext ctx)
     {
+        
         StartCoroutine(Drop());
     }
 
