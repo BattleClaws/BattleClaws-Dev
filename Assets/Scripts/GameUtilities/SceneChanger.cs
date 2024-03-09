@@ -34,14 +34,18 @@ public class SceneChanger : MonoBehaviour
 
     public void OnDrop(InputAction.CallbackContext ctx)
     {
-        loadChosenSceneWithDelay(destinationSceneName);
+        StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
+        if (Input.GetButtonDown("Submit"))
+        {
+            StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+        }
+
+
     }
 
     public IEnumerator loadChosenSceneWithDelay(string SceneName) 
