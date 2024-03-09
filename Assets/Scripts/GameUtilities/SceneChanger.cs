@@ -55,7 +55,7 @@ public class SceneChanger : MonoBehaviour
         PlayerController[] playersToDestroy = FindObjectsOfType<PlayerController>();
        foreach(PlayerController player in playersToDestroy)
         {
-            Destroy(player);
+            Destroy(gameObject);
         }
         
     }
