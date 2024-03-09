@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     public void hold()
     {
-        var newPosition = Position - _handle.GetComponent<Rigidbody>().velocity.normalized * 0.05f;
+        var newPosition = Position - _handle.GetComponent<Rigidbody>().velocity.normalized * 0.1f;
         _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
     }
 
