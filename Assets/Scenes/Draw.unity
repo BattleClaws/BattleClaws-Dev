@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2128345, g: 0.5256892, b: 0.73926437, a: 1}
+  m_IndirectSpecularColor: {r: 0.21287209, g: 0.5257065, b: 0.7392699, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -61953,8 +61953,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 18.075268, y: 11.660793, z: 1.1694791}
-  m_Center: {x: 1.4762902, y: 3.343419, z: 8.2603445}
+  m_Size: {x: 18.075268, y: 11.660794, z: 6.3712006}
+  m_Center: {x: 1.4762903, y: 3.3434196, z: 10.861217}
 --- !u!54 &2083633297
 Rigidbody:
   m_ObjectHideFlags: 0
