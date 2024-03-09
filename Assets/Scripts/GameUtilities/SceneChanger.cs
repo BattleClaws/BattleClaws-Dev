@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -14,7 +15,9 @@ public class SceneChanger : MonoBehaviour
     private string currentSceneName;
     private bool isSplash = false;
     private bool isCredits = false;
+    private bool isGameOver = false;
 
+    public PlayerController playerScripts;
     private void Start()
     {
        
@@ -29,12 +32,31 @@ public class SceneChanger : MonoBehaviour
         {
             isCredits = true;
         }
+
+        if(currentSceneName == "EndGame")
+        {
+            isGameOver = true;
+        }
        
     }
 
     public void OnDrop(InputAction.CallbackContext ctx)
     {
+        if(isGameOver)
+        {
+            ResetGame();
+        }
         StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+    }
+
+    public void ResetGame()
+    {
+        PlayerController[] playersToDestroy = FindObjectsOfType<PlayerController>();
+       foreach(PlayerController player in playersToDestroy)
+        {
+            Destroy(player);
+        }
+        
     }
 
     // Update is called once per frame
