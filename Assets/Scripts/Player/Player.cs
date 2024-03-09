@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -61,9 +62,9 @@ public class Player : MonoBehaviour
         _controller = GetComponent<PlayerController>();
         PlayerSetup();
         
-
         charge = Resources.Load<Material>("Materials/SuperCharge");
-        CamAnchor = transform.GetChild(0).Find("Cam Anchor").gameObject;
+        CamAnchor = _controller._handle.transform.Find("Cam Anchor").gameObject;
+        print("awake!");
 
 
     }
@@ -81,8 +82,9 @@ public class Player : MonoBehaviour
         List<Renderer> ChildrenRenderer = GetComponentsInChildren<Renderer>(true).Where(ren => ren.material.name.Contains("Tips")).ToList();
         ChildrenRenderer.ForEach(ren => ren.material.color = playerColours[PlayerNum - 1]);
         
-        if(!RoundManager.draw && !eliminated)
+        if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round" && !eliminated)
             SpawnPointstracker();
+        
         
     }
 

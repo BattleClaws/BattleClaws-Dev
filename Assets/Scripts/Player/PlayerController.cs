@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Vector2 _input;
-    private GameObject _handle;
+    public GameObject _handle;
     private bool _isDropped;
     private bool _knockback;
     public bool _roundActive = true;
@@ -235,6 +235,7 @@ public class PlayerController : MonoBehaviour
 
     public void Eliminate()
     {
+        Properties.RoundReset();
         print("eliminate");
         Properties.eliminated = true;
         GetComponent<PlayerInput>().enabled = false;

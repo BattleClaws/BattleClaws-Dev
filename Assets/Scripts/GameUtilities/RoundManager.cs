@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class RoundManager : MonoBehaviour
 {
-    private static int currentRoundNumber;
+    public static int currentRoundNumber;
     private static int maxNumberOfRounds;
     private static bool roundEnded;
     private GameObject endRoundPanel;

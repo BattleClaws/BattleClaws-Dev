@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.XR;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -20,24 +20,17 @@ public class SceneChanger : MonoBehaviour
     public PlayerController playerScripts;
     private void Start()
     {
-       
+        if (SceneManager.GetActiveScene().name == "Splash")
+        {
+            ResetGame();
+        }
+
         currentSceneName = SceneManager.GetActiveScene().name;
         if(currentSceneName == "Splash")
         {
             audioScript = audioHolder.GetComponent<AudioManager>();
-            isSplash = true;
-           
-        }
-        if(currentSceneName == "Credits")
-        {
-            isCredits = true;
         }
 
-        if(currentSceneName == "EndGame")
-        {
-            isGameOver = true;
-        }
-       
     }
 
     public void OnDrop(InputAction.CallbackContext ctx)
@@ -51,10 +44,12 @@ public class SceneChanger : MonoBehaviour
 
     public void ResetGame()
     {
+        RoundManager.currentRoundNumber = 0;
         Player.amountOfPlayers = 0;
         PlayerController[] playersToDestroy = FindObjectsOfType<PlayerController>();
        foreach(PlayerController player in playersToDestroy)
         {
+            print("Killed player " + player.Properties.PlayerNum);
             Destroy(player.gameObject);
         }
         
