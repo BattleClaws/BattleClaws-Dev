@@ -51,6 +51,7 @@ public class SceneChanger : MonoBehaviour
 
     public void ResetGame()
     {
+        Player.amountOfPlayers = 0;
         PlayerController[] playersToDestroy = FindObjectsOfType<PlayerController>();
        foreach(PlayerController player in playersToDestroy)
         {
