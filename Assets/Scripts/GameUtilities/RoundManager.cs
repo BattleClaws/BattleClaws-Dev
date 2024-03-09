@@ -36,7 +36,7 @@ public class RoundManager : MonoBehaviour
     private void SceneReload()
     {
         print("Draw: " + draw);
-        if (!draw && SceneManager.GetActiveScene().name != "Round")
+        if (!draw && SceneManager.GetActiveScene().name == "Round")
         {
             currentRoundNumber++;
             GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
