@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
     {
         _controller.Position = GameUtils.RequestSpawnLocation(PlayerNum).position;
         print("Position: " + GameUtils.RequestSpawnLocation(PlayerNum).position);
+        //StartCoroutine(DoubleSetPosition());
 
         TMP_Text playerNum = transform.GetComponentInChildren<TMP_Text>(true);
         playerNum.text = "P" + PlayerNum;
@@ -84,9 +85,20 @@ public class Player : MonoBehaviour
         
         if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round" && !eliminated)
             SpawnPointstracker();
-        
-        
+
+        /*if (heldObject != gameObject)
+        {
+            Destroy(heldObject);
+            heldObject = gameObject;
+        }*/
     }
+    
+    // TEMP FIX
+    /*public IEnumerator DoubleSetPosition()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _controller.Position = GameUtils.RequestSpawnLocation(PlayerNum).position;
+    }*/
 
     private IEnumerator MultiplierGlow(Renderer renderer, Color color, float length)
     {

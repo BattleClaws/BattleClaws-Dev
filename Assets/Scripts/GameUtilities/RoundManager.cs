@@ -27,6 +27,11 @@ public class RoundManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (!draw && SceneManager.GetActiveScene().name == "Round")
+        {
+            currentRoundNumber++;
+            GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
+        }
         SceneReload();
         
         print("Scene Loaded");
@@ -36,11 +41,7 @@ public class RoundManager : MonoBehaviour
     private void SceneReload()
     {
         print("Draw: " + draw);
-        if (!draw && SceneManager.GetActiveScene().name == "Round")
-        {
-            currentRoundNumber++;
-            GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
-        }
+        
 
         Timer = GameObject.Find("Time");
         secondsRemaining = (draw)? 15 : 30;  //60 - (currentRoundNumber -1 * 10);
@@ -56,7 +57,7 @@ public class RoundManager : MonoBehaviour
         }
 
         print(currentRoundNumber);
-        if ((currentRoundNumber > maxNumberOfRounds || activePlayers.Count <=1) && currentRoundNumber > 1) SceneManager.LoadScene("EndGame");
+        if ((activePlayers.Count <=1) && currentRoundNumber > 1) SceneManager.LoadScene("EndGame");
 
         if (draw) 
         {
@@ -182,7 +183,7 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
         noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "ROUND END!";
-        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = (winningPlayer == null)? "NO WINNER":"Winner: Player " + winningPlayer;
+        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = (winningPlayer == null)? "NO WINNER":"Winner: Player " + winningPlayer.Properties.PlayerNum;
         yield return new WaitForSeconds(2f);
         drawnPlayers.ForEach(player => player.Eliminate());
         draw = false;

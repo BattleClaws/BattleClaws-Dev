@@ -241,4 +241,12 @@ public class GameUtils : MonoBehaviour
         var newScoreObj = Instantiate(ScoreIndicator, position.position + new Vector3(0,1,0), Quaternion.identity);
         newScoreObj.GetComponentInChildren<TMP_Text>().text = "+" + score;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Splash");
+        }
+    }
 }

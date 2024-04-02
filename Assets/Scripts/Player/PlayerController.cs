@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (!_isDropped && _input != Vector2.zero && _roundActive)
+        if (!_isDropped && _input != Vector2.zero && _roundActive && !Properties.eliminated)
         {
             Vector3 movement = new Vector3(_input.x, 0, _input.y) * Properties.Speed * Time.fixedDeltaTime;
             Vector3 newPosition = _handle.GetComponent<Rigidbody>().position + movement + moveDelta;
@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
     {
         var newPosition = Position - _handle.GetComponent<Rigidbody>().velocity.normalized * 0.1f;
         _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
+    }
+
+    public void OnReset(InputAction.CallbackContext ctx)
+    {
+        Position = GameUtils.RequestSpawnLocation(Properties.PlayerNum).position;
     }
 
     #endregion
@@ -238,7 +243,6 @@ public class PlayerController : MonoBehaviour
         Properties.RoundReset();
         print("eliminate");
         Properties.eliminated = true;
-        GetComponent<PlayerInput>().enabled = false;
         Invisible(true);
     }
 
@@ -246,6 +250,7 @@ public class PlayerController : MonoBehaviour
     {
         GetComponentInChildren<Projector>(true).enabled = !active;
         Properties.Model.transform.localScale = (active) ? Vector3.zero : new Vector3(1, 1, 1);
+        Position = (active) ? new Vector3(0, -20, 0) : GameUtils.RequestSpawnLocation(Properties.PlayerNum).position;
         GetComponentInChildren<Canvas>(true).gameObject.SetActive(!active);
         
     }
