@@ -25,6 +25,10 @@ public class PlayerCollisions : MonoBehaviour
             _controller.hold();
         }
 
+        if (other.CompareTag("Return"))
+        {
+            _controller.ResetPosition();
+        }
 
     }
 }

@@ -62,6 +62,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnReset(InputAction.CallbackContext ctx)
     {
+        ResetPosition();
+    }
+
+    public void ResetPosition()
+    {
         Position = GameUtils.RequestSpawnLocation(Properties.PlayerNum).position;
     }
 
