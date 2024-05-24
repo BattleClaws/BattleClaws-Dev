@@ -184,10 +184,11 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator EndRoundDraw()
     {
-        yield return new WaitForSeconds(1f);
         var NoticePrefab = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
 
         var drawnPlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).Where(player => player.Properties.isDrawPlayer).ToList();
+        drawnPlayers.ForEach(p => p._roundActive = false);
+        yield return new WaitForSeconds(0.7f);
         PlayerController winningPlayer = null;
         try
         {
