@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
         var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
 
         var particles = Resources.Load<GameObject>("Prefabs/Sparks");
+        StartCoroutine(GameUtils.instance.CamShake(0.1f));
         
         // Here, im getting the normalised position between the current claw and the collider, getting a direction to move away from
         Vector3 Direction = Vector3.Normalize(otherPosition - Position);

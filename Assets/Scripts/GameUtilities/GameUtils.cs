@@ -23,6 +23,8 @@ public class GameUtils : MonoBehaviour
     private static GameObject EffectIndicator;
     private static GameObject DropParticles;
 
+    public static GameUtils instance;
+
     public static GameUtils live;
     
 
@@ -34,7 +36,9 @@ public class GameUtils : MonoBehaviour
 
     private static List<GameObject> _dropZones = new List<GameObject>();
 
-    private static List<string> _effects = new List<string>() { "LockDown", "DoublePoints", "SpeedBoost", "ShuffleZones", "FreezeMetal" }; 
+    private static List<string> _effects = new List<string>() { "LockDown", "DoublePoints", "SpeedBoost", "ShuffleZones", "FreezeMetal" };
+
+    private bool isShakeActive;
 
     private void Awake()
     {
@@ -50,6 +54,15 @@ public class GameUtils : MonoBehaviour
     
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
         ScoreIndicator = Resources.Load<GameObject>("Prefabs/Score Indicator");
         EffectIndicator = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
         DropParticles = Resources.Load<GameObject>("Prefabs/DropZone Particles");
@@ -122,6 +135,26 @@ public class GameUtils : MonoBehaviour
     public void LockZone(GameObject zone)
     {
         StartCoroutine(LockZoneInstance(zone));
+    }
+    
+    public IEnumerator CamShake(float shakeDuration)
+    {
+        if (!isShakeActive)
+        {
+            isShakeActive = true;
+            var originalPos = Camera.main.transform.localPosition;
+            while (shakeDuration > 0)
+            {
+                Camera.main.transform.localPosition = originalPos + UnityEngine.Random.insideUnitSphere * 0.23f;
+
+                shakeDuration -= Time.deltaTime * 0.7f;
+                yield return new WaitForFixedUpdate();
+            }
+
+            shakeDuration = 0f;
+            Camera.main.transform.localPosition = originalPos;
+            isShakeActive = false;
+        }
     }
 
     private static void ZoneParticles(GameObject zone)
