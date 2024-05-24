@@ -114,7 +114,7 @@ public class GameUtils : MonoBehaviour
                 break;
             case "LockDown":
                 var Zones = _dropZones;
-                var ZoneToLock = Zones[Random.Range(0, Zones.Count)];
+                var ZoneToLock = Zones[Random.Range(0, Zones.Count-1)];
                 
                 FindObjectOfType<GameUtils>().LockZone(ZoneToLock);
                 break;
@@ -170,7 +170,7 @@ public class GameUtils : MonoBehaviour
         Color originalColor = zone.GetComponent<Renderer>().material.color;
         zone.GetComponent<Renderer>().material.color = Color.gray;
         ZoneParticles(zone);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         zone.GetComponent<Renderer>().material.color = originalColor;
         ZoneParticles(zone);
     }
