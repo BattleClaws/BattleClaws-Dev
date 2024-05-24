@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -7,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class RoundManager : MonoBehaviour
 {
     public static int currentRoundNumber;
-    private static int maxNumberOfRounds;
     private static bool roundEnded;
     private GameObject endRoundPanel;
     public static bool draw = false;
@@ -19,44 +19,46 @@ public class RoundManager : MonoBehaviour
     {
         StartCoroutine(GameUtils.live.OpenedScene());
         SceneManager.sceneLoaded += OnSceneLoaded;
-        
-        maxNumberOfRounds = 4 - 1;
-        print($"current: {currentRoundNumber} | max: {maxNumberOfRounds}");
+
+        // Accounts for SceneManager.sceneLoaded event not being set on first run
+        if (currentRoundNumber == 0)
+        {
+            currentRoundNumber++;
+            GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
+        }
+
         SceneReload();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        print("Scene Loaded: " + (!draw && SceneManager.GetActiveScene().name == "Round"));
         if (!draw && SceneManager.GetActiveScene().name == "Round")
         {
             currentRoundNumber++;
             GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
         }
         SceneReload();
-        
-        print("Scene Loaded");
     }
 
 
     private void SceneReload()
     {
-        print("Draw: " + draw);
         
 
         Timer = GameObject.Find("Time");
         secondsRemaining = (draw)? 15 : 30;  //60 - (currentRoundNumber -1 * 10);
-        InvokeRepeating(nameof(UpdateTimer), 1f, 1f);
+        
         
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
             .Where(player => player.Properties.eliminated == false).ToList();
         foreach (var playerController in activePlayers)
         {
-            playerController._roundActive = true;
-            playerController.Properties.RoundReset();
             playerController.Invisible(false);
         }
 
-        print(currentRoundNumber);
+        StartCoroutine(SpawnBuffer(activePlayers));
+        
         if ((activePlayers.Count <=1) && currentRoundNumber > 1) SceneManager.LoadScene("EndGame");
 
         if (draw) 
@@ -64,6 +66,21 @@ public class RoundManager : MonoBehaviour
             activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p._roundActive = false);
             activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p.Invisible(true));
         }
+    }
+
+    private IEnumerator SpawnBuffer(List<PlayerController> active)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (var playerController in active)
+        {
+            playerController.StopCoroutines();
+            print("Resetting player position: " + playerController.Properties.PlayerNum + " at position " + playerController.Position);
+            playerController.Properties.RoundReset();
+            print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
+            playerController._roundActive = true;
+        }
+        InvokeRepeating(nameof(UpdateTimer), 1f, 1f);
     }
 
     private void UpdateTimer()
@@ -93,14 +110,17 @@ public class RoundManager : MonoBehaviour
     {
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
             .Where(player => player.Properties.eliminated == false).ToList();
-        var playersByScore = activePlayers.OrderBy(player => player.Properties.Points).ToList();
         activePlayers.ForEach(p => p._roundActive = false);
+
+        yield return new WaitForSeconds(1.5f);
+        
+        var playersByScore = activePlayers.OrderBy(player => player.Properties.Points).ToList();
+        
 
         var lowestScoring = playersByScore
             .Where(x => x.Properties.Points == playersByScore.First().Properties.Points).ToList();
         
         var NoticePrefab = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");
-        print(lowestScoring.Count +" | "+ lowestScoring);
         if (lowestScoring.Count > 1)
         {
             yield return new WaitForSeconds(1f);

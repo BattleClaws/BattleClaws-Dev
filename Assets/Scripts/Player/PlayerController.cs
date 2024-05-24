@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,9 +16,11 @@ public class PlayerController : MonoBehaviour
     public bool isWinningPlayer;
     private Vector3 parentPosition;
     private Vector3 moveDelta;
-    
 
-    
+
+    public List<Coroutine> activeRoutines;
+
+
     // Allows for other scripts to access the Player class without calling it again
     public Player Properties { get; set; }
 
@@ -67,11 +70,16 @@ public class PlayerController : MonoBehaviour
     #region Drop Input & Coroutine
     public void OnDrop(InputAction.CallbackContext ctx)
     {
-        
-        StartCoroutine(Drop());
+        StartCoroutine("Drop");
     }
 
-     
+    public void StopCoroutines()
+    {
+        StopCoroutine("Drop");
+        _isDropped = false;
+    }
+
+
 
     private IEnumerator Drop()
     {
@@ -96,6 +104,7 @@ public class PlayerController : MonoBehaviour
                 for (float i = 0; i < 1.1f; i += 0.07f)
                 {
                     Position = Vector3.Lerp(startPosition, goalPosition, i);
+                    print("changing position of player " + Properties.PlayerNum);
                     yield return new WaitForSeconds(0.02f);
                 }
 

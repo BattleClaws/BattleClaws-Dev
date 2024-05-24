@@ -83,7 +83,6 @@ public class GameUtils : MonoBehaviour
     {
         var effect = _effects[Random.Range(0, _effects.Count)];
 
-        print(effect);
         EffectNotification(effect, user.Properties.PlayerNum);
         switch (effect)
         {
@@ -131,7 +130,6 @@ public class GameUtils : MonoBehaviour
         var systemMain = pSystem.GetComponent<ParticleSystem>().main;
         systemMain.startColor = zone.GetComponent<Renderer>().material.color + new Color(0,0,0,1);
         pSystem.GetComponent<ParticleSystem>().Play();
-        print("played");
     }
 
     private IEnumerator LockZoneInstance(GameObject zone)
