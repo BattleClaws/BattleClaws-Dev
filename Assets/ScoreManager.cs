@@ -16,6 +16,8 @@ public class ScoreManager : MonoBehaviour
     
     void GetFinalScores()
     {
+        var allPlayers = FindObjectsOfType<PlayerController>();
+        allPlayers.ToList().ForEach(player=> player.Properties.LegacyPoints +=  player.Properties.Points);
         var FinalScores = FindObjectsOfType<PlayerController>().OrderBy(p => p.Properties.LegacyPoints).Reverse();
 
         try

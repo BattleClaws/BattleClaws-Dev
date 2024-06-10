@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public bool isDrawPlayer;
     // Allows newly spawned claws to know their id
     public static int amountOfPlayers = 0;
+    public int sessionWins;
     
     
     // Properties
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     public Color PlayerColor { get; private set; }
     public int Speed { get; private set; }
     public int Points { get; set; }
-    public int LegacyPoints { get; private set; }
+    public int LegacyPoints { get; set; }
     public int Multiplier { get; private set; }
     public GameObject ScorePanel { get; private set; }
 

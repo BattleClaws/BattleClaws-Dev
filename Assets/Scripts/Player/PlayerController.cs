@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -212,10 +213,19 @@ public class PlayerController : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        StartCoroutine(Drop());
+        //StartCoroutine(Drop());
+        if (Properties.heldObject != Properties.gameObject)
+        {
+            DropCollectable();
+        }
+        _isDropped = false;
+        Properties.heldObject = Properties.gameObject;
     }
 
-
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     #endregion
     
@@ -228,7 +238,9 @@ public class PlayerController : MonoBehaviour
         _handle = transform.Find("AnchorPoint").gameObject;
         DontDestroyOnLoad(gameObject);
         Properties.Model.transform.position = _handle.transform.position - new Vector3(0, 1, 0);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    
 
     private void Update()
     {
