@@ -38,6 +38,7 @@ public class ModeSelection : MonoBehaviour
         }
         votesCount[optionName]++;
         statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
+        TallyVotes();
     }
 
     // Remove a vote for the specified option
@@ -46,24 +47,18 @@ public class ModeSelection : MonoBehaviour
         if (votesCount.ContainsKey(optionName))
         {
             votesCount[optionName]--;
-            if (votesCount[optionName] <= 0)
-            {
-                votesCount.Remove(optionName);
-            }
-        }
         
-      else  if (!votesCount.ContainsKey(optionName))
-      {
-          votesCount[optionName] = 0;
-      }
-        statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
+            statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
+        }
     }
+
+
 
     // Tally the votes and select the option if it has enough votes
     public void TallyVotes()
     {
         maximumVotesPossible = Player.amountOfPlayers;
-        votesRequiredToProceed = 3;
+        votesRequiredToProceed = 2;
         
             foreach (var option in votesCount)
             {
@@ -71,35 +66,20 @@ public class ModeSelection : MonoBehaviour
                 {
                     Debug.Log(option.Key + " Selected!");
                     selectedOption = option.Key;
-                    BeginStartCountdown();
+                    StartCoroutine(ApplySelection(selectedOption));
                 }
             }
         
     }
-
-    private void BeginStartCountdown()
-    {
-        statusText.text = "Starting Game";
-        loadingBarSlider.value = 0;
-        InvokeRepeating("FillSlider", 0.1f, 0.05f);
-
-    }
     
-    private void FillSlider()
+
+
+    private IEnumerator ApplySelection(string optionName)
     {
-        loadingBarSlider.value = Mathf.Clamp(loadingBarSlider.value + 1, loadingBarSlider.minValue, loadingBarSlider.maxValue);
-
-        if (loadingBarSlider.value >= loadingBarSlider.maxValue)
-        {
-            ApplySelection(selectedOption);
-            CancelInvoke("FillSlider");
-            loadingBarSlider.value = 0;
-        }
-    }
-
-
-    private void ApplySelection(string optionName)
-    {
+        statusText.text = "Option Selected:  " + optionName;
+         yield return new WaitForSeconds(1);
+         
+         
         switch (optionName)
         {
             case "Battle Mode":
