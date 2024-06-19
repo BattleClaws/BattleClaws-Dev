@@ -1,171 +1,154 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-
-
+using UnityEngine.UI;
 
 public class ModeSelection : MonoBehaviour
 {
-    private int votesForThisMode; 
-    private int possibleMaxVotes;
-    private int NumReqForMajority;
-    private Player playerCountScript; // attach logic  to get the active player count for determining max votes
-    public GameObject audioPrefab;
+    // Voting variables
+    private int maximumVotesPossible;
+    private int votesRequiredToProceed;
+    private Dictionary<string, int> votesCount = new Dictionary<string, int>(); // OptionName -> NumberOfVotes
+    private string selectedOption;
 
+    // Chosen custom values (based on voting outcomes)
+    private int customNumberOfRounds;
+    private int customRoundLength;
 
-    [SerializeField] private TextMeshProUGUI VoteDisplay; // text over the Mode Chute to indicate votes applied
-    [SerializeField] private TextMeshProUGUI StatusText; // the text at the top of the screen
-    [SerializeField] private GameObject SliderHolder; // the slider that controls the image fill for the logo
-    [SerializeField] private bool ModeSelected; // flag for if the majority have players have selected a mode or not 
-    [SerializeField] private string ModeNameString;
-    [SerializeField] private string ModeSceneToLoad;
-    [SerializeField] private int requiredPlayers;
+    //signposting variables
+    public Animator playerSelectAnim; // Assigned via the Unity Editor
+    public Slider loadingBarSlider;
+    public TextMeshProUGUI statusText;
 
-    public List<GameObject> ballsInMode;
-
-
-
-    private void Start()
+    void Start()
     {
-        UpdateTextDisplay();
-        SliderHolder.SetActive(false); // turn the slider off on start
+        statusText.text = "Vote for your Game Mode!";
+        Debug.Log(votesCount);
+
     }
 
-
-
-    void Update()
+    // Record a vote for the specified option
+    public void RecordVote(string optionName)
     {
-        if(ModeSelected) 
+        if (!votesCount.ContainsKey(optionName))
         {
-            SliderHolder.SetActive(true); 
-            ManageSlider();
-
-            //TO DO: fix this
-            ModeSelected = false; // DO NOT REMOVE! Or  update will trigger an invoke repeating every frame and you will explode. 
-          
+            votesCount[optionName] = 0; // Initialize count if not exists
         }
+        votesCount[optionName]++;
+        statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
     }
 
-    public void OnTriggerEnter(Collider other) 
-        
-        // when a collision occurs with the chute for the chosen mode, increase votes and check for majority
+    // Remove a vote for the specified option
+    public void RemoveVote(string optionName)
     {
-        if(other.CompareTag("Collectable"))
+        if (votesCount.ContainsKey(optionName))
         {
-            if (!ballsInMode.Contains(other.gameObject) && ModeNameString != "Coming Soon")
-            { 
-                ballsInMode.Add(other.gameObject);
-                AudioManager audioScript = audioPrefab.GetComponent<AudioManager>();
-                audioScript.playChosenClip("Score");
-
-                checkVotes();
-            }
-
-         
-
-            UpdateTextDisplay();
-        }
-    }
-
-    public void OnTriggerExit(Collider other) // if a player removes their vote, minus the vote and check to see if there is still a majority 
-    {
-        if (other.CompareTag("Collectable") && ModeNameString != "Coming Soon")
-        {
-            if (ballsInMode.Contains(other.gameObject))
+            votesCount[optionName]--;
+            if (votesCount[optionName] <= 0)
             {
-                ballsInMode.Remove(other.gameObject);
+                votesCount.Remove(optionName);
             }
-          
-          
-           checkVotes();
-           UpdateTextDisplay();
+        }
+        
+      else  if (!votesCount.ContainsKey(optionName))
+      {
+          votesCount[optionName] = 0;
+      }
+        statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
+    }
+
+    // Tally the votes and select the option if it has enough votes
+    public void TallyVotes()
+    {
+        maximumVotesPossible = Player.amountOfPlayers;
+        votesRequiredToProceed = 3;
+        
+            foreach (var option in votesCount)
+            {
+                if (option.Value >= votesRequiredToProceed)
+                {
+                    Debug.Log(option.Key + " Selected!");
+                    selectedOption = option.Key;
+                    BeginStartCountdown();
+                }
+            }
+        
+    }
+
+    private void BeginStartCountdown()
+    {
+        statusText.text = "Starting Game";
+        loadingBarSlider.value = 0;
+        InvokeRepeating("FillSlider", 0.1f, 0.05f);
+
+    }
+    
+    private void FillSlider()
+    {
+        loadingBarSlider.value = Mathf.Clamp(loadingBarSlider.value + 1, loadingBarSlider.minValue, loadingBarSlider.maxValue);
+
+        if (loadingBarSlider.value >= loadingBarSlider.maxValue)
+        {
+            ApplySelection(selectedOption);
+            CancelInvoke("FillSlider");
+            loadingBarSlider.value = 0;
         }
     }
 
-    public void checkVotes()
+
+    private void ApplySelection(string optionName)
     {
-        possibleMaxVotes = Player.amountOfPlayers; 
-        NumReqForMajority = possibleMaxVotes / 2 + 1;
-
-        votesForThisMode = ballsInMode.Count;
-
-        if(votesForThisMode >= NumReqForMajority) // if any given mode has enough votes for a majority 
+        switch (optionName)
         {
+            case "Battle Mode":
+                SceneManager.LoadScene("Round");
+                
+                break;
+
+            case "Custom Mode":
+                statusText.text = "CUSTOM MODE! Choose the number of rounds";
+                playerSelectAnim.SetTrigger("NumberOptions");
+                
+                break;
+
+            case "Custom 3 rounds":
+                customNumberOfRounds = 3;
+                playerSelectAnim.SetTrigger("LengthOptions");
+                statusText.text = " 3 ROUNDS! Choose the length of each round";
+                break;
+
+            case "Custom 5 rounds":
+                customNumberOfRounds = 5;
+                playerSelectAnim.SetTrigger("LengthOptions");
+                statusText.text = " 5 ROUNDS! Choose the length of each round";
+                break;
+
+            case "Custom 8 rounds":
+                customNumberOfRounds = 8;
+                statusText.text = " 8 ROUNDS! Choose the length of each round";
+                playerSelectAnim.SetTrigger("LengthOptions");
+                break;
+
+            case "Custom 30 seconds":
+                customRoundLength = 30;
+                statusText.text = "Starting Game! Rounds: " + customNumberOfRounds + " Length: " + customRoundLength;
+                break;
+
+            case "Custom 60 seconds":
+                customRoundLength = 60;
+                statusText.text = "Starting Game! Rounds: " + customNumberOfRounds + " Length: " + customRoundLength;
+                break;
+
+            case "Custom 90 seconds":
+                customRoundLength = 90;
+                statusText.text = "Starting Game! Rounds: " + customNumberOfRounds + " Length: " + customRoundLength;
+                break;
             
-            ModeSelected = true;
-            SliderHolder.SetActive(true); 
-            ManageSlider(); // update the slider value
-            UpdateTextDisplay();
-        } 
-     
-        else
-        {
-            ModeSelected=false; 
-            ManageSlider(); // reset the slider value 
-            UpdateTextDisplay();
+           
         }
+        
+        votesCount.Clear();
     }
-
-    public void ManageSlider()
-    {
-        Slider BeginningSlider = SliderHolder.GetComponent<Slider>();
-        if(ModeSelected && Player.amountOfPlayers >= requiredPlayers)
-        {
-            InvokeRepeating("FillSlider", 0.1f, 0.05f);
-        }
-
-        else if (!ModeSelected) // if a mode is not selected any more = stop filling the slider
-        {
-            UpdateTextDisplay();
-            CancelInvoke("FillSlider"); // stop filling the slider 
-            BeginningSlider.value = 0;
-            SliderHolder.SetActive(false); // turn the slider off again
-        }
-    }
-
-    public void FillSlider()
-    {
-        Slider BeginningSlider = SliderHolder.GetComponent<Slider>();
-        // Increase the slider value by 1 
-        float currentValue = BeginningSlider.value + 1;
-
-        // Clamp the value between the min and max values of the slider
-        currentValue = Mathf.Clamp(currentValue, BeginningSlider.minValue, BeginningSlider.maxValue);
-
-        // Update the slider value
-        BeginningSlider.value = currentValue;
-
-        if (BeginningSlider.value >= BeginningSlider.maxValue) // start the game with the selected mode when the slider is full 
-        {
-            SceneManager.LoadScene(ModeSceneToLoad);
-        }
-    }
-
-    public void UpdateTextDisplay()
-    {
-        if (ModeSelected && Player.amountOfPlayers < requiredPlayers && ModeNameString != "Coming Soon" )
-        {
-            StatusText.text = requiredPlayers + " or more Players required";
-        }
-        else if (ModeSelected && ModeNameString != "Coming Soon")
-        {
-            StatusText.text = "Starting " + ModeNameString + " ...";
-        }
-        else if (!ModeSelected && ModeNameString != "Coming Soon")
-        {
-            StatusText.text = "Choose your Game Mode";
-        }
-
-        else if (ModeNameString == "Coming Soon")
-        {
-            StatusText.text = "More Game Modes Coming Soon!";
-       
-        }
-    }
-
-  
 }
