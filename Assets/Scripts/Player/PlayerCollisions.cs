@@ -29,6 +29,18 @@ public class PlayerCollisions : MonoBehaviour
         {
             _controller.ResetPosition();
         }
+        
+        
 
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+        print("Exit Trigger: " + other.name);
+        if (other.CompareTag("SafeZone") && RoundManager.draw)
+        {
+            _controller.Explode();
+        }
     }
 }

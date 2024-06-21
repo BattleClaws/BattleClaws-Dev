@@ -9,6 +9,7 @@ TagManager:
   - DropZone
   - Constraint
   - Return
+  - SafeZone
   layers:
   - Default
   - TransparentFX

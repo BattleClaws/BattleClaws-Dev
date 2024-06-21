@@ -23,6 +23,8 @@ public class RoundManager : MonoBehaviour
     public GameType gameStyle;
     public int roundTime;
     public int roundAmount;
+
+    [Space] public GameObject CirclePlatform;
    
 
     public GameObject Timer { get; private set; }
@@ -49,7 +51,7 @@ public class RoundManager : MonoBehaviour
         print("Executing Scene Reload Sequence");
 
         Timer = GameObject.Find("Time");
-        secondsRemaining = (draw)? 15 : (gameStyle == GameType.Basic)? 30:roundTime;  //60 - (currentRoundNumber -1 * 10);
+        secondsRemaining = (draw)? 360 : (gameStyle == GameType.Basic)? 30:roundTime;  //60 - (currentRoundNumber -1 * 10);
         
         
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
@@ -61,28 +63,32 @@ public class RoundManager : MonoBehaviour
 
         StartCoroutine(SpawnBuffer(activePlayers));
 
-
-        switch (gameStyle)
+        if (!draw)
         {
-            case GameType.Basic:
-                if ((activePlayers.Count <=1) && currentRoundNumber > 1) SceneManager.LoadScene("EndGame");
-                
-                if (draw) 
-                {
-                    activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p._roundActive = false);
-                    activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p.Invisible(true));
-                }
-                break;
-            case GameType.BestOf:
-                if (currentRoundNumber > roundAmount) SceneManager.LoadScene("EndGame");
-                break;
+            switch (gameStyle)
+            {
+                case GameType.Basic:
+                    if ((activePlayers.Count <= 1) && currentRoundNumber > 1) SceneManager.LoadScene("EndGame");
+
+                    if (draw)
+                    {
+                        activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList()
+                            .ForEach(p => p._roundActive = false);
+                        activePlayers.Where(p => !p.Properties.isDrawPlayer).ToList().ForEach(p => p.Invisible(true));
+                    }
+
+                    break;
+                case GameType.BestOf:
+                    if (currentRoundNumber > roundAmount) SceneManager.LoadScene("EndGame");
+                    break;
+            }
+        }
+        else
+        {
+            StartCoroutine(PlatformReduction());
         }
     }
-
-    private void OnDisable()
-    {
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    
 
     private IEnumerator SpawnBuffer(List<PlayerController> active)
     {
@@ -99,11 +105,37 @@ public class RoundManager : MonoBehaviour
         InvokeRepeating(nameof(UpdateTimer), 1f, 1f);
     }
 
+    private IEnumerator PlatformReduction()
+    {
+        Vector3 scale = CirclePlatform.transform.localScale;
+        while (scale.x > 0.5f)
+        {
+            scale -= new Vector3(0.001f, 0, 0.001f);
+            yield return new WaitForSeconds(0.01f);
+            CirclePlatform.transform.localScale = scale;
+        }
+    }
+
     private void UpdateTimer()
     {
         secondsRemaining--;
         var formatTime = $"{Mathf.Floor(secondsRemaining / 60):0}:{secondsRemaining % 60:00}";
         Timer.GetComponent<TMP_Text>().text = formatTime;
+
+        if (draw)
+        {
+            var drawnPlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).Where(player => player.Properties.isDrawPlayer).Where(player => !player.Properties.eliminated).ToList();
+            print(drawnPlayers.Count + "  Found!");
+            if (drawnPlayers.Count <= 1)
+            {
+                if(drawnPlayers[0] != null)
+                    drawnPlayers[0].isWinningPlayer = true;
+                StartCoroutine(EndRoundDraw());
+                CancelInvoke(nameof(UpdateTimer));
+            }
+            
+            
+        }
 
         if (secondsRemaining <= 0)
         {
