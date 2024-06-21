@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class ModeSelection : MonoBehaviour
 {
+
+    public GameObject votingCollectable;
+    public Vector3 collectablesSpawnPoint; // respawning collectables also happens in the Killzone manager script 
+    
     // Voting variables
     private int maximumVotesPossible;
     private int votesRequiredToProceed;
@@ -71,6 +75,26 @@ public class ModeSelection : MonoBehaviour
             }
         
     }
+
+  
+    // Method to delete all objects with the tag "Collectable" in between selections
+    public IEnumerator DeleteCollectables()
+    {
+        GameObject[] collectables = GameObject.FindGameObjectsWithTag("Collectable");
+        foreach (GameObject votingObject in collectables)
+        {
+            Destroy(votingObject);
+        }
+
+        yield return new WaitForSeconds(1);
+
+        // Instantiate the deleted collectables with 0.5 seconds delay between each
+        for (int i = 0; i < 2; i++)
+        {
+            Instantiate(votingCollectable, collectablesSpawnPoint, Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
     
 
 
@@ -90,6 +114,7 @@ public class ModeSelection : MonoBehaviour
             case "Custom Mode":
                 statusText.text = "CUSTOM MODE! Choose the number of rounds";
                 playerSelectAnim.SetTrigger("NumberOptions");
+                StartCoroutine(DeleteCollectables());
                 
                 break;
 
@@ -97,18 +122,21 @@ public class ModeSelection : MonoBehaviour
                 customNumberOfRounds = 3;
                 playerSelectAnim.SetTrigger("LengthOptions");
                 statusText.text = " 3 ROUNDS! Choose the length of each round";
+                StartCoroutine(DeleteCollectables());
                 break;
 
             case "Custom 5 rounds":
                 customNumberOfRounds = 5;
                 playerSelectAnim.SetTrigger("LengthOptions");
                 statusText.text = " 5 ROUNDS! Choose the length of each round";
+                StartCoroutine(DeleteCollectables());
                 break;
 
             case "Custom 8 rounds":
                 customNumberOfRounds = 8;
                 statusText.text = " 8 ROUNDS! Choose the length of each round";
                 playerSelectAnim.SetTrigger("LengthOptions");
+                StartCoroutine(DeleteCollectables());
                 break;
 
             case "Custom 30 seconds":

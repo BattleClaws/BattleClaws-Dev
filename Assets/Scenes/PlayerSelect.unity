@@ -5768,6 +5768,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a886adbfe431634fbae7e1cdb7de346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  votingCollectable: {fileID: 6597764802383447042, guid: 1ccb288b6b17b2a4fb75a9de5fbd7de1, type: 3}
+  collectablesSpawnPoint: {x: 60, y: -55, z: 165}
   playerSelectAnim: {fileID: 2107528940}
   loadingBarSlider: {fileID: 1992654959}
   statusText: {fileID: 1695750912}
