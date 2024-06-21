@@ -41,7 +41,7 @@ public class ModeSelection : MonoBehaviour
             votesCount[optionName] = 0; // Initialize count if not exists
         }
         votesCount[optionName]++;
-        statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
+      //  statusText.text = "Votes for " + optionName + ": " + votesCount[optionName]; Used for Testing Purposes
         TallyVotes();
     }
 
@@ -51,9 +51,9 @@ public class ModeSelection : MonoBehaviour
         if (votesCount.ContainsKey(optionName))
         {
             votesCount[optionName]--;
-        
-            statusText.text = "Votes for " + optionName + ": " + votesCount[optionName];
+            
         }
+       // statusText.text = "Votes for " + optionName + ": " + votesCount[optionName]; Used for Testing Purposes
     }
 
 
@@ -100,7 +100,7 @@ public class ModeSelection : MonoBehaviour
 
     private IEnumerator ApplySelection(string optionName)
     {
-        statusText.text = "Option Selected:  " + optionName;
+        //statusText.text = "Option Selected:  " + optionName; Used for Testing Purposes
          yield return new WaitForSeconds(1);
          
          
@@ -112,7 +112,7 @@ public class ModeSelection : MonoBehaviour
                 break;
 
             case "Custom Mode":
-                statusText.text = "CUSTOM MODE! Choose the number of rounds";
+                statusText.text = "Choose the number of rounds";
                 playerSelectAnim.SetTrigger("NumberOptions");
                 StartCoroutine(DeleteCollectables());
                 
@@ -121,37 +121,37 @@ public class ModeSelection : MonoBehaviour
             case "Custom 3 rounds":
                 customNumberOfRounds = 3;
                 playerSelectAnim.SetTrigger("LengthOptions");
-                statusText.text = " 3 ROUNDS! Choose the length of each round";
+                statusText.text = "Choose the length of each round";
                 StartCoroutine(DeleteCollectables());
                 break;
 
             case "Custom 5 rounds":
                 customNumberOfRounds = 5;
                 playerSelectAnim.SetTrigger("LengthOptions");
-                statusText.text = " 5 ROUNDS! Choose the length of each round";
+                statusText.text = "Choose the length of each round";
                 StartCoroutine(DeleteCollectables());
                 break;
 
             case "Custom 8 rounds":
                 customNumberOfRounds = 8;
-                statusText.text = " 8 ROUNDS! Choose the length of each round";
+                statusText.text = "Choose the length of each round";
                 playerSelectAnim.SetTrigger("LengthOptions");
                 StartCoroutine(DeleteCollectables());
                 break;
 
             case "Custom 30 seconds":
                 customRoundLength = 30;
-                statusText.text = "Starting Game! Rounds: " + customNumberOfRounds + " Length: " + customRoundLength;
+                statusText.text = "Starting Custom Match!";
                 break;
 
             case "Custom 60 seconds":
                 customRoundLength = 60;
-                statusText.text = "Starting Game! Rounds: " + customNumberOfRounds + " Length: " + customRoundLength;
+                statusText.text = "Starting Custom Match!";
                 break;
 
             case "Custom 90 seconds":
                 customRoundLength = 90;
-                statusText.text = "Starting Game! Rounds: " + customNumberOfRounds + " Length: " + customRoundLength;
+                statusText.text = "Starting Custom Match!"; 
                 break;
             
            
