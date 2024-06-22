@@ -22,6 +22,7 @@ public class GameUtils : MonoBehaviour
     private static GameObject ScoreIndicator;
     private static GameObject EffectIndicator;
     private static GameObject DropParticles;
+    public static MenuManager menuManager;
 
     public static GameUtils instance;
 
@@ -48,6 +49,8 @@ public class GameUtils : MonoBehaviour
         _dropZoneSpawns = dropZoneSpawns;
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         Collectable.SetValue(100);
+
+        menuManager = GameObject.FindObjectOfType<MenuManager>();
 
         live = this;
     }

@@ -4003,7 +4003,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9214978199771648277}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnReset
+        m_MethodName: OnMenu
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4013,8 +4013,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: c92023cc-2735-4fb4-9874-6ea6582e020d
-    m_ActionName: Gameplay/Reset[/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth,/XInputControllerWindows2/buttonNorth,/XInputControllerWindows3/buttonNorth]
+    m_ActionId: e8bc682e-db51-474c-921f-24f05250a840
+    m_ActionName: Gameplay/Menu[/Keyboard/escape,/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9214978199771648277}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnBack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 236f0392-2793-45e0-807c-2912699ee9f8
+    m_ActionName: Gameplay/Back[/XInputControllerWindows/buttonEast,/Keyboard/b]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

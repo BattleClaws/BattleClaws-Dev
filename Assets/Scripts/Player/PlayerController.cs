@@ -66,6 +66,16 @@ public class PlayerController : MonoBehaviour
         ResetPosition();
     }
 
+    public void OnMenu(InputAction.CallbackContext ctx)
+    {
+        GameUtils.menuManager.SetVisibility(true);
+    }
+    
+    public void OnBack(InputAction.CallbackContext ctx)
+    {
+        GameUtils.menuManager.OnBackPressed();
+    }
+
     public void ResetPosition()
     {
         Position = GameUtils.RequestSpawnLocation(Properties.PlayerNum).position;
