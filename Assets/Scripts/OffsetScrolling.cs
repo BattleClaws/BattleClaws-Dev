@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class OffsetScrolling : MonoBehaviour
 {
-    public float scrollSpeed;
+    public float scrollSpeedX;
+    public float scrollSpeedY;
 
     private Renderer renderer;
     private Vector2 savedOffset;
@@ -14,8 +15,9 @@ public class OffsetScrolling : MonoBehaviour
     }
 
     void Update () {
-        float x = Mathf.Repeat (Time.time * scrollSpeed, 1);
-        Vector2 offset = new Vector2 (x, 0);
+        float x = Mathf.Repeat (Time.time * scrollSpeedX, 1);
+        float y = Mathf.Repeat (Time.time * scrollSpeedY, 1);
+        Vector2 offset = new Vector2 (x, y);
         renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
     }
 }
