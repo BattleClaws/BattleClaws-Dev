@@ -18,7 +18,7 @@ TagManager:
   - UI
   - Player
   - Collectables
-  - 
+  - OverlayUI
   - 
   - 
   - 
@@ -45,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 
+    uniqueID: 4104446381
     locked: 0
