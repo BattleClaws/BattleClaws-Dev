@@ -8,11 +8,18 @@ public class MenuLogic : MonoBehaviour
     // This script is tracking the player's selection of custom mode options.
     // It's handling both the number of rounds UI buttons and the timer length buttons in two different functions
     // so it can keep the relevant selection highlighted.
+    
+    //this script also contains the full screen option manager 
+    // fullScreenButtons[0]: This is the button for turning FullScreen ON.
+    //fullScreenButtons[1]: This is the button for turning FullScreen OFF.
 
     private int customTimerLength;
     private int customNumberOfRounds;
     public Button[] roundButtons; // Array of buttons for number of rounds
     public Button[] timerButtons; // Array of buttons for timer length
+
+    public Button[] fullScreenButtons; // Array of buttons for FullScreen (0: ON, 1: OFF)
+    private bool fullScreenActive;
 
     public Color defaultColor;
     public Color selectedColor;
@@ -35,6 +42,12 @@ public class MenuLogic : MonoBehaviour
             button.GetComponent<Image>().color = defaultColor;
         }
 
+       
+            fullScreenButtons[0].onClick.AddListener(() => SetFullScreen(true)); // ON button
+            fullScreenButtons[1].onClick.AddListener(() => SetFullScreen(false)); // OFF button
+            UpdateFullScreenButtons();
+        
+
         DefaultCustomOptions();
     }
 
@@ -44,7 +57,6 @@ public class MenuLogic : MonoBehaviour
         // This function gets called when the player clicks "Start" Button on the Custom Mode UI menu. 
         // apply settings
         // transition into player customization scene
-        
     }
 
     public void DefaultCustomOptions() // called on Start, sets Custom Mode Options to default
@@ -109,5 +121,28 @@ public class MenuLogic : MonoBehaviour
 
         // Update the selected button reference
         selectedTimerButton = clickedButton;
+    }
+
+   public void SetFullScreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
+        fullScreenActive = isFullScreen;
+        UpdateFullScreenButtons();
+    }
+
+    void UpdateFullScreenButtons()
+    {
+        if (fullScreenActive)
+        {
+            fullScreenButtons[0].GetComponent<Image>().color = selectedColor; // ON button is highlighted pink
+            fullScreenButtons[1].GetComponent<Image>().color = defaultColor; // OFF button is defaulted to grey
+        }
+        else
+        {
+            fullScreenButtons[0].GetComponent<Image>().color = defaultColor; // ON button // is defaulted to grey
+            fullScreenButtons[1].GetComponent<Image>().color = selectedColor; // OFF button // is highlighted pink
+        }
+        
+        Debug.Log("FullScreen Status " + fullScreenActive );
     }
 }
