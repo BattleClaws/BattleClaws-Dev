@@ -72,5 +72,11 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene(destinationSceneName);
     }
 
+    public void changeSceneViaUI(string sceneString)
+    {
+        destinationSceneName = sceneString;
+        StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+    }
+
    
 }
