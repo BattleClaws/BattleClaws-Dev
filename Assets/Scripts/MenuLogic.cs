@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,18 +14,24 @@ public class MenuLogic : MonoBehaviour
     // fullScreenButtons[0]: This is the button for turning FullScreen ON.
     //fullScreenButtons[1]: This is the button for turning FullScreen OFF.
 
+    // custom mode setting variables 
     private int customTimerLength;
     private int customNumberOfRounds;
+    
+    // button arrays (this is related to keeping the selected option highlighted pink 
     public Button[] roundButtons; // Array of buttons for number of rounds
     public Button[] timerButtons; // Array of buttons for timer length
-
     public Button[] fullScreenButtons; // Array of buttons for FullScreen (0: ON, 1: OFF)
     private bool fullScreenActive;
-
     public Color defaultColor;
     public Color selectedColor;
     private Button selectedRoundButton;
     private Button selectedTimerButton;
+    
+    // volume setting variables
+    public Slider volumeSlider;
+    private TextMeshProUGUI volumeText;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -41,11 +48,14 @@ public class MenuLogic : MonoBehaviour
             button.onClick.AddListener(() => OnTimerButtonClick(button));
             button.GetComponent<Image>().color = defaultColor;
         }
-
-       
+        
             fullScreenButtons[0].onClick.AddListener(() => SetFullScreen(true)); // ON button
             fullScreenButtons[1].onClick.AddListener(() => SetFullScreen(false)); // OFF button
             UpdateFullScreenButtons();
+            
+            // Initialize volume slider
+            volumeSlider.onValueChanged.AddListener(OnVolumeSliderChange);
+            volumeSlider.value = AudioListener.volume; // Set initial slider value to current audio volume
         
 
         DefaultCustomOptions();
@@ -145,4 +155,13 @@ public class MenuLogic : MonoBehaviour
         
         Debug.Log("FullScreen Status " + fullScreenActive );
     }
+    
+    public void OnVolumeSliderChange(float value)
+    {
+        AudioListener.volume = value;
+        volumeText = volumeSlider.GetComponentInChildren<TextMeshProUGUI>();
+        volumeText.text = value.ToString();
+        PlayerPrefs.SetFloat("Volume", value); // save the value to the PlayerPrefs;
+    }
+    
 }
