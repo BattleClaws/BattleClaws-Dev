@@ -10,6 +10,9 @@ public class MenuLogic : MonoBehaviour
     // It's handling both the number of rounds UI buttons and the timer length buttons in two different functions
     // so it can keep the relevant selection highlighted.
     
+    //This script also updates the textmeshPro with the current value of the slider when its changed (Volume, brightness, contrast)
+    //The logic for setting brightness and contrast needs to be linked to your existing work.
+    
     //this script also contains the full screen option manager 
     // fullScreenButtons[0]: This is the button for turning FullScreen ON.
     //fullScreenButtons[1]: This is the button for turning FullScreen OFF.
@@ -159,9 +162,13 @@ public class MenuLogic : MonoBehaviour
     public void OnVolumeSliderChange(float value)
     {
         AudioListener.volume = value;
-        volumeText = volumeSlider.GetComponentInChildren<TextMeshProUGUI>();
-        volumeText.text = value.ToString();
         PlayerPrefs.SetFloat("Volume", value); // save the value to the PlayerPrefs;
+        UpdateSliderText(volumeSlider);
     }
-    
+
+    public void UpdateSliderText(Slider currentSlider)
+    {
+        TextMeshProUGUI sliderText = currentSlider.GetComponentInChildren<TextMeshProUGUI>();
+        sliderText.text = currentSlider.value.ToString();
+    }
 }
