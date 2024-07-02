@@ -34,6 +34,7 @@ public class MenuLogic : MonoBehaviour
     // volume setting variables
     public Slider volumeSlider;
     private TextMeshProUGUI volumeText;
+    private const float maxVolume = 0.8f; // Max volume cap
     
 
     // Start is called before the first frame update
@@ -57,8 +58,10 @@ public class MenuLogic : MonoBehaviour
             UpdateFullScreenButtons();
             
             // Initialize volume slider
+            float savedVolume = PlayerPrefs.GetFloat("Volume"); // Get saved volume 
             volumeSlider.onValueChanged.AddListener(OnVolumeSliderChange);
-            volumeSlider.value = AudioListener.volume; // Set initial slider value to current audio volume
+            volumeSlider.value = savedVolume; // Set initial slider value to saved volume
+            AudioListener.volume = savedVolume; // Set initial audio volume to saved volume
         
 
         DefaultCustomOptions();
@@ -161,8 +164,9 @@ public class MenuLogic : MonoBehaviour
     
     public void OnVolumeSliderChange(float value)
     {
+        value = Mathf.Clamp(value, 0f, maxVolume); // Clamp volume value
         AudioListener.volume = value;
-        PlayerPrefs.SetFloat("Volume", value); // save the value to the PlayerPrefs;
+        PlayerPrefs.SetFloat("Volume", value); // Save the clamped value to the PlayerPrefs
         UpdateSliderText(volumeSlider);
     }
 
