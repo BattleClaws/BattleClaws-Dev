@@ -34,7 +34,6 @@ public class MenuLogic : MonoBehaviour
     // volume setting variables
     public Slider volumeSlider;
     private TextMeshProUGUI volumeText;
- //  private const float maxVolume = 0.8f; // Max volume cap
     
 
     // Start is called before the first frame update
@@ -112,7 +111,7 @@ public class MenuLogic : MonoBehaviour
             customTimerLength = buttonValue;
         }
 
-        Debug.Log("Rounds: " + customNumberOfRounds + " Timer Length: " + customTimerLength); // For testing
+       // Debug.Log("Rounds: " + customNumberOfRounds + " Timer Length: " + customTimerLength); For testing
     }
 
     void OnRoundButtonClick(Button clickedButton)
@@ -165,7 +164,7 @@ public class MenuLogic : MonoBehaviour
             fullScreenButtons[1].GetComponent<Image>().color = selectedColor; // OFF button // is highlighted pink
         }
         
-        Debug.Log("FullScreen Status " + fullScreenActive );
+        //Debug.Log("FullScreen Status " + fullScreenActive ); for testing
     }
     
     public void OnVolumeSliderChange()
@@ -187,6 +186,6 @@ public class MenuLogic : MonoBehaviour
     {
         TextMeshProUGUI sliderText = currentSlider.GetComponentInChildren<TextMeshProUGUI>();
         float volumePercentage = Mathf.Round(currentSlider.value * 100); // Convert to percentage
-        sliderText.text = volumePercentage.ToString("F0") + "%"; // Display as whole number percentage
+        sliderText.text = volumePercentage.ToString("F0"); // Display as whole number
     }
 }
