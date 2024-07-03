@@ -34,7 +34,7 @@ public class MenuLogic : MonoBehaviour
     // volume setting variables
     public Slider volumeSlider;
     private TextMeshProUGUI volumeText;
-    private const float maxVolume = 0.8f; // Max volume cap
+ //  private const float maxVolume = 0.8f; // Max volume cap
     
 
     // Start is called before the first frame update
@@ -58,11 +58,17 @@ public class MenuLogic : MonoBehaviour
             UpdateFullScreenButtons();
             
             // Initialize volume slider
-            float savedVolume = PlayerPrefs.GetFloat("Volume"); // Get saved volume 
-            volumeSlider.onValueChanged.AddListener(OnVolumeSliderChange);
-            volumeSlider.value = savedVolume; // Set initial slider value to saved volume
-            AudioListener.volume = savedVolume; // Set initial audio volume to saved volume
-        
+            if (!PlayerPrefs.HasKey("Volume"))
+            {
+                PlayerPrefs.SetFloat("Volume", 1);
+                LoadVolume();
+            }
+
+            else
+            {
+
+                LoadVolume();
+            }
 
         DefaultCustomOptions();
     }
@@ -162,17 +168,25 @@ public class MenuLogic : MonoBehaviour
         Debug.Log("FullScreen Status " + fullScreenActive );
     }
     
-    public void OnVolumeSliderChange(float value)
+    public void OnVolumeSliderChange()
     {
-        value = Mathf.Clamp(value, 0f, maxVolume); // Clamp volume value
-        AudioListener.volume = value;
-        PlayerPrefs.SetFloat("Volume", value); // Save the clamped value to the PlayerPrefs
+        float Slidervalue = volumeSlider.value;
+        AudioListener.volume = Slidervalue;
+        UpdateSliderText(volumeSlider);
+        PlayerPrefs.SetFloat("Volume", Slidervalue);
+    }
+
+    public void LoadVolume()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        AudioListener.volume = volumeSlider.value;
         UpdateSliderText(volumeSlider);
     }
 
     public void UpdateSliderText(Slider currentSlider)
     {
         TextMeshProUGUI sliderText = currentSlider.GetComponentInChildren<TextMeshProUGUI>();
-        sliderText.text = currentSlider.value.ToString();
+        float volumePercentage = Mathf.Round(currentSlider.value * 100); // Convert to percentage
+        sliderText.text = volumePercentage.ToString("F0") + "%"; // Display as whole number percentage
     }
 }
