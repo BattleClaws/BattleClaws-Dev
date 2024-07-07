@@ -20,7 +20,7 @@ public class RoundManager : MonoBehaviour
     private GameObject endRoundPanel;
     public static bool draw = false;
 
-    public GameType gameStyle;
+    public static GameType gameStyle;
     public int roundTime;
     public int roundAmount;
 
@@ -51,7 +51,7 @@ public class RoundManager : MonoBehaviour
         print("Executing Scene Reload Sequence");
 
         Timer = GameObject.Find("Time");
-        secondsRemaining = (draw)? 360 : (gameStyle == GameType.Basic)? 30:roundTime;  //60 - (currentRoundNumber -1 * 10);
+        secondsRemaining = (draw)? 360 : (gameStyle == GameType.Basic)? roundTime:30;  //60 - (currentRoundNumber -1 * 10);
         
         
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)
@@ -192,14 +192,15 @@ public class RoundManager : MonoBehaviour
                 else
                 {
                     var playerToElim = lowestScoring[0];
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.2f);
                     yield return ZoomToPlayer(playerToElim);
             
-                    var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
+                    GameUtils.instance.AnnounceEliminatedPlayer(playerToElim.Properties.PlayerNum);
+                    /*var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
                     noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "Eliminated";
-                    noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Player " + playerToElim.Properties.PlayerNum;
+                    noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "Player " + playerToElim.Properties.PlayerNum;*/
         
-                    yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(5f);
                     playerToElim.Eliminate();
                     draw = false;
                     activePlayers.ForEach(player => player.Properties.isDrawPlayer = false);

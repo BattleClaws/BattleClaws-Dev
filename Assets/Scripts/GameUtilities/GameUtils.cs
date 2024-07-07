@@ -23,6 +23,7 @@ public class GameUtils : MonoBehaviour
     private static GameObject EffectIndicator;
     private static GameObject DropParticles;
     public static MenuManager menuManager;
+    public BannerHandler eliminationAnnouncer;
     public UIScoreManager uIScoreManager;
 
     public static GameUtils instance;
@@ -51,10 +52,16 @@ public class GameUtils : MonoBehaviour
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         Collectable.SetValue(100);
         uIScoreManager = GameObject.FindObjectOfType<UIScoreManager>();
+        eliminationAnnouncer = FindObjectOfType<BannerHandler>();
 
         menuManager = GameObject.FindObjectOfType<MenuManager>();
 
         live = this;
+    }
+
+    public void AnnounceEliminatedPlayer(int playerNum)
+    {
+        eliminationAnnouncer.EliminationAnnounce(playerNum);
     }
 
     public void SetMenuVisibility(bool isOn)
