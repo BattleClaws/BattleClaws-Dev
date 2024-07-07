@@ -22,9 +22,9 @@ public class Player : MonoBehaviour
     public int Points { get; set; }
     public int LegacyPoints { get; set; }
     public int Multiplier { get; private set; }
-    public GameObject ScorePanel { get; private set; }
+    //public GameObject ScorePanel { get; private set; }
 
-    public TMP_Text ScoreDisplay { get; set; }
+    //public TMP_Text ScoreDisplay { get; set; }
 
     public GameObject CamAnchor { get; set; }
 
@@ -116,7 +116,9 @@ public class Player : MonoBehaviour
 
     private void SpawnPointstracker()
     {
-        var scorePrefab = Resources.Load<GameObject>("Prefabs/Score");
+        GameUtils.instance.SendScoreToUI(PlayerNum, Points);
+        
+        /*var scorePrefab = Resources.Load<GameObject>("Prefabs/Score");
         ScorePanel = Instantiate(scorePrefab, GameUtils.UICanvas.transform);
         ScoreDisplay = ScorePanel.transform.Find("Score").GetComponent<TMP_Text>();
 
@@ -124,7 +126,7 @@ public class Player : MonoBehaviour
 
         var _PlayerNumDisplay = ScorePanel.transform.Find("Player").GetComponent<TMP_Text>();
         _PlayerNumDisplay.text = PlayerNum.ToString();
-        _PlayerNumDisplay.color = playerColours[PlayerNum - 1];
+        _PlayerNumDisplay.color = playerColours[PlayerNum - 1];*/
     }
 
     public IEnumerator SpeedEffect(int amount, float length, bool colorEffect)
@@ -165,7 +167,7 @@ public class Player : MonoBehaviour
 
     private void UpdateScoreDisplay()
     {
-        ScoreDisplay.text = Points.ToString().PadLeft(6, '0');
+        GameUtils.instance.SendScoreToUI(PlayerNum, Points);
     }
 
     public void RoundReset()
