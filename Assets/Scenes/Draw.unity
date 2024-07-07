@@ -1325,7 +1325,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 574601679}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 3
+    m_Bits: 8
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -56831,6 +56831,7 @@ MonoBehaviour:
   - {fileID: 1147294739}
   - {fileID: 1715442199}
   - {fileID: 426650415}
+  uIScoreManager: {fileID: 0}
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns:
   - {fileID: 0}

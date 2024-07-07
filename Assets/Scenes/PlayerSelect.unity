@@ -3938,7 +3938,7 @@ AudioSource:
   m_GameObject: {fileID: 1042498082}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 6285669fc562f06428ebbc78c9c34c69, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -5738,6 +5738,7 @@ MonoBehaviour:
   - {fileID: 575246850}
   - {fileID: 1983729006}
   - {fileID: 625456261}
+  uIScoreManager: {fileID: 0}
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns: []
 --- !u!4 &1544270564

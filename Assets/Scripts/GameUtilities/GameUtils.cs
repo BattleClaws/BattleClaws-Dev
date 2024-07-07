@@ -56,7 +56,12 @@ public class GameUtils : MonoBehaviour
 
         live = this;
     }
-    
+
+    public void SetMenuVisibility(bool isOn)
+    {
+        menuManager.SetVisibility(isOn);
+    }
+
     private void Start()
     {
         if (instance == null)
