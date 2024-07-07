@@ -4706,7 +4706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25724722bcc2f549a0d87d2c6abf5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameStyle: 1
+  gameStyle: 0
   roundTime: 10
   roundAmount: 3
 --- !u!1 &1406114688
