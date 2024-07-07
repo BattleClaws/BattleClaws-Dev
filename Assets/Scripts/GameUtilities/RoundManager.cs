@@ -35,6 +35,9 @@ public class RoundManager : MonoBehaviour
         StartCoroutine(GameUtils.live.OpenedScene());
         //SceneManager.sceneLoaded += OnSceneLoaded;
 
+        roundTime = PlayerPrefs.GetInt("RTime");
+        roundAmount = PlayerPrefs.GetInt("RAmount");
+
         // Accounts for SceneManager.sceneLoaded event not being set on first run
         if (currentRoundNumber == 0 || (!draw && SceneManager.GetActiveScene().name == "Round"))
         {
@@ -118,6 +121,11 @@ public class RoundManager : MonoBehaviour
 
     private void UpdateTimer()
     {
+        if (GameUtils.isMenuOpen)
+        {
+            return;
+        }
+
         secondsRemaining--;
         var formatTime = $"{Mathf.Floor(secondsRemaining / 60):0}:{secondsRemaining % 60:00}";
         Timer.GetComponent<TMP_Text>().text = formatTime;
@@ -216,12 +224,13 @@ public class RoundManager : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     yield return ZoomToPlayer(highestScoring[0]);
 
-                    var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
+                    GameUtils.instance.AnnounceEliminatedPlayer(highestScoring[0].Properties.PlayerNum);
+                    /*var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
                     noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "Round Winner!";
                     noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text =
-                        "Player " + highestScoring[0].Properties.PlayerNum;
+                        "Player " + highestScoring[0].Properties.PlayerNum;*/
                     highestScoring[0].Properties.sessionWins++;
-                    yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(5f);
 
                     draw = false;
                     StartCoroutine(GameUtils.live.ChangeScene("Round"));

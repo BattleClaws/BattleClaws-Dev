@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
@@ -27,6 +30,8 @@ public class MenuManager : MonoBehaviour
     public TMP_Text textSliderLabel;
     public TMP_Text contrastSliderLabel;
     public TMP_Text brightnessSliderLabel;
+
+    private GameObject previousHighlightedItem;
 
     [Header("Misc.")] public GameObject currentScreen;
     
@@ -52,9 +57,19 @@ public class MenuManager : MonoBehaviour
 
     public void SetVisibility(bool value)
     {
+        GameUtils.isMenuOpen = value;
         if (Base.activeSelf == value)
             return;
-        
+
+        if (value)
+        {
+            previousHighlightedItem = EventSystem.current.currentSelectedGameObject;
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(previousHighlightedItem);
+        }
+
         if (Base.activeSelf)
         {
             audioSettings.SetActive(false);
@@ -95,5 +110,7 @@ public class MenuManager : MonoBehaviour
     {
         Screen.fullScreen = isOn;
     }
-
+    
+    
+    
 }

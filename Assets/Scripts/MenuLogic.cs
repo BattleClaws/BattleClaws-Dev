@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuLogic : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class MenuLogic : MonoBehaviour
     public Color selectedColor;
     private Button selectedRoundButton;
     private Button selectedTimerButton;
+    public GameObject firstOptionCustom;
     
     // volume setting variables
     public Slider volumeSlider;
@@ -72,12 +74,28 @@ public class MenuLogic : MonoBehaviour
         DefaultCustomOptions();
     }
 
+    public void SetDefaults()
+    {
+        PlayerPrefs.SetInt("RTime", 45);
+        //PlayerPrefs.SetInt("RAmount", customNumberOfRounds);
+        RoundManager.gameStyle = GameType.Basic;
+    }
+
+    public void SetCustomActive()
+    {
+        EventSystem.current.SetSelectedGameObject(firstOptionCustom);
+    }
+
     public void ApplySelectionsAndProceed()
     {
         // Jess! use this function to apply the player's selections to the Round Management logic. 
         // This function gets called when the player clicks "Start" Button on the Custom Mode UI menu. 
         // apply settings
         // transition into player customization scene
+        
+        PlayerPrefs.SetInt("RTime", customTimerLength);
+        PlayerPrefs.SetInt("RAmount", customNumberOfRounds);
+        RoundManager.gameStyle = GameType.BestOf;
     }
 
     public void DefaultCustomOptions() // called on Start, sets Custom Mode Options to default

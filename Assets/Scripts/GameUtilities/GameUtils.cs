@@ -27,7 +27,7 @@ public class GameUtils : MonoBehaviour
     public UIScoreManager uIScoreManager;
 
     public static GameUtils instance;
-
+    public static bool isMenuOpen;
     public static GameUtils live;
     
 
