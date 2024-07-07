@@ -66,6 +66,16 @@ public class PlayerController : MonoBehaviour
         ResetPosition();
     }
 
+    public void OnMenu(InputAction.CallbackContext ctx)
+    {
+        GameUtils.menuManager.SetVisibility(true);
+    }
+    
+    public void OnBack(InputAction.CallbackContext ctx)
+    {
+        GameUtils.menuManager.OnBackPressed();
+    }
+
     public void ResetPosition()
     {
         Position = GameUtils.RequestSpawnLocation(Properties.PlayerNum).position;
@@ -84,6 +94,8 @@ public class PlayerController : MonoBehaviour
         StopCoroutine("Drop");
         _isDropped = false;
     }
+
+
 
 
 
@@ -210,6 +222,16 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Utils
+    
+    public void Explode()
+    {
+        var explosionPrefab = Resources.Load<GameObject>("Prefabs/Explosion");
+
+        var newExplosion = Instantiate(explosionPrefab, Position, Quaternion.identity);
+        newExplosion.GetComponent<ParticleSystem>().Play();
+        
+        Eliminate();
+    }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

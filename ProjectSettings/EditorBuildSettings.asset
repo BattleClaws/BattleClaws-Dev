@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/InitNonPerishables.unity
+    guid: abca1b6c89bc0f7498cb07c4dce7bc4d
+  - enabled: 1
     path: Assets/Scenes/Splash.unity
     guid: d06a72b0e6ebc472caf77aa0e1089f94
   - enabled: 1

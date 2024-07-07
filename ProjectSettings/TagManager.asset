@@ -9,11 +9,12 @@ TagManager:
   - DropZone
   - Constraint
   - Return
+  - SafeZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Settings
   - Water
   - UI
   - Player

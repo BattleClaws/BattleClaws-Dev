@@ -22,6 +22,8 @@ public class GameUtils : MonoBehaviour
     private static GameObject ScoreIndicator;
     private static GameObject EffectIndicator;
     private static GameObject DropParticles;
+    public static MenuManager menuManager;
+    public UIScoreManager uIScoreManager;
 
     public static GameUtils instance;
 
@@ -48,6 +50,9 @@ public class GameUtils : MonoBehaviour
         _dropZoneSpawns = dropZoneSpawns;
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         Collectable.SetValue(100);
+        uIScoreManager = GameObject.FindObjectOfType<UIScoreManager>();
+
+        menuManager = GameObject.FindObjectOfType<MenuManager>();
 
         live = this;
     }
@@ -90,6 +95,11 @@ public class GameUtils : MonoBehaviour
         Vector3 randomLoc = Random.insideUnitCircle;
         randomLoc = new Vector3(randomLoc.x, -1.3f, randomLoc.y) * 5;
         Instantiate(collectable, randomLoc, Quaternion.identity);
+    }
+
+    public void SendScoreToUI(int playerNum, int score)
+    {
+        uIScoreManager.InjectScore(playerNum, score);
     }
 
     public static void SpecialAction(PlayerController user)
