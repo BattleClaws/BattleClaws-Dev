@@ -1121,6 +1121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Custom  Dropzone '
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1364974133809703462, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1417,6 +1421,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2469ab168c795c1429c8dece124fd0e0, type: 3}
       propertyPath: m_Name
       value: PlayerSelect Arena
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2469ab168c795c1429c8dece124fd0e0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4275637848283909027, guid: 2469ab168c795c1429c8dece124fd0e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3665,7 +3673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.820001
+      value: -0.409
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3722,6 +3730,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
       propertyPath: m_Name
       value: Elimination Dropzone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1364974133809703462, guid: a9e4792edbb4de5489af82875c9029e0, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5799,6 +5811,8 @@ MonoBehaviour:
   - {fileID: 575246850}
   - {fileID: 1983729006}
   - {fileID: 625456261}
+  eliminationAnnouncer: {fileID: 0}
+  genericAnnouncement: {fileID: 0}
   uIScoreManager: {fileID: 0}
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns: []
@@ -5918,6 +5932,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548153667}
   m_Mesh: {fileID: 6244854566930169998, guid: 0095428696c65ca4e9884ca9b089b1e1, type: 3}
+--- !u!1001 &1553337203
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.32
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.32
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.32
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 59.12927
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -54.582455
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 160.43
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_Name
+      value: arenaPregame
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fe885c0e41f7de4e8fe5747d820488d, type: 3}
 --- !u!1 &1583714962
 GameObject:
   m_ObjectHideFlags: 0
@@ -7074,7 +7165,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Battle Mode
+  m_text: Begin
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 58768ab4d5f2faa428a65aa021ab67b7, type: 2}
   m_sharedMaterial: {fileID: -973849912930560469, guid: 58768ab4d5f2faa428a65aa021ab67b7, type: 2}
@@ -8378,3 +8469,4 @@ SceneRoots:
   - {fileID: 1544270564}
   - {fileID: 172450964}
   - {fileID: 2067203730}
+  - {fileID: 1553337203}

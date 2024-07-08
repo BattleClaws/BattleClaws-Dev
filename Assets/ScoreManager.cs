@@ -22,7 +22,16 @@ public class ScoreManager : MonoBehaviour
 
         try
         {
-            var Winner = FindObjectsOfType<PlayerController>().First(p => !p.Properties.eliminated);
+            PlayerController Winner;
+            if (RoundManager.gameStyle == GameType.BestOf)
+            {
+                Winner = FindObjectsOfType<PlayerController>().OrderBy(x => x.Properties.sessionWins).Last();
+            }
+            else
+            {
+                Winner = FindObjectsOfType<PlayerController>().First(p => !p.Properties.eliminated);
+            }
+            
             GameObject.Find("Winner").GetComponent<TMP_Text>().text = "PLAYER" + Winner.Properties.PlayerNum;
         }
         catch (Exception e)

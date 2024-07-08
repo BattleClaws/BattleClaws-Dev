@@ -183,11 +183,10 @@ public class RoundManager : MonoBehaviour
                 if (lowestScoring.Count > 1)
                 {
                     yield return new WaitForSeconds(1f);
-                    var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
-                    noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "DRAW!";
                     var drawingPlayers = "| ";
                     lowestScoring.ForEach(x=> drawingPlayers += "Player " + x.Properties.PlayerNum + " | ");
-                    noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = drawingPlayers;
+
+                    GameUtils.instance.GenericAnnouncement(drawingPlayers, "DRAW!");
                     yield return new WaitForSeconds(2f);
 
             
@@ -237,12 +236,11 @@ public class RoundManager : MonoBehaviour
                 }
                 else
                 {
-                    var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
-                    noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "DRAW!";
-                    var drawingPlayers = "| ";
-                    highestScoring.ForEach(x=> drawingPlayers += "Player " + x.Properties.PlayerNum + " | ");
                     highestScoring.ForEach(x => x.Properties.sessionWins++);
-                    noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = drawingPlayers;
+                    var drawingPlayers = "| ";
+                    lowestScoring.ForEach(x=> drawingPlayers += "Player " + x.Properties.PlayerNum + " | ");
+
+                    GameUtils.instance.GenericAnnouncement(drawingPlayers, "DRAW!");
                     yield return new WaitForSeconds(2f);
                     
                     draw = false;
@@ -300,9 +298,8 @@ public class RoundManager : MonoBehaviour
         drawnPlayers.ForEach(player => print(player.Properties.PlayerNum + " |  eliminated" ));
 
         yield return new WaitForSeconds(1f);
-        var noticeInstance = Instantiate(NoticePrefab, GameUtils.UICanvas.transform);
-        noticeInstance.transform.GetChild(0).GetComponent<TMP_Text>().text = "ROUND END!";
-        noticeInstance.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = (winningPlayer == null)? "NO WINNER":"Winner: Player " + winningPlayer.Properties.PlayerNum;
+        
+        GameUtils.instance.AnnounceEliminatedPlayer(winningPlayer.Properties.PlayerNum);
         yield return new WaitForSeconds(2f);
         drawnPlayers.ForEach(player => player.Eliminate());
         draw = false;

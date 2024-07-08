@@ -24,6 +24,7 @@ public class GameUtils : MonoBehaviour
     private static GameObject DropParticles;
     public static MenuManager menuManager;
     public BannerHandler eliminationAnnouncer;
+    public GenericAnnoucementHandler genericAnnouncement;
     public UIScoreManager uIScoreManager;
 
     public static GameUtils instance;
@@ -53,6 +54,7 @@ public class GameUtils : MonoBehaviour
         Collectable.SetValue(100);
         uIScoreManager = GameObject.FindObjectOfType<UIScoreManager>();
         eliminationAnnouncer = FindObjectOfType<BannerHandler>();
+        genericAnnouncement = FindObjectOfType<GenericAnnoucementHandler>();
 
         menuManager = GameObject.FindObjectOfType<MenuManager>();
 
@@ -62,6 +64,11 @@ public class GameUtils : MonoBehaviour
     public void AnnounceEliminatedPlayer(int playerNum)
     {
         eliminationAnnouncer.EliminationAnnounce(playerNum);
+    }
+
+    public void GenericAnnouncement(string line1, string line2)
+    {
+        genericAnnouncement.StartAnnounce(line1, line2);
     }
 
     public void SetMenuVisibility(bool isOn)
