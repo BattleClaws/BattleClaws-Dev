@@ -11476,6 +11476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colors: []
   PlayerSpawns: []
+  eliminationAnnouncer: {fileID: 0}
   uIScoreManager: {fileID: 0}
   zoneScale: {x: 0, y: 0, z: 0}
   dropZoneSpawns: []

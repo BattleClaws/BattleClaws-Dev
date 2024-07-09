@@ -15,7 +15,7 @@ public class HighScoreUI : MonoBehaviour
         LeanTween.moveX( winnerHeader, 400, 2f).setEase( LeanTweenType.easeInQuad ).setDelay(4.5f).setEase( LeanTweenType.easeInOutBack );
         
         // the winning player text 
-        LeanTween.moveX( winnerText, 560, 1.5f).setEase( LeanTweenType.easeInQuad ).setDelay(5f).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.moveX( winnerText, 560, 1.5f).setEase( LeanTweenType.easeInQuad ).setDelay(5f).setEase( LeanTweenType.easeInOutBack);
         LeanTween.scaleY(winnerText,3f,1.4f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
         LeanTween.scaleX(winnerText,3f,1.2f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
         LeanTween.scaleZ(winnerText,3f,1.2f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
@@ -28,6 +28,8 @@ public class HighScoreUI : MonoBehaviour
         LeanTween.scaleY(scoresText,1.2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(4f).setEase( LeanTweenType.easeInOutBack );
         LeanTween.scaleX(scoresText,1.2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(4f).setEase( LeanTweenType.easeInOutBack );
         LeanTween.scaleZ(scoresText,1.2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(4f).setEase( LeanTweenType.easeInOutBack );
+        
+      
     }
     
     
