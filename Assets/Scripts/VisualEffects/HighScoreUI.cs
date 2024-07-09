@@ -24,10 +24,10 @@ public class HighScoreUI : MonoBehaviour
         LeanTween.moveX(finalScoresSubHeader, 1415, 1.3f).setEase( LeanTweenType.easeInQuad ).setDelay(2f).setEase( LeanTweenType.easeInOutBack );
         
         //finalScores Text
-        LeanTween.moveY(scoresText, 330, 1.5f).setEase( LeanTweenType.easeInQuad ).setDelay(3f).setEase( LeanTweenType.easeInOutBack );
-        LeanTween.scaleY(winnerText,2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(5f).setEase( LeanTweenType.easeInOutBack );
-        LeanTween.scaleX(winnerText,2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(5f).setEase( LeanTweenType.easeInOutBack );
-        LeanTween.scaleZ(winnerText,2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(5f).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.moveY(scoresText, 300, 1.5f).setEase( LeanTweenType.easeInQuad ).setDelay(3f).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.scaleY(scoresText,1.2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(4f).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.scaleX(scoresText,1.2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(4f).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.scaleZ(scoresText,1.2f,1f).setEase( LeanTweenType.easeInQuad ).setDelay(4f).setEase( LeanTweenType.easeInOutBack );
     }
     
     
