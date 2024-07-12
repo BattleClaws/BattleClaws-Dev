@@ -37,7 +37,7 @@ public class PlayerCollisions : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         
-        print("Exit Trigger: " + other.name);
+        //print("Exit Trigger: " + other.name);
         if (other.CompareTag("SafeZone") && RoundManager.draw)
         {
             _controller.Explode();

@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     private void PlayerSetup()
     {
         _controller.Position = GameUtils.RequestSpawnLocation(PlayerNum).position;
-        print("Position: " + GameUtils.RequestSpawnLocation(PlayerNum).position);
+        //print("Position: " + GameUtils.RequestSpawnLocation(PlayerNum).position);
         //StartCoroutine(DoubleSetPosition());
 
         TMP_Text playerNum = transform.GetComponentInChildren<TMP_Text>(true);

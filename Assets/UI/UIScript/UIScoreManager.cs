@@ -39,7 +39,7 @@ public class UIScoreManager : MonoBehaviour
 
     public void InjectScore(int playerNum, int score)
     {
-        print("Score Injected!");
+        //print("Score Injected!");
         var tempscores = PlayersScores;
 
         if (tempscores.ContainsKey(playerNum))
@@ -67,7 +67,7 @@ public class UIScoreManager : MonoBehaviour
             }
         }
 
-        print("Lowest Score " + low);
+        //print("Lowest Score " + low);
         return low;
     }
     
@@ -82,19 +82,19 @@ public class UIScoreManager : MonoBehaviour
                 high = entry.Value;
             }
         }
-        print("Highest Score: " + high);
+        //print("Highest Score: " + high);
         return high;
     }
 
     private void UpdatePlayerUI()
     {
-        print("Updating player UI!");
+        //print("Updating player UI!");
         for (int i = 0; i < uiCorners.Length + 1; i++)
         {
             
             if (PlayersScores.ContainsKey(i+1))
             {
-                print("Setting player Active: " + i);
+                //print("Setting player Active: " + i);
                 uiCorners[i].SetActive(true);
             }
         }

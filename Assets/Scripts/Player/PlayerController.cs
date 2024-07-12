@@ -107,7 +107,20 @@ public class PlayerController : MonoBehaviour
             if (Properties.heldObject != Properties.gameObject)
             {
                 Properties.Animator.SetTrigger("Open");
-                DropCollectable();
+                try
+                {
+                    // Have a try here for the instance that the collectable has been deleted while the player was
+                    // holding it. Without the try/catch it will error out and freeze the claw. With this, even if the
+                    // drop fails, the claw will not have any issues.
+                    DropCollectable();
+                }
+                catch (Exception e)
+                {
+                    //empty
+                }
+                
+                Properties.heldObject = Properties.gameObject;
+                
                 yield return new WaitForSeconds(0.5f);
                 _isDropped = false;
                 Properties.Animator.SetTrigger("Idle");
@@ -122,7 +135,7 @@ public class PlayerController : MonoBehaviour
                 for (float i = 0; i < 1.1f; i += 0.07f)
                 {
                     Position = Vector3.Lerp(startPosition, goalPosition, i);
-                    print("changing position of player " + Properties.PlayerNum);
+                    //print("changing position of player " + Properties.PlayerNum);
                     yield return new WaitForSeconds(0.02f);
                 }
 
@@ -148,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForCollectable()
     {
-        print("check");
+        //print("check");
         RaycastHit hit;
 
         int collectableMask = 1 << 7;
@@ -156,7 +169,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.SphereCast(Position + new Vector3(0, 1f, 0), 0.15f, Vector3.down + new Vector3(0, -70, 0),out hit, Mathf.Infinity,collectableMask) &&
             hit.collider.CompareTag("Collectable"))
         {
-            print("hit!");
+            //print("hit!");
             var target = hit.collider.gameObject;
             
             target.transform.SetParent(Properties.Model.transform);
@@ -183,7 +196,7 @@ public class PlayerController : MonoBehaviour
             SceneManager.MoveGameObjectToScene(Properties.heldObject, SceneManager.GetActiveScene());
             Properties.heldObject.GetComponent<Rigidbody>().useGravity = true;
             Properties.heldObject.GetComponent<Rigidbody>().isKinematic = false;
-            Properties.heldObject = Properties.gameObject;
+            
         }
 
         if (RoundManager.draw)
@@ -290,7 +303,7 @@ public class PlayerController : MonoBehaviour
     public void Eliminate()
     {
         Properties.RoundReset();
-        print("eliminate");
+        //print("eliminate");
         Properties.eliminated = true;
         Invisible(true);
     }

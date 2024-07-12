@@ -133,7 +133,7 @@ public class RoundManager : MonoBehaviour
         if (draw)
         {
             var drawnPlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).Where(player => player.Properties.isDrawPlayer).Where(player => !player.Properties.eliminated).ToList();
-            print(drawnPlayers.Count + "  Found!");
+            //print(drawnPlayers.Count + "  Found!");
             if (drawnPlayers.Count <= 1)
             {
                 if(drawnPlayers[0] != null)

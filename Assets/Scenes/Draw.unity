@@ -26839,7 +26839,7 @@ PrefabInstance:
     - target: {fileID: 108074562802827907, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 1b5397c57bdd74b4fbba9446660a0e31, type: 3}
+      objectReference: {fileID: 8300000, guid: 64c76e5989af81a4ea2dbfa662b5f130, type: 3}
     - target: {fileID: 108074562802827907, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
       propertyPath: m_PlayOnAwake
       value: 1
