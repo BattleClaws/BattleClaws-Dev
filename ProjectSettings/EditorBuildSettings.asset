@@ -12,14 +12,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Splash.unity
     guid: d06a72b0e6ebc472caf77aa0e1089f94
   - enabled: 1
-    path: Assets/Scenes/GameSelection.unity
-    guid: 809d101b95f7e9a4fb11e7dbb2c7994b
+    path: Assets/Scenes/Round.unity
+    guid: bcb639bca74e4214bb1cdfe329b10630
   - enabled: 1
     path: Assets/Scenes/PlayerSelect.unity
     guid: 7a45fd8bf24c155488e3aa34d8c47a9b
   - enabled: 1
-    path: Assets/Scenes/Round.unity
-    guid: bcb639bca74e4214bb1cdfe329b10630
+    path: Assets/Scenes/GameSelection.unity
+    guid: 809d101b95f7e9a4fb11e7dbb2c7994b
   - enabled: 1
     path: Assets/Scenes/Draw.unity
     guid: 8586ed070c5f1534daefcdca5ecc01c1
