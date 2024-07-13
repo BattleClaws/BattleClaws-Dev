@@ -21,8 +21,8 @@ public class RoundManager : MonoBehaviour
     public static bool draw = false;
 
     public static GameType gameStyle;
-    public int roundTime;
-    public int roundAmount;
+    public static int roundTime;
+    public static int roundAmount;
 
     [Space] public GameObject CirclePlatform;
    

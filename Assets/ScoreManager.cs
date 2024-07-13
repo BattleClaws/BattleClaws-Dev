@@ -41,8 +41,17 @@ public class ScoreManager : MonoBehaviour
         
 
         string playerScores = "";
-        FinalScores.ToList().ForEach(sc => playerScores += "PLAYER" + sc.Properties.PlayerNum + "  " 
-                                                           + sc.Properties.LegacyPoints.ToString().PadLeft(6, '0') + "\n");
+
+        if (RoundManager.gameStyle == GameType.BestOf)
+        {
+            FinalScores.ToList().ForEach(sc => playerScores += "PLAYER" + sc.Properties.PlayerNum + ":  "
+                                                               + sc.Properties.sessionWins.ToString() + "/" + RoundManager.roundAmount + " Wins" + "\n");
+        }
+        else {
+            FinalScores.ToList().ForEach(sc => playerScores += "PLAYER" + sc.Properties.PlayerNum + "  "
+                                                               + sc.Properties.LegacyPoints.ToString().PadLeft(6, '0') + "\n");
+        }
+            
 
         
         GameObject.Find("Scores").GetComponent<TMP_Text>().text = playerScores;
