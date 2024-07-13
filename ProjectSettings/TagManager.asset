@@ -3,17 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collectable
+  - UI
+  - DropZone
+  - Constraint
+  - Return
+  - SafeZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Settings
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Collectables
+  - OverlayUI
   - 
   - 
   - 
@@ -40,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 
+    uniqueID: 4104446381
     locked: 0
