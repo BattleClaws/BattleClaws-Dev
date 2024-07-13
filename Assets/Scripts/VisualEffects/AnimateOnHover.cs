@@ -1,7 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class AnimateOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class AnimateOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     public float raiseAmount = 10f;  // Amount to raise the UI element
     public float animationSpeed = 10f; // suitable Speed of the animation
@@ -23,17 +26,36 @@ public class AnimateOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * animationSpeed);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void Focus()
     {
-        // Set the target position to the raised position
         targetPosition = new Vector3(originalPosition.x, originalPosition.y + raiseAmount, originalPosition.z);
         isHovered = true;
     }
 
+    private void Unfocus()
+    {
+        targetPosition = originalPosition;
+        isHovered = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Set the target position to the raised position
+        Focus();
+    }
+    
+    public void OnSelect(BaseEventData eventData)
+    {
+        Focus();
+    }
+    
+    public void OnDeselect(BaseEventData eventData)
+    {
+        Unfocus();
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
         // Set the target position back to the original position
-        targetPosition = originalPosition;
-        isHovered = false;
+        Unfocus();
     }
 }
