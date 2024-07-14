@@ -32,6 +32,7 @@ public class MenuLogic : MonoBehaviour
     private Button selectedRoundButton;
     private Button selectedTimerButton;
     public GameObject firstOptionCustom;
+    public GameObject defaultOption;
     
     // volume setting variables
     public Slider volumeSlider;
@@ -84,6 +85,11 @@ public class MenuLogic : MonoBehaviour
     public void SetCustomActive()
     {
         EventSystem.current.SetSelectedGameObject(firstOptionCustom);
+    }
+
+    public void SetCustomInactive()
+    {
+        EventSystem.current.SetSelectedGameObject(defaultOption);
     }
 
     public void ApplySelectionsAndProceed()

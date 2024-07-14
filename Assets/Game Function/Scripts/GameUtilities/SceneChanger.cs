@@ -12,7 +12,7 @@ public class SceneChanger : MonoBehaviour
     [SerializeField] public GameObject audioHolder;
     private AudioManager audioScript;
 
-    [Space] [Header("Delay Options")] public bool delayInput;
+    [Space] [Header("Delay Options")] public bool delayInput = false;
     public float delayTime;
     public GameObject continuePrompt;
     
@@ -25,7 +25,7 @@ public class SceneChanger : MonoBehaviour
     public PlayerController playerScripts;
     private void Start()
     {
-        if (delayInput)
+        if (delayInput && continuePrompt != null)
         {
             continuePrompt.SetActive(false);
         }
@@ -69,13 +69,14 @@ public class SceneChanger : MonoBehaviour
     void Update()
     {
         delayTime -= Time.deltaTime;
-        if (delayTime <= 0)
+        if (delayTime <= 0 && continuePrompt != null)
         {
             continuePrompt.SetActive(true);
         }
 
-        if (delayInput && delayTime <= 0 && Input.GetButtonDown("Submit"))
+        if ((delayInput && delayTime <= 0 && Input.GetButtonDown("Submit")) || (!delayInput && Input.GetButtonDown("Submit")))
         {
+            print("Changing to: " + destinationSceneName);
             StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
         }
 

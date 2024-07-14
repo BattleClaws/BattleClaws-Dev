@@ -13,6 +13,8 @@ public class SceneChange : MonoBehaviour
     
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         if (startOnAwake)
         {
             StartCoroutine(StartSceneChange());

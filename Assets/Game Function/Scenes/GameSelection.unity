@@ -4861,6 +4861,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1966551915}
+        m_TargetAssemblyTypeName: MenuLogic, Assembly-CSharp
+        m_MethodName: SetCustomInactive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &633480913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11456,6 +11468,7 @@ MonoBehaviour:
   defaultColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
   selectedColor: {r: 1, g: 0, b: 0.48627454, a: 1}
   firstOptionCustom: {fileID: 1511765938}
+  defaultOption: {fileID: 95908273}
   volumeSlider: {fileID: 1891258279}
 --- !u!4 &1966551916
 Transform:
@@ -11486,6 +11499,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationSceneName: 
   audioHolder: {fileID: 1597926872}
+  delayInput: 0
+  delayTime: 0
+  continuePrompt: {fileID: 0}
   playerScripts: {fileID: 0}
 --- !u!114 &1966551918
 MonoBehaviour:
@@ -11502,6 +11518,7 @@ MonoBehaviour:
   colors: []
   PlayerSpawns: []
   eliminationAnnouncer: {fileID: 0}
+  genericAnnouncement: {fileID: 0}
   uIScoreManager: {fileID: 0}
   zoneScale: {x: 0, y: 0, z: 0}
   dropZoneSpawns: []
