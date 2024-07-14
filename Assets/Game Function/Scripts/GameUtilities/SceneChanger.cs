@@ -12,14 +12,24 @@ public class SceneChanger : MonoBehaviour
     [SerializeField] public GameObject audioHolder;
     private AudioManager audioScript;
 
+    [Space] [Header("Delay Options")] public bool delayInput;
+    public float delayTime;
+    public GameObject continuePrompt;
+    
+
     private string currentSceneName;
     private bool isSplash = false;
     private bool isCredits = false;
     private bool isGameOver = false;
-
+    [Space]
     public PlayerController playerScripts;
     private void Start()
     {
+        if (delayInput)
+        {
+            continuePrompt.SetActive(false);
+        }
+
         if (SceneManager.GetActiveScene().name == "Splash")
         {
             ResetGame();
@@ -58,7 +68,13 @@ public class SceneChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Submit"))
+        delayTime -= Time.deltaTime;
+        if (delayTime <= 0)
+        {
+            continuePrompt.SetActive(true);
+        }
+
+        if (delayInput && delayTime <= 0 && Input.GetButtonDown("Submit"))
         {
             StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
         }
