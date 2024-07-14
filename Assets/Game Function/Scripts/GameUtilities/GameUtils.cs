@@ -124,7 +124,6 @@ public class GameUtils : MonoBehaviour
     public static void SpecialAction(PlayerController user)
     {
         var effect = _effects[Random.Range(0, _effects.Count)];
-        //var effect = "LockDown";
 
         EffectNotification(effect, user.Properties.PlayerNum);
         switch (effect)
