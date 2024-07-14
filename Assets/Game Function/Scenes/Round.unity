@@ -3584,7 +3584,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.99
   far clip plane: 1000
   field of view: 72.9
   orthographic: 0
@@ -7150,8 +7150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25724722bcc2f549a0d87d2c6abf5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 10
-  roundAmount: 3
   CirclePlatform: {fileID: 0}
 --- !u!1 &1406114688
 GameObject:
@@ -7447,6 +7445,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 574601678}
+    - target: {fileID: 4827511929830583131, guid: cabbdaaed20f8014b93a7fc2c03bfd14, type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4827511929830583131, guid: cabbdaaed20f8014b93a7fc2c03bfd14, type: 3}
       propertyPath: m_PlaneDistance
       value: 1
