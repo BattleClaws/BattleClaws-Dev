@@ -145,7 +145,11 @@ public class GameUtils : MonoBehaviour
             case "LockDown":
                 var Zones = _dropZones;
                 var ZoneToLock = Zones[Random.Range(0, Zones.Count-1)];
-                
+                while (ZoneToLock == null)
+                {
+                    ZoneToLock = Zones[Random.Range(0, Zones.Count-1)];
+                }
+
                 FindObjectOfType<GameUtils>().LockZone(ZoneToLock);
                 break;
             default:
