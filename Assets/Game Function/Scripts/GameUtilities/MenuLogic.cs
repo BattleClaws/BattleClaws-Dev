@@ -92,6 +92,8 @@ public class MenuLogic : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(defaultOption);
     }
 
+
+
     public void ApplySelectionsAndProceed()
     {
         // Jess! use this function to apply the player's selections to the Round Management logic. 

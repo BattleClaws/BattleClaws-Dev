@@ -63,6 +63,11 @@ public class MenuManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
     void Start()
     {
