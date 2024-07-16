@@ -28,8 +28,7 @@ public class ModeSelection : MonoBehaviour
 
     void Start()
     {
-        statusText.text = "Vote for your Game Mode!";
-        Debug.Log(votesCount);
+      
 
     }
 
@@ -53,7 +52,7 @@ public class ModeSelection : MonoBehaviour
             votesCount[optionName]--;
             
         }
-       // statusText.text = "Votes for " + optionName + ": " + votesCount[optionName]; Used for Testing Purposes
+   
     }
 
 
