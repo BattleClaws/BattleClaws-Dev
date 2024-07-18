@@ -1,9 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = System.Random;
+
+public enum SpecialCollectableType
+{
+    Lockdown, 
+    Ice
+}
 
 public class Collectable : MonoBehaviour
 {
@@ -11,10 +18,21 @@ public class Collectable : MonoBehaviour
     public Color Color { get; private set; }
     public GameObject Mesh { get; private set; }
     public PlayerController Holder { get; set; }
-
-    public bool Special { get; private set; }
+    
+    [Header("Special Settings")]
     [Tooltip("Percentage of special collectables: 0-100")]
-    public static int specialPercent = 5;
+    [SerializeField]
+    private int specialPercent = 5;
+
+    [Tooltip("Is this instance a power-up/round shaker?")]
+    [SerializeField]private bool isSpecial;
+    [SerializeField] private SpecialCollectableType specialType;
+    
+    [Space] [Header("Lockdown/Bomb Settings")]
+    [SerializeField] private float diffuseTime;
+    [SerializeField] private float blastRadius = 500;
+    [SerializeField] private float lockdownTime;
+    [SerializeField] private float stunTime = 3;
 
     private void Start()
     {
@@ -34,7 +52,7 @@ public class Collectable : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 100) < specialPercent && !RoundManager.draw)
         {
-            Special = true;
+            isSpecial = true;
             Mesh.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Collectableglint");
         }
 
@@ -62,9 +80,9 @@ public class Collectable : MonoBehaviour
             }
             if (other.GetComponent<Renderer>().material.color == Color)
             {
-                if (Special)
+                if (isSpecial)
                 {
-                    GameUtils.SpecialAction(Holder);
+                    SpecialAction(Holder, other.gameObject);
                 }
                 else
                 {
@@ -73,6 +91,42 @@ public class Collectable : MonoBehaviour
                 }
                 Destroy(gameObject);
             }   
+        }
+    }
+    
+    public void SpecialAction(PlayerController user, GameObject zone)
+    {
+        GameUtils.EffectNotification(specialType.ToString(), user.Properties.PlayerNum);
+        switch (specialType)
+        {
+            /*case "DoublePoints":
+                user.Properties.ApplyMultiplier(2, 10);
+                break;
+            case "SpeedBoost":
+                user.Properties.ApplySpeed(8, 10);
+                break;
+            case "ShuffleZones":
+                InitDropZones(false);
+                break;
+            case "FreezeMetal":
+                FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList()
+                    .ForEach(p=> p.Properties.ApplySpeed(1, 2));
+                break;*/
+            case SpecialCollectableType.Lockdown:
+                GameUtils.instance.LockZone(zone);
+                Collider[] collidingPlayers = new Collider[10];
+                Physics.OverlapSphereNonAlloc(user.Position, blastRadius, collidingPlayers, 6);
+                foreach (var collidingPlayer in collidingPlayers)
+                {
+                    if (collidingPlayer == null)
+                        return;
+                    print(collidingPlayer.name);
+                    var playerData = collidingPlayer.GetComponentInParent<PlayerController>();
+                    playerData.Properties.ApplySpeed(1, stunTime);
+                }
+                break;
+            default:
+                break;
         }
     }
 }
