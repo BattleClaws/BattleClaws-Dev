@@ -48,7 +48,8 @@ public class Player : MonoBehaviour
     private PlayerController _controller;
     
     public GameObject heldObject = null;
-    private List<Color> playerColours = new List<Color>() { Color.red, Color.blue, Color.magenta, Color.green };
+
+    [SerializeField] private List<Color> playerColours = new List<Color>() { Color.red, Color.blue, Color.magenta, Color.green };
 
     private void Awake()
     {
