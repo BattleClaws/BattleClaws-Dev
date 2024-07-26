@@ -30,6 +30,10 @@ public class GameUtils : MonoBehaviour
     public static GameUtils instance;
     public static bool isMenuOpen;
     public static GameUtils live;
+
+    public float spawnOffset;
+    public int spawnAmount;
+    public int spawnRadius;
     
 
     [Space] [Header("DropZone Properties")]
@@ -92,11 +96,13 @@ public class GameUtils : MonoBehaviour
         DropParticles = Resources.Load<GameObject>("Prefabs/DropZone Particles");
         UICanvas = GameObject.FindGameObjectWithTag("UI");
 
-        if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round")
+        InitDropZones(true);
+        Repeat(spawnAmount, InitCollectables);
+        
+        /*if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round")
         {
-            InitDropZones(true);
-            Repeat(130, InitCollectables);
-        }
+            
+        }*/
 
     }
     
@@ -108,11 +114,11 @@ public class GameUtils : MonoBehaviour
         }
     }
 
-    public static void InitCollectables()
+    public void InitCollectables()
     {
         var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
         Vector3 randomLoc = Random.insideUnitCircle;
-        randomLoc = new Vector3(randomLoc.x, -1.3f, randomLoc.y) * 5;
+        randomLoc = new Vector3(randomLoc.x, spawnOffset, randomLoc.y) * spawnRadius;
         Instantiate(collectable, randomLoc, Quaternion.identity);
     }
 

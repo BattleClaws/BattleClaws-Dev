@@ -7169,6 +7169,9 @@ MonoBehaviour:
   eliminationAnnouncer: {fileID: 0}
   genericAnnouncement: {fileID: 0}
   uIScoreManager: {fileID: 0}
+  spawnOffset: -1.3
+  spawnAmount: 130
+  spawnRadius: 5
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns:
   - {fileID: 1682519410}

@@ -45,7 +45,7 @@ public class Collectable : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity) && hit.transform.CompareTag("DropZone"))
         {
-            GameUtils.InitCollectables();
+            GameUtils.instance.InitCollectables();
             Destroy(gameObject);
             return;
         }
@@ -61,6 +61,10 @@ public class Collectable : MonoBehaviour
             Color = GameUtils.RequestColor();
             Mesh.GetComponent<Renderer>().material.color = Color;
         }
+        else
+        {
+            Mesh.GetComponent<Renderer>().material.color = Color.yellow;
+        }
     }
 
     public static void SetValue(int value)
@@ -74,11 +78,11 @@ public class Collectable : MonoBehaviour
         {
             if (!Holder || Holder == null)
             {
-                GameUtils.InitCollectables();
+                GameUtils.instance.InitCollectables();
                 Destroy(gameObject);
                 return;
             }
-            if (other.GetComponent<Renderer>().material.color == Color)
+            if (RoundManager.draw || other.GetComponent<Renderer>().material.color == Color)
             {
                 if (isSpecial)
                 {
