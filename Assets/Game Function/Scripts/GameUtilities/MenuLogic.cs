@@ -74,6 +74,11 @@ public class MenuLogic : MonoBehaviour
 
         DefaultCustomOptions();
     }
+    
+    public void QuitTheGame()
+    {
+        Application.Quit();
+    }
 
     public void SetDefaults()
     {

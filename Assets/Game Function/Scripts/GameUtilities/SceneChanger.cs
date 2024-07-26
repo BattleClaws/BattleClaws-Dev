@@ -87,6 +87,7 @@ public class SceneChanger : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(destinationSceneName);
+        destinationSceneName = null;
     }
 
     public void changeSceneViaUI(string sceneString)
