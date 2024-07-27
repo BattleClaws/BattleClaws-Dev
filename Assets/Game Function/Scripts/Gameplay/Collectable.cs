@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Random = System.Random;
 
 public enum SpecialCollectableType
 {
@@ -12,12 +11,45 @@ public enum SpecialCollectableType
     Ice
 }
 
+public enum CollectableType
+{
+    Toy,
+    Sweets,
+    Tech,
+    Money
+}
+
 public class Collectable : MonoBehaviour
 {
+
     public static int Points { get; private set; }
     public Color Color { get; private set; }
-    public GameObject Mesh { get; private set; }
+
+    private GameObject currentMesh;
+
+    public GameObject Mesh
+    {
+        get
+        {
+            return currentMesh;
+        }
+        set
+        {
+            if(currentMesh)
+                Destroy(currentMesh);
+            var newMesh = Instantiate(value, transform);
+            newMesh.transform.localPosition = Vector3.zero;
+            currentMesh = newMesh;
+        }
+    }
     public PlayerController Holder { get; set; }
+
+    [Header("Group Models")] [SerializeField]
+    private List<GameObject> moneyModels;
+    [SerializeField]private List<GameObject> toyModels;
+    [SerializeField]private List<GameObject> sweetsModels;
+    [SerializeField]private List<GameObject> techModels;
+    [SerializeField] private List<GameObject> specialModels;
     
     [Header("Special Settings")]
     [Tooltip("Percentage of special collectables: 0-100")]
@@ -36,7 +68,7 @@ public class Collectable : MonoBehaviour
 
     private void Start()
     {
-        Mesh = transform.GetChild(0).gameObject;
+        currentMesh = transform.GetChild(0).gameObject;
         CollectableSetup();
     }
 
@@ -58,13 +90,37 @@ public class Collectable : MonoBehaviour
 
         if (!RoundManager.draw)
         {
-            Color = GameUtils.RequestColor();
-            Mesh.GetComponent<Renderer>().material.color = Color;
+            Mesh = RandomCollectable();
         }
         else
         {
             Mesh.GetComponent<Renderer>().material.color = Color.yellow;
         }
+    }
+
+    private GameObject RandomCollectable()
+    {
+        var random = UnityEngine.Random.Range(0, 4);
+        List<GameObject> itemPool;
+
+        switch (random)
+        {
+            case (int) CollectableType.Money:
+                itemPool = moneyModels;
+                break;
+            case (int) CollectableType.Tech:
+                itemPool = techModels;
+                break;
+            case (int) CollectableType.Sweets:
+                itemPool = sweetsModels;
+                break;
+            default:
+                itemPool = toyModels;
+                break;
+        }
+
+        var chosenModel = itemPool[UnityEngine.Random.Range(0, itemPool.Count -1)];
+        return chosenModel;
     }
 
     public static void SetValue(int value)

@@ -260,11 +260,7 @@ public class GameUtils : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
     }
-
-    public static Color RequestColor()
-    {
-        return _enteredColors[Random.Range(0, _enteredColors.Count)];
-    }
+    
 
     public static Transform RequestSpawnLocation(int playerNum)
     {

@@ -2768,7 +2768,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8110739, g: 0.35933605, b: 0.8962264, a: 1}
-  m_Intensity: 2.04
+  m_Intensity: 1
   m_Range: 47.63967
   m_SpotAngle: 147
   m_InnerSpotAngle: 21.80208
@@ -6041,6 +6041,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dd185d314086f4e8842db4512c5cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyModels: []
+  toyModels: []
+  sweetsModels: []
+  techModels: []
+  specialModels: []
   specialPercent: 5
   isSpecial: 1
   specialType: 0
@@ -9217,7 +9222,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.63198227, b: 0.15566039, a: 1}
-  m_Intensity: 29.71
+  m_Intensity: 20
   m_Range: 9.8227215
   m_SpotAngle: 112.5
   m_InnerSpotAngle: 21.80208
