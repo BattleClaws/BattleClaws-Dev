@@ -15,8 +15,20 @@ public enum CornerStates
 public class CornerManager : MonoBehaviour
 {
     [DoNotSerialize]public Color bgColorCurrent;
+    [DoNotSerialize]public Color bgColorBase;
 
-    public CornerStates currentState;
+    public CornerStates CurrentState
+    {
+        get
+        {
+            return CurrentState;
+        }
+        set
+        {
+            UpdateState(value);
+            CurrentState = value;
+        }
+    }
     
     public Color playerColor;
     
@@ -30,6 +42,35 @@ public class CornerManager : MonoBehaviour
     {
         _uiScore = GameUtils.instance.uIScoreManager;
         bgAnimator = gameObject.GetComponentInChildren<Animator>();
+
+        CurrentState = CornerStates.defaut;
+    }
+
+    private void UpdateState(CornerStates state)
+    {
+        switch(state)
+        {
+            case CornerStates.freeze:
+                bgColorBase = _uiScore.freezeColor;
+                bgAnimator.speed = _uiScore.slowSpeed;
+                break;
+            case CornerStates.doublePoints:
+                bgColorBase = _uiScore.doubleColor;
+                bgAnimator.speed = _uiScore.fastSpeed;
+                break;
+            case CornerStates.speed:
+                bgColorBase = _uiScore.speedColor;
+                bgAnimator.speed = _uiScore.fastSpeed;
+                break;
+            default:
+                bgColorBase = _uiScore.baseColor;
+                bgAnimator.speed = _uiScore.baseSpeed;
+                break;
+        }
+        
+            
+                
+        
     }
 
     public float GetScale()
