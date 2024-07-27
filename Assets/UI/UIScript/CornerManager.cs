@@ -4,10 +4,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum CornerStates
+{
+    defaut,
+    freeze,
+    speed,
+    doublePoints
+}
+
 public class CornerManager : MonoBehaviour
 {
     [DoNotSerialize]public Color bgColorCurrent;
-    
+
+    public CornerStates currentState;
     
     public Color playerColor;
     
@@ -15,9 +24,12 @@ public class CornerManager : MonoBehaviour
 
     private UIScoreManager _uiScore;
 
+    public Animator bgAnimator; 
+
     public void Start()
     {
         _uiScore = GameUtils.instance.uIScoreManager;
+        bgAnimator = gameObject.GetComponentInChildren<Animator>();
     }
 
     public float GetScale()

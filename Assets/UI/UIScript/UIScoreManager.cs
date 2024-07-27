@@ -25,6 +25,10 @@ public class UIScoreManager : MonoBehaviour
 
     public int numberOfPlayers;
     
+    public Color baseColor;
+    public Color freezeColor;
+    public Color speedColor;
+    public Color doubleColor;
     
     public Color bgColorBase;
     public Color bgColorWarning;
