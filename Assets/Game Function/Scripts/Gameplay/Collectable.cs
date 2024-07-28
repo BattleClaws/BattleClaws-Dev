@@ -7,8 +7,10 @@ using UnityEngine.UIElements;
 
 public enum SpecialCollectableType
 {
-    Lockdown, 
-    Ice
+    Bomb, 
+    Ice,
+    ShuffleZones,
+    Speed
 }
 
 public enum CollectableType
@@ -82,12 +84,6 @@ public class Collectable : MonoBehaviour
             return;
         }
 
-        if (UnityEngine.Random.Range(0, 100) < specialPercent && !RoundManager.draw)
-        {
-            isSpecial = true;
-            Mesh.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Collectableglint");
-        }
-
         if (!RoundManager.draw)
         {
             Mesh = RandomCollectable();
@@ -95,6 +91,22 @@ public class Collectable : MonoBehaviour
         else
         {
             Mesh.GetComponent<Renderer>().material.color = Color.yellow;
+        }
+        
+        if (UnityEngine.Random.Range(0, 100) < specialPercent && !RoundManager.draw)
+        {
+            // Assigning the random power up model and also setting the local SpecialType from the models name
+            var chosenModel = specialModels[UnityEngine.Random.Range(0, specialModels.Count )];
+            String newSpecialType = chosenModel.name.Split("_")[1];
+            
+            // This is taking the second half of the prefab name and parsing it as an enum.
+            // This ONLY works if the special collectable prefab's name is formatted as such:
+            //     if the type value in the enum is: SpecialCollectableType.Bomb
+            //     then, the prefabs name MUST follow the format "XXXXX_Bomb"
+            // From there it should work fine
+            specialType = (SpecialCollectableType)Enum.Parse(typeof(SpecialCollectableType), newSpecialType);
+            Mesh = chosenModel;
+            isSpecial = true;
         }
     }
 
@@ -119,7 +131,7 @@ public class Collectable : MonoBehaviour
                 break;
         }
 
-        var chosenModel = itemPool[UnityEngine.Random.Range(0, itemPool.Count -1)];
+        var chosenModel = itemPool[UnityEngine.Random.Range(0, itemPool.Count )];
         return chosenModel;
     }
 
@@ -138,7 +150,7 @@ public class Collectable : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            if (RoundManager.draw || other.GetComponent<Renderer>().material.color == Color)
+            if (isSpecial || RoundManager.draw || other.GetComponent<Renderer>().material.color == Color)
             {
                 if (isSpecial)
                 {
@@ -159,20 +171,23 @@ public class Collectable : MonoBehaviour
         GameUtils.EffectNotification(specialType.ToString(), user.Properties.PlayerNum);
         switch (specialType)
         {
-            /*case "DoublePoints":
-                user.Properties.ApplyMultiplier(2, 10);
-                break;
-            case "SpeedBoost":
+            //case spec:
+            //    user.Properties.ApplyMultiplier(2, 10);
+            //    break;
+            case SpecialCollectableType.Speed:
                 user.Properties.ApplySpeed(8, 10);
                 break;
-            case "ShuffleZones":
-                InitDropZones(false);
+            case SpecialCollectableType.ShuffleZones:
+                GameUtils.InitDropZones(false);
                 break;
-            case "FreezeMetal":
+            case SpecialCollectableType.Ice:
                 FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList()
                     .ForEach(p=> p.Properties.ApplySpeed(1, 2));
-                break;*/
-            case SpecialCollectableType.Lockdown:
+                break;
+            case SpecialCollectableType.Bomb:
+                var newExplosion = Resources.Load<GameObject>("Prefabs/Explosion");
+                var explosionInstance = Instantiate(newExplosion, transform.position, Quaternion.identity);
+                explosionInstance.GetComponent<ParticleSystem>().Play();
                 GameUtils.instance.LockZone(zone);
                 Collider[] collidingPlayers = new Collider[10];
                 Physics.OverlapSphereNonAlloc(user.Position, blastRadius, collidingPlayers, 6);
@@ -184,8 +199,6 @@ public class Collectable : MonoBehaviour
                     var playerData = collidingPlayer.GetComponentInParent<PlayerController>();
                     playerData.Properties.ApplySpeed(1, stunTime);
                 }
-                break;
-            default:
                 break;
         }
     }

@@ -199,7 +199,11 @@ MonoBehaviour:
   - {fileID: 6842829227114463172, guid: 2fb3dc88ce3b0434180ed353fec764cc, type: 3}
   - {fileID: 5873321712811110359, guid: 147ab9000571caf49bc30f3a814163fc, type: 3}
   - {fileID: 4119449016439725477, guid: d44f24525f13c7c4099b449afdb27da3, type: 3}
-  specialModels: []
+  specialModels:
+  - {fileID: 8865688821106158202, guid: e8c8f1aaa21a1f14eb8d5868d2bc6804, type: 3}
+  - {fileID: 4235893222464023216, guid: 7418daec6c30b89418044739a3d80e85, type: 3}
+  - {fileID: 5952443546364179246, guid: bbf908171309cfa46b588e0c4f447690, type: 3}
+  - {fileID: 3741020310366373573, guid: 94044fd5ea49043479cfb637db0401b4, type: 3}
   specialPercent: 5
   isSpecial: 0
   specialType: 0
