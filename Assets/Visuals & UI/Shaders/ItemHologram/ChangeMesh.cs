@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class ChangeMesh : MonoBehaviour
 {
-    public Mesh[] meshes;
-    private MeshFilter _mf;
+    public GameObject[] holograms;
 
     public float changeSpeed = 0.1f;
 
-    private int currentMesh;
+    private int currentHologramId;
+    private GameObject currentHologramObject;
 
-    public Coroutine switchMeshCoroutine;
+    public Coroutine switchHologramCoroutine;
+
+    public Material hologramMat;
     void Start()
     {
-        _mf = GetComponent<MeshFilter>();
+        
 
-        switchMeshCoroutine = StartCoroutine(SwitchMesh());
+        switchHologramCoroutine = StartCoroutine(SwitchHologram());
     }
 
-    IEnumerator SwitchMesh()
+    IEnumerator SwitchHologram()
     {
         while(true){
-        currentMesh++;
+        currentHologramId++;
 
-        _mf.mesh = meshes[currentMesh % meshes.Length];
+        Destroy(currentHologramObject);
+        currentHologramObject = Instantiate(holograms[currentHologramId % holograms.Length],gameObject.transform.position, gameObject.transform.rotation, gameObject.transform);
+        currentHologramObject.GetComponent<MeshRenderer>().material = hologramMat;
+
         yield return new WaitForSeconds(changeSpeed);
         }
     }

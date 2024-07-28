@@ -75,7 +75,7 @@ Transform:
   m_GameObject: {fileID: 8481712860167448960}
   serializedVersion: 2
   m_LocalRotation: {x: -0.35201272, y: 0.69236374, z: 0.28545684, w: 0.56145704}
-  m_LocalPosition: {x: -0.123, y: -0.019, z: -0.121}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 31.733, y: 31.732998, z: 31.732998}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96,7 +96,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8481712860167448960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -148,7 +148,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -164,9 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65352c910a3a04346be0bb69204f07f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshes:
-  - {fileID: 2673242652621986369, guid: ec414f6dc350ca54e9f23f0bc588d450, type: 3}
-  - {fileID: -7704724290991575875, guid: ec414f6dc350ca54e9f23f0bc588d450, type: 3}
-  - {fileID: 6333463344553260916, guid: ec414f6dc350ca54e9f23f0bc588d450, type: 3}
-  - {fileID: 1154645297785807368, guid: ec414f6dc350ca54e9f23f0bc588d450, type: 3}
+  holograms:
+  - {fileID: 4986634714904459932, guid: bd088bcae9c41ee4f96941268317b898, type: 3}
+  - {fileID: 5058457952017324336, guid: 83b2a7e9f477ca643ae05d7c4eec4041, type: 3}
+  - {fileID: 958294752831267720, guid: b2129506940e3bf40b5a32787edaae84, type: 3}
+  - {fileID: 1419149190156722257, guid: 019b1ecb4269f844a9679333b9f5237e, type: 3}
   changeSpeed: 2
+  hologramMat: {fileID: 2100000, guid: 5fba8fa7e5693b04883e169768afa630, type: 2}
