@@ -8744,6 +8744,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 985417219942908673, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
+      propertyPath: timeToFlash
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 1127595840511904025, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -8763,6 +8767,14 @@ PrefabInstance:
     - target: {fileID: 2749723306486049189, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483152144973688270, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
+      propertyPath: timeToFlash
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150359093007402072, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
+      propertyPath: timeToFlash
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6531129233190234336, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
       propertyPath: m_IsActive
@@ -8869,6 +8881,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7563757852926313346, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
+      propertyPath: fastSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563757852926313346, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
+      propertyPath: slowSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563757852926313346, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
       propertyPath: baseColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -8919,6 +8939,10 @@ PrefabInstance:
     - target: {fileID: 7563757852926313346, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
       propertyPath: freezeColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706233941524857132, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
+      propertyPath: timeToFlash
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9124775410846847764, guid: 783e02e20b8105043982e392d3264fdd, type: 3}
       propertyPath: playerNumber
