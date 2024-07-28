@@ -113,6 +113,20 @@ public class UIScoreManager : MonoBehaviour
         uiCorners[cornerId].GetComponent<CornerManager>().CurrentState = state;
     }
 
+    public void SetCornerStateForTime(int cornerId, CornerStates state, float length)
+    {
+        StartCoroutine(SetCornerStateForTimeCoroutine(cornerId, state, length));
+    }
+
+    public IEnumerator SetCornerStateForTimeCoroutine(int cornerId, CornerStates state, float length)
+    {
+        print("setting corner state of: " + state + " to player: " + cornerId.ToString() + " for " + length.ToString() + " second(s).");
+        SetCornerState(cornerId, state);
+        yield return new WaitForSeconds(length);
+        print("reseting state for player: " + cornerId.ToString());
+        SetCornerState(cornerId, CornerStates.defaut);
+    }
+
     public void DebugAddScore( int player)
     {
         scores[player] += DEBUGVAL;

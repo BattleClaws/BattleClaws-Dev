@@ -6,8 +6,8 @@ public class PlayerAnnocementHandler : MonoBehaviour
 {
     public PlayerAnnocementPopup[] playerAnnocementPopups;
 
-    public void StatusPopup(int i, string topText, string bottomText)
+    public void StatusPopup(int i, string topText)
     {
-        playerAnnocementPopups[i].TriggerAnnouncement(topText, bottomText);
+        playerAnnocementPopups[i-1].TriggerAnnouncement(topText, "Player " + i.ToString() + " activated");
     }
 }

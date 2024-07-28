@@ -168,7 +168,8 @@ public class Collectable : MonoBehaviour
     
     public void SpecialAction(PlayerController user, GameObject zone)
     {
-        GameUtils.EffectNotification(specialType.ToString(), user.Properties.PlayerNum);
+        //GameUtils.EffectNotification(specialType.ToString(), user.Properties.PlayerNum);
+        GameUtils.instance.playerAnnocementHandler.StatusPopup(user.Properties.PlayerNum, specialType.ToString());
         switch (specialType)
         {
             //case spec:
@@ -176,13 +177,18 @@ public class Collectable : MonoBehaviour
             //    break;
             case SpecialCollectableType.Speed:
                 user.Properties.ApplySpeed(8, 10);
+                GameUtils.instance.uIScoreManager.SetCornerStateForTime(user.Properties.PlayerNum-1, CornerStates.speed, 10);
                 break;
             case SpecialCollectableType.ShuffleZones:
                 GameUtils.InitDropZones(false);
                 break;
             case SpecialCollectableType.Ice:
-                FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList()
-                    .ForEach(p=> p.Properties.ApplySpeed(1, 2));
+                var otherPlayers = FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList();
+                for(int i = 0; i < otherPlayers.Count; i++)
+                {
+                    otherPlayers[i].Properties.ApplySpeed(1,2);
+                    GameUtils.instance.uIScoreManager.SetCornerStateForTime(otherPlayers[i].Properties.PlayerNum-1, CornerStates.freeze, 2);
+                }
                 break;
             case SpecialCollectableType.Bomb:
                 var newExplosion = Resources.Load<GameObject>("Prefabs/Explosion");

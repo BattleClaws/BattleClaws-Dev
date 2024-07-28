@@ -39,7 +39,7 @@ public class StateDebug : MonoBehaviour
             print("frozen");
             SetFreeze(0);
 
-            ann.StatusPopup(0, "Frozen!", "brr!!");
+            ann.StatusPopup(0, "Frozen!");
         }
         if (Input.GetKey(KeyCode.G))
         {
