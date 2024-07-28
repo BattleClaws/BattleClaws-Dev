@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
     public void KnockBack(Transform other, bool isPlayer)
     {
         var otherPosition = (isPlayer) ? other.GetComponent<PlayerController>().Position : other.transform.position;
-        var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
+        //var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
 
         var particles = Resources.Load<GameObject>("Prefabs/Sparks");
         StartCoroutine(GameUtils.instance.CamShake(0.1f));
@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
 
-        Instantiate(particles, midPoint, Quaternion.identity);
+        Instantiate(particles, Position, Quaternion.identity);
         // Then i just force it away :3
         
         print("Strike Direction" + Direction);

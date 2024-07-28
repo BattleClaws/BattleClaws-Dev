@@ -19,6 +19,11 @@ public class PlayerCollisions : MonoBehaviour
         {
             _controller.KnockBack(other.transform.parent.transform, true);
         }
+        
+        if (other.CompareTag("Fire"))
+        {
+            _controller.KnockBack(other.transform, false);
+        }
 
         if (other.CompareTag("Constraint"))
         {

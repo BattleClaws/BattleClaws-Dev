@@ -8,9 +8,12 @@ public class Cannon : MonoBehaviour
     private GameObject indicatorLight;
     [SerializeField]
     private ParticleSystem flames;
+    [SerializeField] private int delay = 0;
+
 
     [SerializeField] private GameObject collider;
 
+    
     public void StartFlames(int time)
     {
         StartCoroutine(StartFlamesCoroutine(time));
@@ -18,6 +21,7 @@ public class Cannon : MonoBehaviour
 
     private IEnumerator StartFlamesCoroutine(int time)
     {
+        yield return new WaitForSeconds(delay);
         // warning period
         for (int i = 0; i <= 7; i++)
         {
