@@ -54,7 +54,7 @@ public class RoundManager : MonoBehaviour
         print("Executing Scene Reload Sequence");
 
         Timer = GameObject.Find("Time");
-        secondsRemaining = (draw)? 360 : (gameStyle == GameType.Basic)? 10:roundTime;  //60 - (currentRoundNumber -1 * 10);
+        secondsRemaining = (draw)? 360 : (gameStyle == GameType.Basic)? 30:roundTime;  //60 - (currentRoundNumber -1 * 10);
         
         
         var activePlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None)

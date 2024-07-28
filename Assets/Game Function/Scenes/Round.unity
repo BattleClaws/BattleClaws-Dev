@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 7e953766c7ecaf54dac016d343e7f60e, type: 2}
   m_HaloStrength: 0.5
@@ -32,7 +32,7 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -662,7 +662,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.3607843, g: 0.8002777, b: 0.8980392, a: 1}
   m_Intensity: 1.5
-  m_Range: 47.63967
+  m_Range: 18.45
   m_SpotAngle: 147
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1520,8 +1520,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.47
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.35
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2769,7 +2769,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.8110739, g: 0.35933605, b: 0.8962264, a: 1}
   m_Intensity: 1
-  m_Range: 47.63967
+  m_Range: 33.6
   m_SpotAngle: 147
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -3305,6 +3305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 542638893}
+  - component: {fileID: 542638894}
   m_Layer: 0
   m_Name: Player Manager
   m_TagString: Untagged
@@ -3327,6 +3328,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1369161728}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &542638894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542638891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: 4
+  m_AllowJoining: 1
+  m_JoinBehavior: 1
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Join
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: e47f3c76-48b9-45ee-a538-ff8091b8099f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 13926416-cf23-420b-a1d7-d51a90d600c8
+        m_Path: <Keyboard>/space
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: daf3d22e-a29d-4ab5-b0bd-ecc7016d3afc
+        m_Path: <Gamepad>/buttonSouth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 5193440640770953159, guid: 0a7ba63f561a8964babfe424cffaa9cf, type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &545426389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,7 +3688,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574601676}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
@@ -7162,10 +7223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colors:
-  - {r: 1, g: 0.83734894, b: 0.05098039, a: 0}
-  - {r: 0, g: 0.21875858, b: 1, a: 0}
-  - {r: 1, g: 0.036886618, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.22552013, a: 0}
+  - {r: 0.84705883, g: 0.105882354, b: 0.3764706, a: 1}
+  - {r: 0.11764706, g: 0.53333336, b: 0.8980392, a: 1}
+  - {r: 1, g: 0.75686276, b: 0.02745098, a: 1}
+  - {r: 0, g: 0.3019608, b: 0.2509804, a: 1}
   PlayerSpawns:
   - {fileID: 2008133201}
   - {fileID: 1147294739}
