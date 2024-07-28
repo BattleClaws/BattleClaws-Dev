@@ -150,7 +150,7 @@ public class Collectable : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            if (RoundManager.draw || other.GetComponent<Renderer>().material.color == Color)
+            if (isSpecial || RoundManager.draw || other.GetComponent<Renderer>().material.color == Color)
             {
                 if (isSpecial)
                 {
@@ -171,20 +171,23 @@ public class Collectable : MonoBehaviour
         GameUtils.EffectNotification(specialType.ToString(), user.Properties.PlayerNum);
         switch (specialType)
         {
-            /*case "DoublePoints":
-                user.Properties.ApplyMultiplier(2, 10);
-                break;
-            case "SpeedBoost":
+            //case spec:
+            //    user.Properties.ApplyMultiplier(2, 10);
+            //    break;
+            case SpecialCollectableType.Speed:
                 user.Properties.ApplySpeed(8, 10);
                 break;
-            case "ShuffleZones":
-                InitDropZones(false);
+            case SpecialCollectableType.ShuffleZones:
+                GameUtils.InitDropZones(false);
                 break;
-            case "FreezeMetal":
+            case SpecialCollectableType.Ice:
                 FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList()
                     .ForEach(p=> p.Properties.ApplySpeed(1, 2));
-                break;*/
+                break;
             case SpecialCollectableType.Bomb:
+                var newExplosion = Resources.Load<GameObject>("Prefabs/Explosion");
+                var explosionInstance = Instantiate(newExplosion, transform.position, Quaternion.identity);
+                explosionInstance.GetComponent<ParticleSystem>().Play();
                 GameUtils.instance.LockZone(zone);
                 Collider[] collidingPlayers = new Collider[10];
                 Physics.OverlapSphereNonAlloc(user.Position, blastRadius, collidingPlayers, 6);
@@ -196,8 +199,6 @@ public class Collectable : MonoBehaviour
                     var playerData = collidingPlayer.GetComponentInParent<PlayerController>();
                     playerData.Properties.ApplySpeed(1, stunTime);
                 }
-                break;
-            default:
                 break;
         }
     }
