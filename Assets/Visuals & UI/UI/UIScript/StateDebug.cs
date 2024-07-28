@@ -5,6 +5,7 @@ using UnityEngine;
 public class StateDebug : MonoBehaviour
 {
     public UIScoreManager manager;
+    public PlayerAnnocementHandler ann;
 
     public void Start()
     {
@@ -36,12 +37,14 @@ public class StateDebug : MonoBehaviour
         if (Input.GetKey(KeyCode.F))
         {
             print("frozen");
-            SetFreeze(1);
+            SetFreeze(0);
+
+            ann.StatusPopup(0, "Frozen!", "brr!!");
         }
         if (Input.GetKey(KeyCode.G))
         {
             print("def");
-            SetDefault(1);
+            SetDefault(0);
         }
         if (Input.GetKey(KeyCode.H))
         {
