@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     //public TMP_Text ScoreDisplay { get; set; }
 
-    public GameObject CamAnchor { get; set; }
+    public GameObject CamAnchor;
 
     public GameObject Model
     {
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
         PlayerSetup();
         
         charge = Resources.Load<Material>("Materials/SuperCharge");
-        CamAnchor = _controller._handle.transform.Find("Cam Anchor").gameObject;
+        //CamAnchor = _controller._handle.transform.Find("Cam Anchor").gameObject;
         print("awake!");
 
 
