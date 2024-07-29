@@ -662,7 +662,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.3607843, g: 0.8002777, b: 0.8980392, a: 1}
   m_Intensity: 1.5
-  m_Range: 18.45
+  m_Range: 8.3
   m_SpotAngle: 147
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -2769,7 +2769,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.8110739, g: 0.35933605, b: 0.8962264, a: 1}
   m_Intensity: 1
-  m_Range: 33.6
+  m_Range: 11.6
   m_SpotAngle: 147
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -6110,9 +6110,7 @@ MonoBehaviour:
   specialPercent: 5
   isSpecial: 1
   specialType: 0
-  diffuseTime: 0
   blastRadius: 0
-  lockdownTime: 0
   stunTime: 0
 --- !u!4 &1049018559
 Transform:
@@ -9284,7 +9282,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.63198227, b: 0.15566039, a: 1}
   m_Intensity: 20
-  m_Range: 9.8227215
+  m_Range: 8.48
   m_SpotAngle: 112.5
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

@@ -63,9 +63,7 @@ public class Collectable : MonoBehaviour
     [SerializeField] private SpecialCollectableType specialType;
     
     [Space] [Header("Lockdown/Bomb Settings")]
-    [SerializeField] private float diffuseTime;
     [SerializeField] private float blastRadius = 500;
-    [SerializeField] private float lockdownTime;
     [SerializeField] private float stunTime = 3;
 
     private void Start()
@@ -119,15 +117,20 @@ public class Collectable : MonoBehaviour
         {
             case (int) CollectableType.Money:
                 itemPool = moneyModels;
+                Color = new Color(1f, 0.75686276f, 0.02745098f);
                 break;
             case (int) CollectableType.Tech:
                 itemPool = techModels;
+                Color = new Color(0f, 0.3019608f, 0.2509804f);
+                
                 break;
             case (int) CollectableType.Sweets:
                 itemPool = sweetsModels;
+                Color = new Color(0.84705883f, 0.105882354f, 0.3764706f);
                 break;
             default:
                 itemPool = toyModels;
+                Color = new Color(0.11764706f, 0.53333336f, 0.8980392f);
                 break;
         }
 
@@ -163,6 +166,7 @@ public class Collectable : MonoBehaviour
                 }
                 Destroy(gameObject);
             }   
+            //print(other.GetComponent<Renderer>().material.color + " | " + Color);
         }
     }
     
