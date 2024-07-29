@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
                     newPosition = hit.point - movement.normalized * 0.05f;
             }
             
+            
+            
             _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
         }
     }
@@ -214,7 +216,7 @@ public class PlayerController : MonoBehaviour
     public void KnockBack(Transform other, bool isPlayer)
     {
         var otherPosition = (isPlayer) ? other.GetComponent<PlayerController>().Position : other.transform.position;
-        var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
+        //var midPoint = Vector3.Lerp(otherPosition, Position, 0.5f);
 
         var particles = Resources.Load<GameObject>("Prefabs/Sparks");
         StartCoroutine(GameUtils.instance.CamShake(0.1f));
@@ -226,10 +228,36 @@ public class PlayerController : MonoBehaviour
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
 
-        Instantiate(particles, midPoint, Quaternion.identity);
+        Instantiate(particles, Position, Quaternion.identity);
         // Then i just force it away :3
         
-        GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);
+        print("Strike Direction" + Direction);
+        _isDropped = true;
+        StartCoroutine(ApplyImpulseOverTime((Direction * -40), 0.5f));
+        //GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);
+    }
+    
+    IEnumerator ApplyImpulseOverTime(Vector3 impulse, float duration)
+    {
+        float elapsedTime = 0.0f;
+        Vector3 velocityChange = impulse / 1;
+
+        while (elapsedTime < duration)
+        {
+            // Calculate the position change for this frame
+            Vector3 positionChange = velocityChange * (Time.deltaTime / duration);
+
+            // Update the kinematic Rigidbody's position
+            _handle.GetComponent<Rigidbody>().MovePosition(_handle.GetComponent<Rigidbody>().position + positionChange);
+
+            velocityChange /= 1.1f;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        _isDropped = false;
     }
 
     #endregion

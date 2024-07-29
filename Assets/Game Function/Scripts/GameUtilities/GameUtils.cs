@@ -30,6 +30,10 @@ public class GameUtils : MonoBehaviour
     public static GameUtils instance;
     public static bool isMenuOpen;
     public static GameUtils live;
+
+    public float spawnOffset;
+    public int spawnAmount;
+    public int spawnRadius;
     
 
     [Space] [Header("DropZone Properties")]
@@ -92,11 +96,13 @@ public class GameUtils : MonoBehaviour
         DropParticles = Resources.Load<GameObject>("Prefabs/DropZone Particles");
         UICanvas = GameObject.FindGameObjectWithTag("UI");
 
-        if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round")
+        InitDropZones(true);
+        Repeat(spawnAmount, InitCollectables);
+        
+        /*if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round")
         {
-            InitDropZones(true);
-            Repeat(130, InitCollectables);
-        }
+            
+        }*/
 
     }
     
@@ -108,52 +114,17 @@ public class GameUtils : MonoBehaviour
         }
     }
 
-    public static void InitCollectables()
+    public void InitCollectables()
     {
         var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
         Vector3 randomLoc = Random.insideUnitCircle;
-        randomLoc = new Vector3(randomLoc.x, -1.3f, randomLoc.y) * 5;
+        randomLoc = new Vector3(randomLoc.x, spawnOffset, randomLoc.y) * spawnRadius;
         Instantiate(collectable, randomLoc, Quaternion.identity);
     }
 
     public void SendScoreToUI(int playerNum, int score)
     {
         uIScoreManager.InjectScore(playerNum, score);
-    }
-
-    public static void SpecialAction(PlayerController user)
-    {
-        var effect = _effects[Random.Range(0, _effects.Count)];
-
-        EffectNotification(effect, user.Properties.PlayerNum);
-        switch (effect)
-        {
-            case "DoublePoints":
-                user.Properties.ApplyMultiplier(2, 10);
-                break;
-            case "SpeedBoost":
-                user.Properties.ApplySpeed(8, 10);
-                break;
-            case "ShuffleZones":
-                InitDropZones(false);
-                break;
-            case "FreezeMetal":
-                FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList()
-                    .ForEach(p=> p.Properties.ApplySpeed(1, 2));
-                break;
-            case "LockDown":
-                var Zones = _dropZones;
-                var ZoneToLock = Zones[Random.Range(0, Zones.Count-1)];
-                while (ZoneToLock == null)
-                {
-                    ZoneToLock = Zones[Random.Range(0, Zones.Count-1)];
-                }
-
-                FindObjectOfType<GameUtils>().LockZone(ZoneToLock);
-                break;
-            default:
-                break;
-        }
     }
 
     public static void EffectNotification(string effect, int player)
@@ -289,11 +260,7 @@ public class GameUtils : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
     }
-
-    public static Color RequestColor()
-    {
-        return _enteredColors[Random.Range(0, _enteredColors.Count)];
-    }
+    
 
     public static Transform RequestSpawnLocation(int playerNum)
     {

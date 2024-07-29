@@ -134,10 +134,8 @@ public class RoundManager : MonoBehaviour
         {
             var drawnPlayers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None).Where(player => player.Properties.isDrawPlayer).Where(player => !player.Properties.eliminated).ToList();
             //print(drawnPlayers.Count + "  Found!");
-            if (drawnPlayers.Count <= 1)
+            if (drawnPlayers.OrderBy(p => p.Properties.Points).Last().Properties.Points >= 300)
             {
-                if(drawnPlayers[0] != null)
-                    drawnPlayers[0].isWinningPlayer = true;
                 StartCoroutine(EndRoundDraw());
                 CancelInvoke(nameof(UpdateTimer));
             }
@@ -287,7 +285,7 @@ public class RoundManager : MonoBehaviour
         PlayerController winningPlayer = null;
         try
         {
-            winningPlayer = drawnPlayers.First(player => player.isWinningPlayer);
+            winningPlayer = drawnPlayers.OrderBy(p => p.Properties.Points).Last();
         }
         catch {
             // Empty
@@ -303,11 +301,6 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         drawnPlayers.ForEach(player => player.Eliminate());
         draw = false;
-        if (winningPlayer != null)
-        {
-            Destroy(winningPlayer.Properties.heldObject);
-            winningPlayer.Properties.heldObject = winningPlayer.Properties.gameObject;
-        }
 
         StartCoroutine(GameUtils.live.ChangeScene("Round"));
     }

@@ -33,7 +33,7 @@ public class ScoreManager : MonoBehaviour
             }
             else
             {
-                Winners += "Winner "+ FindObjectsOfType<PlayerController>().First(p => !p.Properties.eliminated).Properties.PlayerNum;
+                Winners += "Player "+ FindObjectsOfType<PlayerController>().First(p => !p.Properties.eliminated).Properties.PlayerNum;
             }
             
             GameObject.Find("Winner").GetComponent<TMP_Text>().text = Winners;

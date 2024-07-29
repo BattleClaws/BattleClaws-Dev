@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -83,11 +84,14 @@ public class SceneChanger : MonoBehaviour
 
     }
 
-    public IEnumerator loadChosenSceneWithDelay(string SceneName) 
+    public IEnumerator loadChosenSceneWithDelay(string SceneName)
     {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(destinationSceneName);
-        destinationSceneName = null;
+        if (!String.IsNullOrEmpty(SceneName))
+        {
+            yield return new WaitForSeconds(1);
+            SceneManager.LoadScene(destinationSceneName);
+            destinationSceneName = null;
+        }
     }
 
     public void changeSceneViaUI(string sceneString)

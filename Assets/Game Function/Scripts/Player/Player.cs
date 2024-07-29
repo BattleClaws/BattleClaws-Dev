@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
         List<Renderer> ChildrenRenderer = GetComponentsInChildren<Renderer>(true).Where(ren => ren.material.name.Contains("Tips")).ToList();
         ChildrenRenderer.ForEach(ren => ren.material.color = playerColours[PlayerNum - 1]);
         
-        if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round" && !eliminated)
+        if (!eliminated)
             SpawnPointstracker();
 
         /*if (heldObject != gameObject)
