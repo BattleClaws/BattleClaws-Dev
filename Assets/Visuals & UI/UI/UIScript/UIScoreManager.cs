@@ -25,6 +25,14 @@ public class UIScoreManager : MonoBehaviour
 
     public int numberOfPlayers;
     
+    public Color baseColor = Color.black;
+    public Color freezeColor = Color.black;
+    public Color speedColor = Color.black;
+    public Color doubleColor = Color.black;
+
+    public float baseSpeed = 1.0f;
+    public float fastSpeed = 1.2f;
+    public float slowSpeed = 0.6f;
     
     public Color bgColorBase;
     public Color bgColorWarning;
@@ -98,6 +106,25 @@ public class UIScoreManager : MonoBehaviour
                 uiCorners[i].SetActive(true);
             }
         }
+    }
+
+    public void SetCornerState(int cornerId, CornerStates state)
+    {
+        uiCorners[cornerId].GetComponent<CornerManager>().CurrentState = state;
+    }
+
+    public void SetCornerStateForTime(int cornerId, CornerStates state, float length)
+    {
+        StartCoroutine(SetCornerStateForTimeCoroutine(cornerId, state, length));
+    }
+
+    public IEnumerator SetCornerStateForTimeCoroutine(int cornerId, CornerStates state, float length)
+    {
+        print("setting corner state of: " + state + " to player: " + cornerId.ToString() + " for " + length.ToString() + " second(s).");
+        SetCornerState(cornerId, state);
+        yield return new WaitForSeconds(length);
+        print("reseting state for player: " + cornerId.ToString());
+        SetCornerState(cornerId, CornerStates.defaut);
     }
 
     public void DebugAddScore( int player)

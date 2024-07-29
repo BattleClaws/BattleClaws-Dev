@@ -26,6 +26,7 @@ public class GameUtils : MonoBehaviour
     public BannerHandler eliminationAnnouncer;
     public GenericAnnoucementHandler genericAnnouncement;
     public UIScoreManager uIScoreManager;
+    public PlayerAnnocementHandler playerAnnocementHandler;
 
     public static GameUtils instance;
     public static bool isMenuOpen;
@@ -44,6 +45,7 @@ public class GameUtils : MonoBehaviour
 
     private static List<GameObject> _dropZones = new List<GameObject>();
 
+
     private static List<string> _effects = new List<string>() { "LockDown", "DoublePoints", "SpeedBoost", "ShuffleZones", "FreezeMetal" };
 
     private bool isShakeActive;
@@ -59,8 +61,8 @@ public class GameUtils : MonoBehaviour
         uIScoreManager = GameObject.FindObjectOfType<UIScoreManager>();
         eliminationAnnouncer = FindObjectOfType<BannerHandler>();
         genericAnnouncement = FindObjectOfType<GenericAnnoucementHandler>();
-
         menuManager = GameObject.FindObjectOfType<MenuManager>();
+        playerAnnocementHandler = FindObjectOfType<PlayerAnnocementHandler>();
 
         live = this;
     }

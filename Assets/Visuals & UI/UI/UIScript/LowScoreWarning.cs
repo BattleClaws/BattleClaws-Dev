@@ -34,6 +34,8 @@ public class LowScoreWarning : MonoBehaviour
     
     void Update()
     {
+        _cornerData.bgColorCurrent = _cornerData.bgColorBase;
+
         _startTimer += Time.deltaTime;
         
         if (_uiData.GetLowestScore() == _uiData.PlayersScores[_cornerData.playerNumber] && _startTimer >= timeToFlash)
@@ -47,7 +49,6 @@ public class LowScoreWarning : MonoBehaviour
         }
         
         if (isLowScore) UpdateColor();
-        else _cornerData.bgColorCurrent = _uiData.bgColorBase;
     }
 
     private void UpdateColor()
@@ -55,6 +56,6 @@ public class LowScoreWarning : MonoBehaviour
         timer += Time.deltaTime * timeScale;
 
         float blendAmount = (Mathf.Sin(timer) + 1f) / 2f; 
-        _cornerData.bgColorCurrent = _uiData.bgColorBase.gamma * (1 - blendAmount) + _uiData.bgColorWarning * blendAmount;
+        _cornerData.bgColorCurrent = _cornerData.bgColorBase.gamma * (1 - blendAmount) + _uiData.bgColorWarning * blendAmount;
     }
 }
