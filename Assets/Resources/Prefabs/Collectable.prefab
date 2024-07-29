@@ -179,6 +179,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dd185d314086f4e8842db4512c5cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyModels:
+  - {fileID: 8624577406523576405, guid: 5a5f9fb28f6dec64a8e13c042fc16477, type: 3}
+  - {fileID: 3513893836687815945, guid: 6b791b8ba597f88409cf3eba91da9335, type: 3}
+  - {fileID: 4965438142514874405, guid: 6b04b0e20953f7b498603e5e0cc28efd, type: 3}
+  - {fileID: 6399337895489458075, guid: 2fb9cc37911015d4a808785404cadb56, type: 3}
+  toyModels:
+  - {fileID: 4986634714904459932, guid: bd088bcae9c41ee4f96941268317b898, type: 3}
+  - {fileID: 5058457952017324336, guid: 83b2a7e9f477ca643ae05d7c4eec4041, type: 3}
+  - {fileID: 958294752831267720, guid: b2129506940e3bf40b5a32787edaae84, type: 3}
+  - {fileID: 1419149190156722257, guid: 019b1ecb4269f844a9679333b9f5237e, type: 3}
+  sweetsModels:
+  - {fileID: 3096877306465209008, guid: c7086e326ebd09049a38d4dedcec1a0c, type: 3}
+  - {fileID: 3846480307715938376, guid: c5a9888a753206b48ae18fbe50536102, type: 3}
+  - {fileID: 6487298369431324640, guid: 38a2c0ba3e5989049b785113e841cc42, type: 3}
+  - {fileID: 1797936375592093858, guid: c40fdb13c6cf217468bd6e109d8253c7, type: 3}
+  techModels:
+  - {fileID: 1555883625162101510, guid: b20e3ed6b9601384a938725894c97ae2, type: 3}
+  - {fileID: 6842829227114463172, guid: 2fb3dc88ce3b0434180ed353fec764cc, type: 3}
+  - {fileID: 5873321712811110359, guid: 147ab9000571caf49bc30f3a814163fc, type: 3}
+  - {fileID: 4119449016439725477, guid: d44f24525f13c7c4099b449afdb27da3, type: 3}
+  specialModels:
+  - {fileID: 8865688821106158202, guid: e8c8f1aaa21a1f14eb8d5868d2bc6804, type: 3}
+  - {fileID: 4235893222464023216, guid: 7418daec6c30b89418044739a3d80e85, type: 3}
+  - {fileID: 5952443546364179246, guid: bbf908171309cfa46b588e0c4f447690, type: 3}
+  - {fileID: 3741020310366373573, guid: 94044fd5ea49043479cfb637db0401b4, type: 3}
+  specialPercent: 5
+  isSpecial: 0
+  specialType: 0
+  diffuseTime: 0
+  blastRadius: 500
+  lockdownTime: 0
+  stunTime: 3
 --- !u!135 &1821323860583454741
 SphereCollider:
   m_ObjectHideFlags: 0
