@@ -164,6 +164,17 @@ public class Collectable : MonoBehaviour
                 Destroy(gameObject);
             }   
         }
+         // for readying up 
+        if (other.CompareTag("ReadyZone"))
+        {
+            if (Holder != null)
+            {
+                // need to identify the holder here
+                Holder.SetReady(true);
+                Debug.Log("Player " + Holder.Properties.PlayerNum + " Is ready to play!");
+                //Destroy(gameObject);
+            }
+        }
     }
     
     public void SpecialAction(PlayerController user, GameObject zone)

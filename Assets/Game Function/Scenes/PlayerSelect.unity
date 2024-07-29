@@ -504,6 +504,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3267aceb1ce606a4ebd99bd32d872838, type: 2}
+    - target: {fileID: -7080799381303915184, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_TagString
+      value: ReadyZone
+      objectReference: {fileID: 0}
     - target: {fileID: -6621565500062828179, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -591,9 +595,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6893459029092299460, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 933743803}
-    - targetCorrespondingSourceObject: {fileID: -7080799381303915184, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 670490167}
     - targetCorrespondingSourceObject: {fileID: -7080799381303915184, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 670490171}
@@ -1034,31 +1035,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.115016535
+      value: 0.11493459
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.9932581
+      value: -0.9925504
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0016650208
+      value: -0.0046495534
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.014378765
+      value: 0.040152553
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -166.795
+      value: -166.83301
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 1.7039948
+      value: 4.7590027
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.38900757
+      value: -1.0859985
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
       propertyPath: m_CastShadows
@@ -2157,20 +2158,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -7080799381303915184, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
   m_PrefabInstance: {fileID: 57701265}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &670490167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670490162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c74c247f0249c148b242eef24303e09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  optionName: Battle Mode
-  modeTallyScript: {fileID: 1544270565}
 --- !u!65 &670490171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4547,6 +4534,9 @@ MonoBehaviour:
   eliminationAnnouncer: {fileID: 0}
   genericAnnouncement: {fileID: 0}
   uIScoreManager: {fileID: 0}
+  spawnOffset: 0
+  spawnAmount: 0
+  spawnRadius: 0
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns: []
 --- !u!4 &1544270564
@@ -4574,14 +4564,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1544270561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a886adbfe431634fbae7e1cdb7de346, type: 3}
+  m_Script: {fileID: 11500000, guid: f04650187e1f02c48a2ec49363fd4e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  votingCollectable: {fileID: 6597764802383447042, guid: 1ccb288b6b17b2a4fb75a9de5fbd7de1, type: 3}
-  collectablesSpawnPoint: {x: 60, y: -55, z: 165}
-  playerSelectAnim: {fileID: 0}
-  loadingBarSlider: {fileID: 0}
-  statusText: {fileID: 0}
 --- !u!1 &1651389320
 GameObject:
   m_ObjectHideFlags: 0

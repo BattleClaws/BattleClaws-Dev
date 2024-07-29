@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
 
     // Allows for other scripts to access the Player class without calling it again
     public Player Properties { get; set; }
+    
+    // For Readying Up
+    public bool IsReady { get; private set; } = false;
 
     // Gets the position of the "Handle", which is where the claw actually is
     public Vector3 Position
@@ -303,6 +306,18 @@ public class PlayerController : MonoBehaviour
         Properties.Model.transform.position = _handle.transform.position - new Vector3(0, 1, 0);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    
+    public void SetReady(bool ready) // used to mark the player as ready 
+    {
+        if (!IsReady)
+        {
+            ReadyUp.UpdateReadiedPlayersCount();
+            IsReady = ready;
+        }
+        
+    }
+    
+   
     
 
     private void Update()
