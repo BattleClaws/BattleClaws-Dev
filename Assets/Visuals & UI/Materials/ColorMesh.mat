@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mesh
+  m_Name: ColorMesh
   m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 2100000, guid: cf41397dc908943a38769b3d61f3877a, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -31,5 +31,5 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 0.6384834, g: 0.64093304, b: 0.6415094, a: 1}
+    - _Color: {r: 1, g: 0, b: 0.4782486, a: 1}
   m_BuildTextureStacks: []
