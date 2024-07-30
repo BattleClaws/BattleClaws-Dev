@@ -14,6 +14,8 @@ public class ModeSelection : MonoBehaviour
     // Voting variables
     private int maximumVotesPossible;
     private int votesRequiredToProceed;
+
+    private int requiredReadyPlayers;
     private Dictionary<string, int> votesCount = new Dictionary<string, int>(); // OptionName -> NumberOfVotes
     private string selectedOption;
 
@@ -25,12 +27,7 @@ public class ModeSelection : MonoBehaviour
     public Animator playerSelectAnim; // Assigned via the Unity Editor
     public Slider loadingBarSlider;
     public TextMeshProUGUI statusText;
-
-    void Start()
-    {
-      
-
-    }
+    
 
     // Record a vote for the specified option
     public void RecordVote(string optionName)
@@ -60,8 +57,8 @@ public class ModeSelection : MonoBehaviour
     // Tally the votes and select the option if it has enough votes
     public void TallyVotes()
     {
-        maximumVotesPossible = Player.amountOfPlayers;
-        votesRequiredToProceed = 2;
+        //maximumVotesPossible = Player.amountOfPlayers;
+        requiredReadyPlayers = Player.amountOfPlayers;
         
             foreach (var option in votesCount)
             {

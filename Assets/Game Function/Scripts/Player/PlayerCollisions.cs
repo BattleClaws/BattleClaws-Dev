@@ -19,6 +19,11 @@ public class PlayerCollisions : MonoBehaviour
         {
             _controller.KnockBack(other.transform.parent.transform, true);
         }
+        
+        if (other.CompareTag("Fire"))
+        {
+            _controller.KnockBack(other.transform, false);
+        }
 
         if (other.CompareTag("Constraint"))
         {
@@ -30,17 +35,6 @@ public class PlayerCollisions : MonoBehaviour
             _controller.ResetPosition();
         }
         
-        
-
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        
-        //print("Exit Trigger: " + other.name);
-        if (other.CompareTag("SafeZone") && RoundManager.draw)
-        {
-            _controller.Explode();
-        }
-    }
+    
 }

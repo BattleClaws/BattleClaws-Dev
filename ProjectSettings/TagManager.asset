@@ -10,6 +10,8 @@ TagManager:
   - Constraint
   - Return
   - SafeZone
+  - Fire
+  - ReadyZone
   layers:
   - Default
   - TransparentFX

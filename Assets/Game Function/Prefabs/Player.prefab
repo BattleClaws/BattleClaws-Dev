@@ -3939,6 +3939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDrawPlayer: 0
   sessionWins: 0
+  CamAnchor: {fileID: 5165629899608229536}
   _baseSpeed: 5
   eliminated: 0
   heldObject: {fileID: 0}

@@ -9,10 +9,12 @@ public class EnvironmentShakerManager : MonoBehaviour
     private List<Cannon> cannons;
     [SerializeField] private int cannonFrequency;
     [SerializeField] private int cannonLength;
+    [SerializeField] private int cannonDelay = 0;
+
 
     void Start()
     {
-        InvokeRepeating(nameof(StartCanons), 0, cannonFrequency);
+        InvokeRepeating(nameof(StartCanons), cannonDelay, cannonFrequency);
     }
 
     private void StartCanons()
