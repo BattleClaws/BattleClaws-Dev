@@ -176,7 +176,7 @@ public class Collectable : MonoBehaviour
                 // need to identify the holder here
                 Holder.SetReady(true);
                 Debug.Log("Player " + Holder.Properties.PlayerNum + " Is ready to play!");
-                //Destroy(gameObject);
+               
             }
         }
     }
