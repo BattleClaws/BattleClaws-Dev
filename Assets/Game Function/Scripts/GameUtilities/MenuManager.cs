@@ -171,6 +171,7 @@ public class MenuManager : MonoBehaviour
     public void ToggleFullScreen(bool isOn)
     {
         Screen.fullScreen = isOn;
+        
     }
     
     
