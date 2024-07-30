@@ -106,11 +106,15 @@ public class RoundManager : MonoBehaviour
 
     public void UpdateRound()
     {
-        roundNumberTMP.text = RoundManager.currentRoundNumber.ToString();
+        if (roundNumberTMP)
+        {
+            roundNumberTMP.text = RoundManager.currentRoundNumber.ToString();
 
-        roundMaxTMP.text = "/" + RoundManager.roundAmount;
+            roundMaxTMP.text = "/" + RoundManager.roundAmount;
 
-        if (RoundManager.gameStyle == GameType.Basic) roundMaxTMP.text = "";
+            if (RoundManager.gameStyle == GameType.Basic) roundMaxTMP.text = "";
+            
+        }
     }
 
 
