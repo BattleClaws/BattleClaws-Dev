@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     public void PlayChosenClip(string clipName)
     {
         var clip = Resources.Load<AudioClip>("Audio/" + clipName);
+        print("playing: " + clip.name);
         audioObject.PlayOneShot(clip);
 
     }

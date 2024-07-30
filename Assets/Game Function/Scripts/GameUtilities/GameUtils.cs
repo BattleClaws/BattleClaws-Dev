@@ -207,7 +207,12 @@ public class GameUtils : MonoBehaviour
             newZone.tag = "DropZone";
             newZone.layer = LayerMask.NameToLayer("Collectables");
             ZoneParticles(newZone);
-            
+
+            if (RoundManager.draw)
+            {
+                newZone.GetComponent<Renderer>().enabled = false;
+            }
+
             _dropZones.Add(newZone);
             
             InitDropZoneHologram(_enteredColors[i], _dropZoneSpawns[i].position);

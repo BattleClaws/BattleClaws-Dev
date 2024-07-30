@@ -34,8 +34,7 @@ public class BannerHandler : MonoBehaviour
     private Vector3 _startPosition;
 
     public TextMeshProUGUI playerTMP;
-
-    public TextMeshProUGUI dotTMP;
+    
     public GameObject annoucementTextObject;
 
     private void Start()
@@ -70,8 +69,6 @@ public class BannerHandler : MonoBehaviour
             tempId = playerId - 1;
         }
         playerTMP.color = playerColor[tempId];
-
-        dotTMP.text = "is";
         
         LeanTween.move(gameObject, endMarkerObject.transform, moveToTime).setEase(easeMoveTypeIn).setOnComplete(() => { ShowText(); });
     }
@@ -101,20 +98,10 @@ public class BannerHandler : MonoBehaviour
         while (elapsedTime < dotLength)
         {
             elapsedTime += Time.deltaTime;
-
-            if (elapsedTime > dotLength / 3)
-            {
-                dotTMP.text = "is.";
-            }
-            if (elapsedTime > (dotLength / 3) * 2)
-            {
-                dotTMP.text = "is..";
-            }
             
             yield return null;
         }
-
-        dotTMP.text = "is...";
+        
         ShowAnnoucement();
     }
 

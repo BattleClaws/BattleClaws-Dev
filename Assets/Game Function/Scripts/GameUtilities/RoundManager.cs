@@ -29,6 +29,8 @@ public class RoundManager : MonoBehaviour
     [Header("Round Number Text Assets")]
     public TextMeshProUGUI roundNumberTMP;
     public TextMeshProUGUI roundMaxTMP;
+
+    public static bool gameActive = true;
    
 
     public GameObject Timer { get; private set; }
@@ -36,6 +38,9 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Round" || SceneManager.GetActiveScene().name == "Draw")
+            gameActive = false;
+        
         StartCoroutine(GameUtils.live.OpenedScene());
         //SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -48,7 +53,7 @@ public class RoundManager : MonoBehaviour
             currentRoundNumber++;
         }
         
-        GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
+        //GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
         
         GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/GameStart");
 
@@ -111,6 +116,8 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator SpawnBuffer(List<PlayerController> active)
     {
+        gameActive = false;
+        active.ForEach(p => p._roundActive = false);
         yield return new WaitForSeconds(0.5f);
 
         foreach (var playerController in active)
@@ -119,9 +126,9 @@ public class RoundManager : MonoBehaviour
             print("Resetting player position: " + playerController.Properties.PlayerNum + " at position " + playerController.Position);
             playerController.Properties.RoundReset();
             print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
-            playerController._roundActive = true;
+
         }
-        InvokeRepeating(nameof(UpdateTimer), 0f, 1f);
+        InvokeRepeating(nameof(UpdateTimer), 2.5f, 1f);
     }
 
     private IEnumerator PlatformReduction()
@@ -137,6 +144,15 @@ public class RoundManager : MonoBehaviour
 
     private void UpdateTimer()
     {
+        if (!gameActive)
+        {
+            print("Restore movement");
+            GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/TimerStart");
+            GameObject.FindObjectsOfType<PlayerController>().ToList().ForEach(p => p._roundActive = true);
+            gameActive = true;
+        }
+
+        
         if (GameUtils.isMenuOpen)
         {
             return;

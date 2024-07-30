@@ -36,34 +36,55 @@ public class MenuManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
+        print("Focused");
         if (!hasFocus)
         {
             SetVisibility(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            EventSystem.current.SetSelectedGameObject(null);
         }
         else
         {
+            print("Reenter");
+
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
         }
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
+        print("Paused");
         if (pauseStatus)
         {
             SetVisibility(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            EventSystem.current.SetSelectedGameObject(null);
         }
         else
         {
+            print("Reenter");
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            
+            EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
+        }
+
+
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -82,6 +103,10 @@ public class MenuManager : MonoBehaviour
         
         Contrast.value = colorGrading.contrast.value;
         Brightness.value = exposure.keyValue.value;
+
+        currentScreen = Root;
+        
+        SetVisibility(false);
     }
 
     public void SetCurrentScreen(GameObject newScreen)
@@ -141,12 +166,12 @@ public class MenuManager : MonoBehaviour
     public void OnContrastChange(System.Single value)
     {
         colorGrading.contrast.value = value;
-        contrastSliderLabel.text = value.ToString();
     }
 
     public void ToggleFullScreen(bool isOn)
     {
         Screen.fullScreen = isOn;
+        
     }
     
     
