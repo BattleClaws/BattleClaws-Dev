@@ -53,7 +53,7 @@ public class RoundManager : MonoBehaviour
             currentRoundNumber++;
         }
         
-        GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
+        //GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
         
         GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/GameStart");
 
