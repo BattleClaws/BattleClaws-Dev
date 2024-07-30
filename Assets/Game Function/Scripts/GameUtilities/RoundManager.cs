@@ -25,6 +25,10 @@ public class RoundManager : MonoBehaviour
     public static int roundAmount;
 
     [Space] public GameObject CirclePlatform;
+    
+    [Header("Round Number Text Assets")]
+    public TextMeshProUGUI roundNumberTMP;
+    public TextMeshProUGUI roundMaxTMP;
    
 
     public GameObject Timer { get; private set; }
@@ -49,6 +53,7 @@ public class RoundManager : MonoBehaviour
         GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/GameStart");
 
         SceneReload();
+        UpdateRound();
     }
 
     private void SceneReload()
@@ -93,7 +98,16 @@ public class RoundManager : MonoBehaviour
             //StartCoroutine(PlatformReduction());
         }
     }
-    
+
+    public void UpdateRound()
+    {
+        roundNumberTMP.text = RoundManager.currentRoundNumber.ToString();
+
+        roundMaxTMP.text = "/" + RoundManager.roundAmount;
+
+        if (RoundManager.gameStyle == GameType.Basic) roundMaxTMP.text = "";
+    }
+
 
     private IEnumerator SpawnBuffer(List<PlayerController> active)
     {
