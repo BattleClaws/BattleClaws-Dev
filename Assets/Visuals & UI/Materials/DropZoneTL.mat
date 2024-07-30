@@ -31,10 +31,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _DIRECTION: 3
-    - _Lines: 24
-    - _TimeScale: 0.2
+    - _Lines: 8
+    - _TimeScale: 0.5
     m_Colors:
-    - _Color: {r: 0, g: 0.5019822, b: 1, a: 1}
+    - _Color: {r: 0, g: 1, b: 0.16586113, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7862992542302851437
 MonoBehaviour:

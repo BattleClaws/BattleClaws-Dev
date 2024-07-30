@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 13782627}
   - component: {fileID: 13782629}
   - component: {fileID: 13782628}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BlackCentre (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 35669645}
   - component: {fileID: 35669646}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 48424547}
   - component: {fileID: 48424546}
   - component: {fileID: 48424549}
+  - component: {fileID: 48424550}
   m_Layer: 0
   m_Name: Main Camera Alt
   m_TagString: MainCamera
@@ -489,7 +490,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 48424548}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 9
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -534,6 +535,23 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &48424550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48424545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: d1a28e60168586b4ebf716157f4f33be, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1001 &57701265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -594,22 +612,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8588106626669944091, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -7571074502511672477, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3267aceb1ce606a4ebd99bd32d872838, type: 2}
+    - target: {fileID: -7253728084240992535, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -7080799381303915184, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -7080799381303915184, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_TagString
       value: ReadyZone
+      objectReference: {fileID: 0}
+    - target: {fileID: -7070283292004163582, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -6974894488584696798, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -6893459029092299460, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -6621565500062828179, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6f6b661f4c0e4274e93e922d6d30aaf3, type: 2}
+    - target: {fileID: -2806789605299152466, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -2597138904067890040, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6f6b661f4c0e4274e93e922d6d30aaf3, type: 2}
+    - target: {fileID: -2477455684347771058, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -1791021718884840133, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -630,6 +680,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ready Up Arena Model Objects
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179324019631666310, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349694551228206062, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1361649996490795649, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -642,6 +704,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6f6b661f4c0e4274e93e922d6d30aaf3, type: 2}
+    - target: {fileID: 7827204538980744431, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8134837689134937748, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8244280564420062098, guid: c5b0de5b37f763e409766b03561fbb0b, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -821,7 +891,7 @@ GameObject:
   - component: {fileID: 87704656}
   - component: {fileID: 87704655}
   - component: {fileID: 87704654}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -924,7 +994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 90542080}
   - component: {fileID: 90542081}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1017,7 +1087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 107742201}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SideBars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1088,7 +1158,7 @@ GameObject:
   - component: {fileID: 181430860}
   - component: {fileID: 181430859}
   - component: {fileID: 181430858}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1193,7 +1263,7 @@ GameObject:
   - component: {fileID: 218649855}
   - component: {fileID: 218649854}
   - component: {fileID: 218649853}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1368,6 +1438,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Pipe
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1389,7 +1463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374181929}
   - component: {fileID: 374181930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1575,7 +1649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 481795520}
   - component: {fileID: 481795521}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1732,7 +1806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 591927117}
   - component: {fileID: 591927118}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1826,7 +1900,7 @@ GameObject:
   m_Component:
   - component: {fileID: 592778898}
   - component: {fileID: 592778899}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1922,7 +1996,7 @@ GameObject:
   - component: {fileID: 593049160}
   - component: {fileID: 593049159}
   - component: {fileID: 593049158}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2176,7 +2250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 638991600}
   - component: {fileID: 638991601}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spotlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2272,7 +2346,7 @@ GameObject:
   - component: {fileID: 660080052}
   - component: {fileID: 660080051}
   - component: {fileID: 660080050}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left SideBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2576,7 +2650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 741502549}
   - component: {fileID: 741502550}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2669,7 +2743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 756603191}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2848,7 +2922,7 @@ GameObject:
   - component: {fileID: 825780645}
   - component: {fileID: 825780644}
   - component: {fileID: 825780643}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Back Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2954,7 +3028,7 @@ GameObject:
   - component: {fileID: 830332351}
   - component: {fileID: 830332350}
   - component: {fileID: 830332349}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3059,7 +3133,7 @@ GameObject:
   - component: {fileID: 874609938}
   - component: {fileID: 874609937}
   - component: {fileID: 874609936}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3518,7 +3592,7 @@ GameObject:
   - component: {fileID: 947282938}
   - component: {fileID: 947282937}
   - component: {fileID: 947282936}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4149,7 +4223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1146810355}
   - component: {fileID: 1146810356}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4276,7 +4350,7 @@ GameObject:
   - component: {fileID: 1165528136}
   - component: {fileID: 1165528135}
   - component: {fileID: 1165528134}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4571,7 +4645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1269012732}
   - component: {fileID: 1269012733}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4881,7 +4955,7 @@ GameObject:
   - component: {fileID: 1485972514}
   - component: {fileID: 1485972516}
   - component: {fileID: 1485972515}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BlackCentre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4963,7 +5037,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1508052484}
   - component: {fileID: 1508052485}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5097,6 +5171,8 @@ MonoBehaviour:
   spawnRadius: 0
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns: []
+  dropZoneHolograms: []
+  hologramsOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1544270564
 Transform:
   m_ObjectHideFlags: 0
@@ -5138,7 +5214,7 @@ GameObject:
   - component: {fileID: 1651389323}
   - component: {fileID: 1651389322}
   - component: {fileID: 1651389321}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right Mesh (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5249,7 +5325,7 @@ GameObject:
   - component: {fileID: 1711114880}
   - component: {fileID: 1711114879}
   - component: {fileID: 1711114878}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right SideBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5360,7 +5436,7 @@ GameObject:
   - component: {fileID: 1723002121}
   - component: {fileID: 1723002120}
   - component: {fileID: 1723002119}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5555,7 +5631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1777867555}
   - component: {fileID: 1777867556}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5783,7 +5859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1843457736}
   - component: {fileID: 1843457737}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5939,6 +6015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Pipe
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -5987,7 +6067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1894461207}
   - component: {fileID: 1894461208}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6333,7 +6413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1984679481}
   - component: {fileID: 1984679482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6525,7 +6605,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039624088}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6559,7 +6639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2040578289}
   - component: {fileID: 2040578290}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6688,7 +6768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2098204378}
   - component: {fileID: 2098204379}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spot Light 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
