@@ -126,10 +126,12 @@ public class MenuManager : MonoBehaviour
 
         if (value)
         {
+            Time.timeScale = 0;
             previousHighlightedItem = EventSystem.current.currentSelectedGameObject;
         }
         else
         {
+            Time.timeScale = 1;
             EventSystem.current.SetSelectedGameObject(previousHighlightedItem);
         }
 
