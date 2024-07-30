@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
             if (Properties.heldObject != Properties.gameObject)
             {
                 Properties.Animator.SetTrigger("Open");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawLetGo");
                 try
                 {
                     // Have a try here for the instance that the collectable has been deleted while the player was
@@ -137,6 +138,7 @@ public class PlayerController : MonoBehaviour
                 //print(startPosition + " | " + goalPosition);
 
                 Properties.Animator.SetTrigger("Open");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawDrop");
                 for (float i = 0; i < 1.1f; i += 0.07f)
                 {
                     Position = Vector3.Lerp(startPosition, goalPosition, i);
@@ -228,6 +230,9 @@ public class PlayerController : MonoBehaviour
         Vector3 Direction = Vector3.Normalize(otherPosition - Position);
         StartCoroutine(Properties.SpeedEffect(0, 0.2f, false));
         
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawHit1");
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawHit2");
+        
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
 
@@ -236,7 +241,7 @@ public class PlayerController : MonoBehaviour
         
         print("Strike Direction" + Direction);
         _isDropped = true;
-        StartCoroutine(ApplyImpulseOverTime((Direction * -40), 0.5f));
+        StartCoroutine(ApplyImpulseOverTime((Direction * -1), 0.5f));
         //GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);
     }
     
@@ -248,14 +253,14 @@ public class PlayerController : MonoBehaviour
         while (elapsedTime < duration)
         {
             // Calculate the position change for this frame
-            Vector3 positionChange = velocityChange * (Time.deltaTime / duration);
+            Vector3 positionChange = velocityChange;
 
             // Update the kinematic Rigidbody's position
             _handle.GetComponent<Rigidbody>().MovePosition(_handle.GetComponent<Rigidbody>().position + positionChange);
 
-            velocityChange /= 1.1f;
+            velocityChange /= 1.35f;
             elapsedTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         yield return new WaitForSecondsRealtime(0.2f);

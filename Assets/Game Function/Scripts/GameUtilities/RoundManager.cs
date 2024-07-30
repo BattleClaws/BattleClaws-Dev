@@ -45,6 +45,8 @@ public class RoundManager : MonoBehaviour
         }
         
         GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
+        
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/GameStart");
 
         SceneReload();
     }
@@ -88,7 +90,7 @@ public class RoundManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(PlatformReduction());
+            //StartCoroutine(PlatformReduction());
         }
     }
     
@@ -105,7 +107,7 @@ public class RoundManager : MonoBehaviour
             print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
             playerController._roundActive = true;
         }
-        InvokeRepeating(nameof(UpdateTimer), 1f, 1f);
+        InvokeRepeating(nameof(UpdateTimer), 0f, 1f);
     }
 
     private IEnumerator PlatformReduction()
@@ -145,6 +147,7 @@ public class RoundManager : MonoBehaviour
 
         if (secondsRemaining <= 0)
         {
+            GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/TimerEnd");
             if (draw)
             {
                 StartCoroutine(EndRoundDraw());

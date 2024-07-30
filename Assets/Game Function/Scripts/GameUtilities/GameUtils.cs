@@ -27,6 +27,7 @@ public class GameUtils : MonoBehaviour
     public GenericAnnoucementHandler genericAnnouncement;
     public UIScoreManager uIScoreManager;
     public PlayerAnnocementHandler playerAnnocementHandler;
+    public AudioManager audioPlayer;
 
     public static GameUtils instance;
     public static bool isMenuOpen;
@@ -52,6 +53,7 @@ public class GameUtils : MonoBehaviour
 
     private void Awake()
     {
+        //Application.targetFrameRate = 60;
         _zoneScale = zoneScale;
         _enteredColors = colors;
         _playerSpawns = PlayerSpawns;
@@ -63,6 +65,7 @@ public class GameUtils : MonoBehaviour
         genericAnnouncement = FindObjectOfType<GenericAnnoucementHandler>();
         menuManager = GameObject.FindObjectOfType<MenuManager>();
         playerAnnocementHandler = FindObjectOfType<PlayerAnnocementHandler>();
+        audioPlayer = FindObjectOfType<AudioManager>();
 
         live = this;
     }
@@ -198,7 +201,6 @@ public class GameUtils : MonoBehaviour
             newZone.GetComponent<Renderer>().material.color = _enteredColors[i];
             newZone.tag = "DropZone";
             newZone.layer = LayerMask.NameToLayer("Collectables");
-            
             ZoneParticles(newZone);
             
             _dropZones.Add(newZone);

@@ -2973,12 +2973,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 108074562802827907, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1162895151949402688, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 1042498086}
   m_SourcePrefab: {fileID: 100100000, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
 --- !u!1 &929854221
@@ -3474,11 +3475,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 6285669fc562f06428ebbc78c9c34c69, type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 9530254b885a76045a8e2b85f964c0b7, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4803,6 +4804,8 @@ MonoBehaviour:
   eliminationAnnouncer: {fileID: 0}
   genericAnnouncement: {fileID: 0}
   uIScoreManager: {fileID: 0}
+  playerAnnocementHandler: {fileID: 0}
+  audioPlayer: {fileID: 0}
   spawnOffset: 0
   spawnAmount: 0
   spawnRadius: 0

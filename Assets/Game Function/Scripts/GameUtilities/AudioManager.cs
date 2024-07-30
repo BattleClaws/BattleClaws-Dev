@@ -12,11 +12,10 @@ public class AudioManager : MonoBehaviour
         audioObject = GetComponent<AudioSource>();
     }
 
-    public void playChosenClip(string clipName)
+    public void PlayChosenClip(string clipName)
     {
         var clip = Resources.Load<AudioClip>("Audio/" + clipName);
-        audioObject.clip = clip;
-        audioObject.Play();
+        audioObject.PlayOneShot(clip);
 
     }
 }

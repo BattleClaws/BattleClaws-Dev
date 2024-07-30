@@ -5909,7 +5909,7 @@ PrefabInstance:
     - target: {fileID: 108074562802827907, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 1b5397c57bdd74b4fbba9446660a0e31, type: 3}
+      objectReference: {fileID: 8300000, guid: b91de70be071be843bd9401b296f8e40, type: 3}
     - target: {fileID: 108074562802827907, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
       propertyPath: m_PlayOnAwake
       value: 1
@@ -5958,7 +5958,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3342265247025897886, guid: bc8e59d42704e4418b7e049081fab87f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -7233,6 +7234,8 @@ MonoBehaviour:
   eliminationAnnouncer: {fileID: 0}
   genericAnnouncement: {fileID: 0}
   uIScoreManager: {fileID: 0}
+  playerAnnocementHandler: {fileID: 0}
+  audioPlayer: {fileID: 0}
   spawnOffset: -1.3
   spawnAmount: 130
   spawnRadius: 5

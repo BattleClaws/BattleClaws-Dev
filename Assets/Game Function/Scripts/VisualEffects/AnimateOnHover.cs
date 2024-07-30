@@ -13,11 +13,17 @@ public class AnimateOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private Vector3 targetPosition;
     private bool isHovered = false;
 
+    private Button button;
+
     void Start()
     {
         // Store the original position of the UI element
         originalPosition = transform.localPosition;
         targetPosition = originalPosition;
+        
+        if(gameObject.TryGetComponent<Button>(out button)){
+            button.onClick.AddListener(OnButtonClick);
+        }
     }
 
     void Update()
@@ -57,5 +63,10 @@ public class AnimateOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         // Set the target position back to the original position
         Unfocus();
+    }
+
+    private void OnButtonClick()
+    {
+        GameUtils.instance.audioPlayer.PlayChosenClip("UI/ButtonSelect");
     }
 }
