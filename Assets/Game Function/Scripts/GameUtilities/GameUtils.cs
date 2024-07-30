@@ -212,10 +212,12 @@ public class GameUtils : MonoBehaviour
             {
                 newZone.GetComponent<Renderer>().enabled = false;
             }
+            else
+            {
+                InitDropZoneHologram(_enteredColors[i], _dropZoneSpawns[i].position);
+            }
 
             _dropZones.Add(newZone);
-            
-            InitDropZoneHologram(_enteredColors[i], _dropZoneSpawns[i].position);
         }
     }
 

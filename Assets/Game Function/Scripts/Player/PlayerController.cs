@@ -254,9 +254,17 @@ public class PlayerController : MonoBehaviour
         {
             // Calculate the position change for this frame
             Vector3 positionChange = velocityChange;
+            var newPosition = _handle.GetComponent<Rigidbody>().position + positionChange;
+            
+            RaycastHit hit;
+            if (Physics.Raycast(_handle.GetComponent<Rigidbody>().position, impulse.normalized, out hit, velocityChange.magnitude))
+            {
+                if(hit.collider.CompareTag("Constraint"))
+                    newPosition = hit.point - velocityChange.normalized * 0.05f;
+            }
 
             // Update the kinematic Rigidbody's position
-            _handle.GetComponent<Rigidbody>().MovePosition(_handle.GetComponent<Rigidbody>().position + positionChange);
+            _handle.GetComponent<Rigidbody>().MovePosition(newPosition);
 
             velocityChange /= 1.35f;
             elapsedTime += Time.deltaTime;
