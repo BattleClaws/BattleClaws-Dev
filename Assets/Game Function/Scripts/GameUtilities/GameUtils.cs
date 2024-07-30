@@ -42,8 +42,11 @@ public class GameUtils : MonoBehaviour
     public Vector3 zoneScale;
     private static Vector3 _zoneScale;
     private static List<Transform> _dropZoneSpawns;
+    private static List<GameObject> _dropZoneHolograms;
+    private static Vector3 _hologramOffset;
     [SerializeField] private List<Transform> dropZoneSpawns = new List<Transform>();
-
+    [SerializeField] private List<GameObject> dropZoneHolograms = new List<GameObject>();
+    [SerializeField] private Vector3 hologramsOffset;
     private static List<GameObject> _dropZones = new List<GameObject>();
 
 
@@ -58,6 +61,8 @@ public class GameUtils : MonoBehaviour
         _enteredColors = colors;
         _playerSpawns = PlayerSpawns;
         _dropZoneSpawns = dropZoneSpawns;
+        _hologramOffset = hologramsOffset;
+        _dropZoneHolograms = dropZoneHolograms;
         UICanvas = GameObject.FindGameObjectWithTag("UI");
         Collectable.SetValue(100);
         uIScoreManager = GameObject.FindObjectOfType<UIScoreManager>();
@@ -204,7 +209,43 @@ public class GameUtils : MonoBehaviour
             ZoneParticles(newZone);
             
             _dropZones.Add(newZone);
+            
+            InitDropZoneHologram(_enteredColors[i], _dropZoneSpawns[i].position);
         }
+    }
+
+    private static void InitDropZoneHologram(Color inputColor, Vector3 pos)
+    {
+        pos = pos + _hologramOffset;
+        
+        int hologramId = 0;
+
+        Color[] validColors =
+        {
+            new Color(1f, 0.75686276f, 0.02745098f), new Color(0f, 0.3019608f, 0.2509804f),
+            new Color(0.84705883f, 0.105882354f, 0.3764706f), new Color(0.11764706f, 0.53333336f, 0.8980392f)
+        };
+
+        if (inputColor == validColors[0])
+        {
+            hologramId = 0;
+        }
+        else if (inputColor == validColors[1])
+        {
+            hologramId = 1;
+        }
+        else if (inputColor == validColors[2])
+        {
+            hologramId = 2;
+        }
+        else
+        {
+            hologramId = 3;
+        }
+        
+        
+        GameObject newHologram = Instantiate(_dropZoneHolograms[hologramId], pos, Quaternion.identity);
+        print(newHologram);
     }
 
     public static IEnumerator LerpToLocalPosition(GameObject obj, Vector3 goal, float delay)
