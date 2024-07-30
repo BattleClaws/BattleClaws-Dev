@@ -48,7 +48,11 @@ public class BannerHandler : MonoBehaviour
     public void EliminationAnnounce(int playerId = 0)
     {
         MoveToActive(playerId);
-        announcementType.text = (RoundManager.gameStyle == GameType.Basic) ? "ELIMINATED" : "WINNER";
+        announcementType.text = "ELIMINATED";
+        if (RoundManager.gameStyle == GameType.BestOf || RoundManager.draw)
+        {
+            announcementType.text = "WINNER";
+        }
     }
 
     private void MoveToActive(int playerId = 0)

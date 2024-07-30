@@ -53,6 +53,7 @@ public class GameUtils : MonoBehaviour
 
     private void Awake()
     {
+        //Application.targetFrameRate = 60;
         _zoneScale = zoneScale;
         _enteredColors = colors;
         _playerSpawns = PlayerSpawns;

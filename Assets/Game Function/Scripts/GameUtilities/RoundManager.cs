@@ -90,7 +90,7 @@ public class RoundManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(PlatformReduction());
+            //StartCoroutine(PlatformReduction());
         }
     }
     
