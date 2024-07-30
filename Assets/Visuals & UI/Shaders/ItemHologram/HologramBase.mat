@@ -85,11 +85,11 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FrensnelPower: 2
-    - _Gap: 0.56
+    - _Gap: 0.39
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LineSpeed: 0.2
+    - _LineSpeed: 0.5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -97,7 +97,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tiling: 25
+    - _Tiling: 15
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

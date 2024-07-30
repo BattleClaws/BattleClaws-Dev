@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2456867025135280653}
   - component: {fileID: 4750784507175472069}
+  - component: {fileID: -3314494916842112335}
   m_Layer: 0
   m_Name: HologramTech
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.035, y: 0.035, z: 0.035}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5817200245933449404}
   m_Father: {fileID: 0}
@@ -45,7 +46,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384c0beabd8c83b4292c45876a9a8b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 0.5
+  rotationSpeed: 2
+--- !u!114 &-3314494916842112335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140408989915473050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca73d5e0e670b84fb75969e7a82ab44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countDown: 30
 --- !u!1 &5493549078431063303
 GameObject:
   m_ObjectHideFlags: 0

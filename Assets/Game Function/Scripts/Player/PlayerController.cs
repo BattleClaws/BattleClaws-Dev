@@ -271,16 +271,6 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Utils
-    
-    public void Explode()
-    {
-        var explosionPrefab = Resources.Load<GameObject>("Prefabs/Explosion");
-
-        var newExplosion = Instantiate(explosionPrefab, Position, Quaternion.identity);
-        newExplosion.GetComponent<ParticleSystem>().Play();
-        
-        Eliminate();
-    }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

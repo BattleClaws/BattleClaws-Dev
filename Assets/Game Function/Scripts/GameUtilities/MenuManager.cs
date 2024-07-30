@@ -92,6 +92,10 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        // This is hacky. Remove later
+        RoundManager.draw = false;
+        
+        
         DontDestroyOnLoad(gameObject);
 
         postProcessingProfile.TryGetSettings(out exposure);
