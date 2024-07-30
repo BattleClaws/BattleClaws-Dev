@@ -158,6 +158,8 @@ public class Collectable : MonoBehaviour
                 if (isSpecial)
                 {
                     SpecialAction(Holder, other.gameObject);
+                    var value = Holder.Properties.AddPoints(Points-20);
+                    GameUtils.ScoreNotication(value, transform);
                 }
                 else
                 {
