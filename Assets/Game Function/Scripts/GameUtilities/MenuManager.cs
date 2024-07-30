@@ -36,31 +36,38 @@ public class MenuManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
+        print("Focused");
         if (!hasFocus)
         {
             SetVisibility(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            EventSystem.current.SetSelectedGameObject(null);
         }
         else
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
         }
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
+        print("Paused");
         if (pauseStatus)
         {
             SetVisibility(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            EventSystem.current.SetSelectedGameObject(null);
         }
         else
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            
+            EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
         }
     }
     
@@ -82,6 +89,8 @@ public class MenuManager : MonoBehaviour
         
         Contrast.value = colorGrading.contrast.value;
         Brightness.value = exposure.keyValue.value;
+
+        currentScreen = Root;
     }
 
     public void SetCurrentScreen(GameObject newScreen)
