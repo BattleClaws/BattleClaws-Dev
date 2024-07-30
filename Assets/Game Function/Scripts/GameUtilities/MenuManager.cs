@@ -105,6 +105,8 @@ public class MenuManager : MonoBehaviour
         Brightness.value = exposure.keyValue.value;
 
         currentScreen = Root;
+        
+        SetVisibility(false);
     }
 
     public void SetCurrentScreen(GameObject newScreen)
