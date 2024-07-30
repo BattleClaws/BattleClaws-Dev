@@ -29,6 +29,8 @@ public class RoundManager : MonoBehaviour
     [Header("Round Number Text Assets")]
     public TextMeshProUGUI roundNumberTMP;
     public TextMeshProUGUI roundMaxTMP;
+
+    public static bool gameActive = true;
    
 
     public GameObject Timer { get; private set; }
@@ -36,6 +38,9 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Round" || SceneManager.GetActiveScene().name == "Draw")
+            gameActive = false;
+        
         StartCoroutine(GameUtils.live.OpenedScene());
         //SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -121,7 +126,7 @@ public class RoundManager : MonoBehaviour
             print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
             playerController._roundActive = true;
         }
-        InvokeRepeating(nameof(UpdateTimer), 0f, 1f);
+        InvokeRepeating(nameof(UpdateTimer), 2.5f, 1f);
     }
 
     private IEnumerator PlatformReduction()
@@ -137,6 +142,13 @@ public class RoundManager : MonoBehaviour
 
     private void UpdateTimer()
     {
+        if (!gameActive)
+        {
+            GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/TimerStart");
+            gameActive = true;
+        }
+
+        
         if (GameUtils.isMenuOpen)
         {
             return;
