@@ -169,6 +169,14 @@ public class Collectable : MonoBehaviour
             else if (other.GetComponent<Renderer>().material.color != Color)
             {
                 GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawIncorrect");
+                var rb = GetComponent<Rigidbody>();
+                rb.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //get vector between this object and the rejectDirection object
+                Vector3 rejectDirection = Vector3.zero - transform.position;
+                //launch the object toward the reject direction with reject force
+                rb.AddForce(rejectDirection * 6.2f, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
+                
             }
             //print(other.GetComponent<Renderer>().material.color + " | " + Color);
         }

@@ -200,7 +200,6 @@ public class GameUtils : MonoBehaviour
             newZone.GetComponent<Renderer>().material.color = _enteredColors[i];
             newZone.tag = "DropZone";
             newZone.layer = LayerMask.NameToLayer("Collectables");
-            
             ZoneParticles(newZone);
             
             _dropZones.Add(newZone);
