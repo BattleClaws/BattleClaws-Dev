@@ -116,6 +116,8 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator SpawnBuffer(List<PlayerController> active)
     {
+        gameActive = false;
+        active.ForEach(p => p._roundActive = false);
         yield return new WaitForSeconds(0.5f);
 
         foreach (var playerController in active)
@@ -124,7 +126,7 @@ public class RoundManager : MonoBehaviour
             print("Resetting player position: " + playerController.Properties.PlayerNum + " at position " + playerController.Position);
             playerController.Properties.RoundReset();
             print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
-            playerController._roundActive = true;
+
         }
         InvokeRepeating(nameof(UpdateTimer), 2.5f, 1f);
     }
@@ -144,7 +146,9 @@ public class RoundManager : MonoBehaviour
     {
         if (!gameActive)
         {
+            print("Restore movement");
             GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/TimerStart");
+            GameObject.FindObjectsOfType<PlayerController>().ToList().ForEach(p => p._roundActive = true);
             gameActive = true;
         }
 

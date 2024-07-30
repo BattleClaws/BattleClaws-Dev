@@ -166,12 +166,12 @@ public class MenuManager : MonoBehaviour
     public void OnContrastChange(System.Single value)
     {
         colorGrading.contrast.value = value;
-        contrastSliderLabel.text = value.ToString();
     }
 
     public void ToggleFullScreen(bool isOn)
     {
         Screen.fullScreen = isOn;
+        
     }
     
     
