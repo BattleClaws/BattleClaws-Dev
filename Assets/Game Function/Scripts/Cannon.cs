@@ -34,6 +34,7 @@ public class Cannon : MonoBehaviour
         // flames
         flames.Play();
         collider.SetActive(true);
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/EnvironmentFire");
         yield return new WaitForSeconds(time);
         flames.Stop();
         indicatorLight.GetComponent<Renderer>().material.color = Color.black;
