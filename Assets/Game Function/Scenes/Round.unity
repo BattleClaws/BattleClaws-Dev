@@ -7314,6 +7314,12 @@ MonoBehaviour:
   - {fileID: 2125421456}
   - {fileID: 915512906}
   - {fileID: 415894356}
+  dropZoneHolograms:
+  - {fileID: 4476508660732616290, guid: 78fe6c1c5a3dbcd47a6c6b306b2a7ed9, type: 3}
+  - {fileID: 4140408989915473050, guid: 7fe2d9cb2edf7644e980233205fe84c7, type: 3}
+  - {fileID: 4286677981344249017, guid: e53dfb3cc282b7f46a8345a5a29f0ce2, type: 3}
+  - {fileID: 3598135447389936435, guid: 872a31de07fdbd34eb2a5c43a9ff21c7, type: 3}
+  hologramsOffset: {x: 0, y: 2, z: 0}
 --- !u!4 &1403934970
 Transform:
   m_ObjectHideFlags: 0

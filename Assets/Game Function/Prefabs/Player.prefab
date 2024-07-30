@@ -442,7 +442,7 @@ Projector:
   serializedVersion: 2
   m_NearClipPlane: 0.1
   m_FarClipPlane: 80.8
-  m_FieldOfView: 19.7
+  m_FieldOfView: 10
   m_AspectRatio: 1
   m_Orthographic: 0
   m_OrthographicSize: 10
