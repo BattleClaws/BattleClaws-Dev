@@ -22,13 +22,13 @@ public class MenuManager : MonoBehaviour
     public Slider Brightness;
 
     [Space] [Header("Requirements")] public AudioMixer masterVolumeMixer;
+    public AudioMixer EffectsVolumeMixer;
     
     public PostProcessProfile postProcessingProfile;
     private AutoExposure exposure;
     private ColorGrading colorGrading;
     public TMP_Text textSliderLabel;
     public TMP_Text contrastSliderLabel;
-    public TMP_Text brightnessSliderLabel;
 
     private GameObject previousHighlightedItem;
 
@@ -127,11 +127,15 @@ public class MenuManager : MonoBehaviour
         masterVolumeMixer.SetFloat("MasterVol", value);
         textSliderLabel.text = value.ToString();
     }
+    
+    public void OnEffectsChange(System.Single value) 
+    {
+        EffectsVolumeMixer.SetFloat("SoundEffectsVol", value);
+    }
 
     public void OnBrightnessChange(System.Single value)
     {
         exposure.keyValue.value = value;
-        brightnessSliderLabel.text = value.ToString();
     }
     
     public void OnContrastChange(System.Single value)

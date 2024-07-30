@@ -27,6 +27,7 @@ public class GameUtils : MonoBehaviour
     public GenericAnnoucementHandler genericAnnouncement;
     public UIScoreManager uIScoreManager;
     public PlayerAnnocementHandler playerAnnocementHandler;
+    public AudioManager audioPlayer;
 
     public static GameUtils instance;
     public static bool isMenuOpen;
@@ -63,6 +64,7 @@ public class GameUtils : MonoBehaviour
         genericAnnouncement = FindObjectOfType<GenericAnnoucementHandler>();
         menuManager = GameObject.FindObjectOfType<MenuManager>();
         playerAnnocementHandler = FindObjectOfType<PlayerAnnocementHandler>();
+        audioPlayer = FindObjectOfType<AudioManager>();
 
         live = this;
     }

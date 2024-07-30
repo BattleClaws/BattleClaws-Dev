@@ -166,6 +166,10 @@ public class Collectable : MonoBehaviour
                 }
                 Destroy(gameObject);
             }   
+            else if (other.GetComponent<Renderer>().material.color != Color)
+            {
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawIncorrect");
+            }
             //print(other.GetComponent<Renderer>().material.color + " | " + Color);
         }
          // for readying up 
@@ -176,6 +180,7 @@ public class Collectable : MonoBehaviour
                 // need to identify the holder here
                 Holder.SetReady(true);
                 Debug.Log("Player " + Holder.Properties.PlayerNum + " Is ready to play!");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawReady");
                 //Destroy(gameObject);
             }
         }
@@ -193,12 +198,15 @@ public class Collectable : MonoBehaviour
             case SpecialCollectableType.Speed:
                 user.Properties.ApplySpeed(8, 10);
                 GameUtils.instance.uIScoreManager.SetCornerStateForTime(user.Properties.PlayerNum-1, CornerStates.speed, 10);
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/SpecialEffects/SpecialSpeed");
                 break;
             case SpecialCollectableType.ShuffleZones:
                 GameUtils.InitDropZones(false);
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/SpecialEffects/SpecialShuffle");
                 break;
             case SpecialCollectableType.Ice:
                 var otherPlayers = FindObjectsOfType<PlayerController>().Where(p => p!=user).ToList();
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/SpecialEffects/SpecialIce");
                 for(int i = 0; i < otherPlayers.Count; i++)
                 {
                     otherPlayers[i].Properties.ApplySpeed(1,2);
@@ -207,6 +215,8 @@ public class Collectable : MonoBehaviour
                 break;
             case SpecialCollectableType.Bomb:
                 var newExplosion = Resources.Load<GameObject>("Prefabs/Explosion");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/SpecialEffects/SpecialBomb1");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/SpecialEffects/SpecialBomb");
                 var explosionInstance = Instantiate(newExplosion, transform.position, Quaternion.identity);
                 explosionInstance.GetComponent<ParticleSystem>().Play();
                 GameUtils.instance.LockZone(zone);

@@ -160,6 +160,8 @@ public class Player : MonoBehaviour
 
     public int AddPoints(int amount)
     {
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawScore");
+
          Points += amount * Multiplier;
          UpdateScoreDisplay();
          return amount * Multiplier;

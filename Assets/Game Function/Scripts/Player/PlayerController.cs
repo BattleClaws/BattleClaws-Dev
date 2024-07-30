@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
             if (Properties.heldObject != Properties.gameObject)
             {
                 Properties.Animator.SetTrigger("Open");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawLetGo");
                 try
                 {
                     // Have a try here for the instance that the collectable has been deleted while the player was
@@ -137,6 +138,7 @@ public class PlayerController : MonoBehaviour
                 //print(startPosition + " | " + goalPosition);
 
                 Properties.Animator.SetTrigger("Open");
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawDrop");
                 for (float i = 0; i < 1.1f; i += 0.07f)
                 {
                     Position = Vector3.Lerp(startPosition, goalPosition, i);
@@ -227,6 +229,9 @@ public class PlayerController : MonoBehaviour
         // Here, im getting the normalised position between the current claw and the collider, getting a direction to move away from
         Vector3 Direction = Vector3.Normalize(otherPosition - Position);
         StartCoroutine(Properties.SpeedEffect(0, 0.2f, false));
+        
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawHit1");
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawHit2");
         
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
