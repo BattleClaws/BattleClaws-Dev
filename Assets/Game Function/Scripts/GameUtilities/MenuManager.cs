@@ -46,6 +46,8 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
+            print("Reenter");
+
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
@@ -64,13 +66,25 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
+            print("Reenter");
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             
             EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
+        }
+
+
+    }
+
     public void QuitGame()
     {
         Application.Quit();
