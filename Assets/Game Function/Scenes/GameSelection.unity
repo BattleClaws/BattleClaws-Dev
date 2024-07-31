@@ -3015,7 +3015,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2e811414a8074d649ab4e37b7c8ce2a1, type: 2}
+  - {fileID: 2100000, guid: 59b2ff8a7ea538945b1db001d76f57a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12073,6 +12073,8 @@ MonoBehaviour:
   spawnRadius: 0
   zoneScale: {x: 0, y: 0, z: 0}
   dropZoneSpawns: []
+  dropZoneHolograms: []
+  hologramsOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1966551919
 MonoBehaviour:
   m_ObjectHideFlags: 0
