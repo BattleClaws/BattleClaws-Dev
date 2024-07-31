@@ -6001,7 +6001,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.73, y: 6.437506, z: 9.234594}
+  m_Size: {x: 0.28, y: 6.437506, z: 9.234594}
   m_Center: {x: 0.00000059040394, y: 0.24380831, z: -2.641771}
 --- !u!1 &209661469
 GameObject:
@@ -37969,7 +37969,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.73, y: 6.437506, z: 9.234594}
+  m_Size: {x: 0.28, y: 6.437506, z: 9.234594}
   m_Center: {x: 0.00000059040394, y: 0.24380831, z: -2.641771}
 --- !u!1 &892618861
 GameObject:
@@ -42937,7 +42937,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.73, y: 6.437506, z: 9.234594}
+  m_Size: {x: 0.28, y: 6.437506, z: 9.234594}
   m_Center: {x: 0.00000059040394, y: 0.24380831, z: -2.641771}
 --- !u!4 &992170358 stripped
 Transform:
@@ -70886,8 +70886,9 @@ MonoBehaviour:
   spawnAmount: 25
   spawnRadius: 3
   zoneScale: {x: 3, y: 0.38, z: 2.8}
-  dropZoneSpawns:
-  - {fileID: 1969806982}
+  dropZoneSpawns: []
+  dropZoneHolograms: []
+  hologramsOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1932109765 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
@@ -70975,7 +70976,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.73, y: 6.437506, z: 9.234594}
+  m_Size: {x: 0.28, y: 6.437506, z: 9.234594}
   m_Center: {x: 0.00000059040394, y: 0.24380831, z: -2.641771}
 --- !u!1 &2008133200
 GameObject:

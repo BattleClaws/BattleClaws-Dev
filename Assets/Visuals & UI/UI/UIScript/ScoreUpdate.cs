@@ -20,8 +20,9 @@ public class ScoreUpdate : MonoBehaviour
 
     private void Update()
     {
+        print("Current Score : " + _uiScore.PlayersScores[_cornerManager.playerNumber].ToString());
         _text.text = _uiScore.PlayersScores[_cornerManager.playerNumber].ToString().PadLeft(6, '0');
         if(RoundManager.draw)
-            _text.text = _uiScore.PlayersScores[_cornerManager.playerNumber] / 100 + "/3";
+            _text.text = _uiScore.PlayersScores[_cornerManager.playerNumber].ToString()[0] + "/3";
     }
 }

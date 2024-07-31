@@ -194,6 +194,7 @@ public class GameUtils : MonoBehaviour
         if (!isStart)
         {
             GameObject.FindGameObjectsWithTag("DropZone").ToList().ForEach(Destroy);
+            FindObjectsOfType<UiClawRotation>().Where(o => o.name.StartsWith("Hologram")).ToList().ForEach(o => Destroy(o.gameObject));
             //Randomise the colours so the dropzones actually shuffle :3
             _enteredColors = _enteredColors.OrderBy(_ => Guid.NewGuid()).ToList();
             _dropZones = new List<GameObject>();
