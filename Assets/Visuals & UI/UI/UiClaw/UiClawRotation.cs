@@ -13,7 +13,7 @@ public class UiClawRotation : MonoBehaviour
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
         gameObject.transform.Rotate(new Vector3(0, rotationSpeed, 0));
     }
