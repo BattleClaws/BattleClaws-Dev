@@ -310,12 +310,13 @@ public class PlayerController : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
     
-    public void SetReady(bool ready) // used to mark the player as ready 
+    public void SetReady(bool ready) // used to mark the player as ready and activate the light
     {
         if (!IsReady)
         {
             ReadyUp.UpdateReadiedPlayersCount();
             IsReady = ready;
+            ReadyUp.Instance.ShowPlayerReadyStatus(Properties.PlayerNum, ready);
         }
         
     }
