@@ -134,7 +134,8 @@ public class GameUtils : MonoBehaviour
 
     public void SendScoreToUI(int playerNum, int score)
     {
-        uIScoreManager.InjectScore(playerNum, score);
+        if(uIScoreManager)
+            uIScoreManager.InjectScore(playerNum, score);
     }
 
     public static void EffectNotification(string effect, int player)

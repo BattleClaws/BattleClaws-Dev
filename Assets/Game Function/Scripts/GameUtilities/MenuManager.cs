@@ -151,6 +151,10 @@ public class MenuManager : MonoBehaviour
     {
         if(Base.activeSelf && currentScreen.GetComponent<SettingsScreen>().previousPage != null)
             currentScreen.GetComponent<SettingsScreen>().Back();
+        else if (currentScreen.GetComponent<SettingsScreen>().previousPage == null)
+        {
+            SetVisibility(false);
+        }
     }
 
     public void OnVolumeChange(System.Single value) 

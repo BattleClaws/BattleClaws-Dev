@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1273,7 +1273,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1343094965}
     m_SelectOnDown: {fileID: 1158962624}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1421450547}
     m_SelectOnRight: {fileID: 1871751649}
   m_Transition: 1
   m_Colors:
@@ -3267,7 +3267,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1871751649}
     m_SelectOnDown: {fileID: 1343094965}
     m_SelectOnLeft: {fileID: 330090247}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1421450547}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
@@ -5798,7 +5798,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 842356229}
     m_SelectOnDown: {fileID: 1158962624}
     m_SelectOnLeft: {fileID: 1377970338}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1421450547}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
@@ -6851,8 +6851,8 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 1871751649}
-    m_SelectOnLeft: {fileID: 1158962624}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1871751649}
+    m_SelectOnRight: {fileID: 330090247}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
@@ -9541,7 +9541,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1158962624}
     m_SelectOnDown: {fileID: 842356229}
     m_SelectOnLeft: {fileID: 330090247}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1421450547}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}

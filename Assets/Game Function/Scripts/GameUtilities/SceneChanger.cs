@@ -16,6 +16,10 @@ public class SceneChanger : MonoBehaviour
     [Space] [Header("Delay Options")] public bool delayInput = false;
     public float delayTime;
     public GameObject continuePrompt;
+
+    [Space] [Header("Sound Options")] public bool playSound;
+    public string clipName;
+    
     
 
     private string currentSceneName;
@@ -78,6 +82,8 @@ public class SceneChanger : MonoBehaviour
         if ((delayInput && delayTime <= 0 && Input.GetButtonDown("Submit")) || (!delayInput && Input.GetButtonDown("Submit")))
         {
             print("Changing to: " + destinationSceneName);
+            if(playSound)
+                GameUtils.instance.audioPlayer.PlayChosenClip(clipName);
             StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
         }
 

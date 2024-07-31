@@ -5544,6 +5544,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   readyStatusText: {fileID: 935084191}
+  playerLightScripts:
+  - {fileID: 967355995}
+  - {fileID: 57701274}
+  - {fileID: 57701273}
+  - {fileID: 71004123}
 --- !u!1 &1561523037
 GameObject:
   m_ObjectHideFlags: 0
