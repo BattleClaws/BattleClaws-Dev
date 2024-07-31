@@ -64,6 +64,8 @@ public class Player : MonoBehaviour
         _controller = GetComponent<PlayerController>();
         PlayerSetup();
         
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawJoin");
+        
         charge = Resources.Load<Material>("Materials/SuperCharge");
         //CamAnchor = _controller._handle.transform.Find("Cam Anchor").gameObject;
         print("awake!");
