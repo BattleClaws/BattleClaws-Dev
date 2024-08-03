@@ -7,7 +7,7 @@ public class SceneChange : MonoBehaviour
 {
 
     public string destinationScene;
-    public int timeUntilChange;
+    public float timeUntilChange;
     public bool startOnAwake;
     
     
