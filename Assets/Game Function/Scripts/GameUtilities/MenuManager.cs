@@ -90,6 +90,12 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    private void Awake()
+    {
+        if(GameUtils.instance)
+            GameUtils.instance.audioPlayer = FindObjectOfType<AudioManager>();
+    }
+
     void Start()
     {
         // This is hacky. Remove later

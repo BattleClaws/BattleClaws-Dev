@@ -56,6 +56,15 @@ public class GameUtils : MonoBehaviour
 
     private void Awake()
     {
+        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
         //Application.targetFrameRate = 60;
         _zoneScale = zoneScale;
         _enteredColors = colors;
@@ -92,14 +101,7 @@ public class GameUtils : MonoBehaviour
 
     private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        
 
         ScoreIndicator = Resources.Load<GameObject>("Prefabs/Score Indicator");
         EffectIndicator = Resources.Load<GameObject>("Prefabs/EffectAnnouncer");

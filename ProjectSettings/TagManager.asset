@@ -12,6 +12,7 @@ TagManager:
   - SafeZone
   - Fire
   - ReadyZone
+  - Menu
   layers:
   - Default
   - TransparentFX

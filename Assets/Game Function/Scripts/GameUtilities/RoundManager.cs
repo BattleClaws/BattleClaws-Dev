@@ -55,7 +55,8 @@ public class RoundManager : MonoBehaviour
         
         //GameObject.Find("Round").GetComponent<TMP_Text>().text = currentRoundNumber.ToString();
         
-        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/GameStart");
+        if(GameUtils.instance.audioPlayer)
+            GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/GameStart");
 
         SceneReload();
         UpdateRound();
