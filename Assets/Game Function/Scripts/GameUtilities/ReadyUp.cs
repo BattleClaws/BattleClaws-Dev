@@ -9,8 +9,9 @@ public class ReadyUp : MonoBehaviour
   
     public static int NumberOfReadyPlayers;
     public TextMeshProUGUI readyStatusText;
+    public GameObject MorePlayersBanner;
 
-    // array to hold ref to light status scripts (see game controller object)
+    // ray to hold ref to light status scripts (see game controller object)
     public lightStatus[] playerLightScripts;
     
     // Singleton yeehaw
@@ -33,6 +34,7 @@ public class ReadyUp : MonoBehaviour
     void Start()
     {
         NumberOfReadyPlayers = 0;
+        MorePlayersBanner.SetActive(true);
     }
 
     public static void UpdateReadiedPlayersCount()
@@ -60,7 +62,14 @@ public class ReadyUp : MonoBehaviour
 
     void Update()
     {
-        readyStatusText.text = NumberOfReadyPlayers.ToString() + "/" + Player.amountOfPlayers.ToString();
+        if (Player.amountOfPlayers >= 2)
+        {
+            MorePlayersBanner.SetActive(false);
+            readyStatusText.text = NumberOfReadyPlayers.ToString() + "/" + Player.amountOfPlayers.ToString();
+        }
+
+      
+        
     }
 
 
