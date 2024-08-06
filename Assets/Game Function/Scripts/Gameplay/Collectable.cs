@@ -52,6 +52,10 @@ public class Collectable : MonoBehaviour
     [SerializeField]private List<GameObject> sweetsModels;
     [SerializeField]private List<GameObject> techModels;
     [SerializeField] private List<GameObject> specialModels;
+
+    [Header("Cosmetics")] [SerializeField] private bool isCosmetic;
+    [SerializeField] private List<GameObject> cosmeticModels;
+    private GameObject _currentCosmetic;
     
     [Header("Special Settings")]
     [Tooltip("Percentage of special collectables: 0-100")]
@@ -79,6 +83,13 @@ public class Collectable : MonoBehaviour
         {
             GameUtils.instance.InitCollectables();
             Destroy(gameObject);
+            return;
+        }
+
+        if (isCosmetic)
+        {
+            Mesh = RandomCosmetic();
+            _currentCosmetic = Mesh;
             return;
         }
 
@@ -138,6 +149,11 @@ public class Collectable : MonoBehaviour
         return chosenModel;
     }
 
+    private GameObject RandomCosmetic()
+    {
+        return cosmeticModels[UnityEngine.Random.Range(0, cosmeticModels.Count)];
+    }
+
     public static void SetValue(int value)
     {
         Points = value;
@@ -153,6 +169,14 @@ public class Collectable : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
+
+            if (isCosmetic)
+            {
+                Holder.GetComponent<CosmeticsManager>().SetCosmetic(Mesh);
+                Destroy(gameObject);
+                return;
+            }
+
             if (isSpecial || RoundManager.draw || other.GetComponent<Renderer>().material.color == Color)
             {
                 if (isSpecial)
