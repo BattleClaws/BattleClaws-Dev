@@ -129,6 +129,8 @@ public class GameUtils : MonoBehaviour
     public void InitCollectables()
     {
         var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
+        if (SceneManager.GetActiveScene().name == "Cosmetics test")
+            collectable = Resources.Load<GameObject>("Prefabs/CollectableTest");
         Vector3 randomLoc = Random.insideUnitCircle;
         randomLoc = new Vector3(randomLoc.x, spawnOffset, randomLoc.y) * spawnRadius;
         Instantiate(collectable, randomLoc, Quaternion.identity);
