@@ -115,6 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9111255656566348596}
+  - component: {fileID: 5968465409271294633}
   m_Layer: 0
   m_Name: Cosmetic_CowbellCollar
   m_TagString: Untagged
@@ -138,6 +139,22 @@ Transform:
   - {fileID: 8479927737592384163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5968465409271294633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2992578911490471920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee9d5cb5daa8c9499a8830fef2bd43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultScale: {x: 0, y: 0, z: 0}
+  _defaultPosition: {x: 0, y: 0, z: 0}
+  GachaScale: {x: 120, y: 120, z: 120}
+  mesh: {fileID: 1496038833456251771}
 --- !u!1 &7555318381588310970
 GameObject:
   m_ObjectHideFlags: 0

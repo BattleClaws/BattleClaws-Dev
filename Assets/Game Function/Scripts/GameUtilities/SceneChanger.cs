@@ -64,7 +64,7 @@ public class SceneChanger : MonoBehaviour
         PlayerController[] playersToDestroy = FindObjectsOfType<PlayerController>();
        foreach(PlayerController player in playersToDestroy)
         {
-            print("Killed player " + player.Properties.PlayerNum);
+            //print("Killed player " + player.Properties.PlayerNum);
             Destroy(player.gameObject);
         }
         
@@ -81,7 +81,7 @@ public class SceneChanger : MonoBehaviour
 
         if ((delayInput && delayTime <= 0 && Input.GetButtonDown("Submit")) || (!delayInput && Input.GetButtonDown("Submit")))
         {
-            print("Changing to: " + destinationSceneName);
+            //print("Changing to: " + destinationSceneName);
             if(playSound)
                 GameUtils.instance.audioPlayer.PlayChosenClip(clipName);
             StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));

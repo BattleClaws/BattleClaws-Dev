@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(particles, Position, Quaternion.identity);
         // Then i just force it away :3
         
-        print("Strike Direction" + Direction);
+        //print("Strike Direction" + Direction);
         _isDropped = true;
         StartCoroutine(ApplyImpulseOverTime((Direction * -1), 0.5f));
         //GetComponent<Rigidbody>().AddForce(Direction * -5, ForceMode.Impulse);

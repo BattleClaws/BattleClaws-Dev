@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public enum SpecialCollectableType
 {
@@ -28,6 +29,7 @@ public class Collectable : MonoBehaviour
     public Color Color { get; private set; }
 
     private GameObject currentMesh;
+    public GameObject startMesh;
 
     public GameObject Mesh
     {
@@ -39,8 +41,13 @@ public class Collectable : MonoBehaviour
         {
             if(currentMesh)
                 Destroy(currentMesh);
-            var newMesh = Instantiate(value, transform);
+            var newMesh = Instantiate(value, currentMesh.transform.parent);
             newMesh.transform.localPosition = Vector3.zero;
+            if (newMesh.TryGetComponent<Cosmetic>(out Cosmetic newCosmetic))
+            {
+                newCosmetic.SetWearableView(false);
+            }
+
             currentMesh = newMesh;
         }
     }
@@ -55,7 +62,7 @@ public class Collectable : MonoBehaviour
 
     [Header("Cosmetics")] [SerializeField] private bool isCosmetic;
     [SerializeField] private List<GameObject> cosmeticModels;
-    private GameObject _currentCosmetic;
+    public MeshRenderer colourSphere;
     
     [Header("Special Settings")]
     [Tooltip("Percentage of special collectables: 0-100")]
@@ -72,7 +79,7 @@ public class Collectable : MonoBehaviour
 
     private void Start()
     {
-        currentMesh = transform.GetChild(0).gameObject;
+        currentMesh = startMesh;
         CollectableSetup();
     }
 
@@ -89,7 +96,9 @@ public class Collectable : MonoBehaviour
         if (isCosmetic)
         {
             Mesh = RandomCosmetic();
-            _currentCosmetic = Mesh;
+            //_currentCosmetic = Mesh;
+            if (colourSphere)
+                colourSphere.material.color = RandomColor();
             return;
         }
 
@@ -117,6 +126,11 @@ public class Collectable : MonoBehaviour
             Mesh = chosenModel;
             isSpecial = true;
         }
+    }
+
+    private Color RandomColor()
+    {
+        return new Color(Random.Range(0, 101)/100f, Random.Range(0, 101)/100f, Random.Range(0, 101)/100f, 0.55f);
     }
 
     private GameObject RandomCollectable()
@@ -260,7 +274,7 @@ public class Collectable : MonoBehaviour
                 {
                     if (collidingPlayer == null)
                         return;
-                    print(collidingPlayer.name);
+                    //print(collidingPlayer.name);
                     var playerData = collidingPlayer.GetComponentInParent<PlayerController>();
                     playerData.Properties.ApplySpeed(1, stunTime);
                 }

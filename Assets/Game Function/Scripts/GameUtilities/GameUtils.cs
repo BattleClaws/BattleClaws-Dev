@@ -258,7 +258,7 @@ public class GameUtils : MonoBehaviour
         
         
         GameObject newHologram = Instantiate(_dropZoneHolograms[hologramId], pos, Quaternion.identity);
-        print(newHologram);
+        //print(newHologram);
     }
 
     public static IEnumerator LerpToLocalPosition(GameObject obj, Vector3 goal, float delay)

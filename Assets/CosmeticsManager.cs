@@ -15,6 +15,8 @@ public class CosmeticsManager : MonoBehaviour
 
     public void SetCosmetic(GameObject cosmetic)
     {
+        var poofRef = Resources.Load<GameObject>("Prefabs/Poof");
+        Instantiate(poofRef, GetComponent<Player>().Model.transform);
         if (_currentCosmetic != null)
         {
             Destroy(_currentCosmetic);
@@ -22,6 +24,8 @@ public class CosmeticsManager : MonoBehaviour
         }
 
         var newCosmetic = Instantiate(cosmetic, cosmeticsHolder.transform);
+        print("Instantiated " + newCosmetic.name);
+        newCosmetic.GetComponent<Cosmetic>().SetWearableView(true);
         _currentCosmetic = newCosmetic;
     }
 }

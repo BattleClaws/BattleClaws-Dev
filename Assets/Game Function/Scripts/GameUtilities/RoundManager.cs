@@ -64,7 +64,7 @@ public class RoundManager : MonoBehaviour
 
     private void SceneReload()
     {
-        print("Executing Scene Reload Sequence");
+        //print("Executing Scene Reload Sequence");
 
         Timer = GameObject.Find("Time");
         secondsRemaining = (draw)? 360 : (gameStyle == GameType.Basic)? 30:roundTime;  //60 - (currentRoundNumber -1 * 10);
@@ -128,9 +128,9 @@ public class RoundManager : MonoBehaviour
         foreach (var playerController in active)
         {
             playerController.StopCoroutines();
-            print("Resetting player position: " + playerController.Properties.PlayerNum + " at position " + playerController.Position);
+            //print("Resetting player position: " + playerController.Properties.PlayerNum + " at position " + playerController.Position);
             playerController.Properties.RoundReset();
-            print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
+            //print("Changed player position: " + playerController.Properties.PlayerNum + " to " + playerController.Position);
 
         }
         InvokeRepeating(nameof(UpdateTimer), 2.5f, 1f);
@@ -151,7 +151,7 @@ public class RoundManager : MonoBehaviour
     {
         if (!gameActive)
         {
-            print("Restore movement");
+            //print("Restore movement");
             GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Sequencing/TimerStart");
             GameObject.FindObjectsOfType<PlayerController>().ToList().ForEach(p => p._roundActive = true);
             gameActive = true;
