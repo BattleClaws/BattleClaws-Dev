@@ -1841,6 +1841,7 @@ Transform:
   - {fileID: 6082565079579577134}
   - {fileID: 861502632289715707}
   - {fileID: 6171096838742904644}
+  - {fileID: 3714054286672036320}
   m_Father: {fileID: 5519131745135061115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4776560280535828199
@@ -1882,7 +1883,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1.29, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0.0009999275, z: 0}
+  m_ConnectedAnchor: {x: 0, y: 0.0009998679, z: 0}
   serializedVersion: 2
   m_UseSpring: 1
   m_Spring:
@@ -4636,6 +4637,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6846781491033501563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3714054286672036320}
+  m_Layer: 6
+  m_Name: Cosmetics Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3714054286672036320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6846781491033501563}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8728828328834116149}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &6883426142156822173
 GameObject:
   m_ObjectHideFlags: 0
