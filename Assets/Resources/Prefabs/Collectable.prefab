@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dd185d314086f4e8842db4512c5cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startMesh: {fileID: 69383377055368383}
   moneyModels:
   - {fileID: 8624577406523576405, guid: 5a5f9fb28f6dec64a8e13c042fc16477, type: 3}
   - {fileID: 3513893836687815945, guid: 6b791b8ba597f88409cf3eba91da9335, type: 3}
@@ -204,12 +205,12 @@ MonoBehaviour:
   - {fileID: 4235893222464023216, guid: 7418daec6c30b89418044739a3d80e85, type: 3}
   - {fileID: 5952443546364179246, guid: bbf908171309cfa46b588e0c4f447690, type: 3}
   - {fileID: 3741020310366373573, guid: 94044fd5ea49043479cfb637db0401b4, type: 3}
+  isCosmetic: 0
+  cosmeticModels: []
   specialPercent: 5
   isSpecial: 0
   specialType: 0
-  diffuseTime: 0
   blastRadius: 500
-  lockdownTime: 0
   stunTime: 3
 --- !u!135 &1821323860583454741
 SphereCollider:

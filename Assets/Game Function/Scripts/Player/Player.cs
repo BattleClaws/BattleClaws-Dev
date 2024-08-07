@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        print("Spawn");
+        //print("Spawn");
         Speed = _baseSpeed;
         Multiplier = 1;
         heldObject = this.gameObject;
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
         
         charge = Resources.Load<Material>("Materials/SuperCharge");
         //CamAnchor = _controller._handle.transform.Find("Cam Anchor").gameObject;
-        print("awake!");
+        //print("awake!");
 
 
     }
@@ -185,6 +185,6 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        print("Destroy");
+        //print("Destroy");
     }
 }

@@ -36,24 +36,24 @@ public class StateDebug : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.F))
         {
-            print("frozen");
+            //print("frozen");
             SetFreeze(0);
 
             ann.StatusPopup(0, "Frozen!");
         }
         if (Input.GetKey(KeyCode.G))
         {
-            print("def");
+            //print("def");
             SetDefault(0);
         }
         if (Input.GetKey(KeyCode.H))
         {
-            print("2x");
+            //print("2x");
             SetDouble(1);
         }
         if (Input.GetKey(KeyCode.J))
         {
-            print("J");
+            //print("J");
             SetSpeed(1);
         }
     }

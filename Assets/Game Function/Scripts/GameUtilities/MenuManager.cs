@@ -42,7 +42,7 @@ public class MenuManager : MonoBehaviour
  
     private void OnApplicationFocus(bool hasFocus)
     {
-        print("Focused");
+        //print("Focused");
         if (!hasFocus)
         {
             SetVisibility(true);
@@ -52,7 +52,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            print("Reenter");
+            //print("Reenter");
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -62,7 +62,7 @@ public class MenuManager : MonoBehaviour
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        print("Paused");
+        //print("Paused");
         if (pauseStatus)
         {
             SetVisibility(true);
@@ -72,7 +72,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            print("Reenter");
+            //print("Reenter");
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             
