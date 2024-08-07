@@ -8,14 +8,18 @@ using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+   
     [Header("Menu Fields")] public GameObject Base;
     public GameObject Root;
     public GameObject audioSettings;
     public GameObject graphicsSettings;
     public GameObject controlsSettings;
+    public GameObject customizableMenu;
+    public CustomMenu customMenuScript; // contains the logic for custom menu 
 
     [Header("Settings Sliders")] public Slider Volume;
     public Slider Contrast;
@@ -34,6 +38,8 @@ public class MenuManager : MonoBehaviour
 
     [Header("Misc.")] public GameObject currentScreen;
 
+
+ 
     private void OnApplicationFocus(bool hasFocus)
     {
         //print("Focused");
@@ -85,9 +91,73 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    public void LaunchCustomMenu(string Context)
+    {
+        customizableMenu.SetActive(true);
+        customMenuScript = customizableMenu.GetComponent<CustomMenu>();
+
+        switch (Context)
+        {
+            case "EndGame": // After Pressing A when viewing the Final Scores in the End Game Scene
+
+            // hide any  unneeded button(s)
+            customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
+            customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
+            // assign the menu header
+            customMenuScript.setCustomHeaderAndSubHeader("Game Complete!", "");
+
+            // assign the primary button
+            customMenuScript.AssignAction1(() => Rematch(), "REMATCH");
+
+            // assign the secondary button
+            customMenuScript.AssignAction2(() => MainMenu(), "Main Menu");
+            
+            
+            break;
+        
+            case "Quit": // After selecting the "Quit Game" option on the Settings/ Pause Menu
+                
+            SetCurrentScreen(customizableMenu);
+            // hide any  unneeded button(s)
+            customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
+            customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
+            
+            customMenuScript.setCustomHeaderAndSubHeader("Quit the Game?", "You will lose any current progress");
+            
+            // assign the Primary Button
+            customMenuScript.AssignAction1(()=> OnBackPressed(),"NO");
+            
+            // assign the Secondary button 
+            customMenuScript.AssignAction2(() => QuitGame(), "YES");
+            
+            
+            break;
+            
+        }
+
+    }
+
+    public void Rematch()
+    {
+        // this function should begin a new game with the same gamemode,
+        // number of players, customization options and round settings. 
+        SceneManager.LoadScene("Round");
+    }
+
+    public void CloseCustomMenu() // closes the Custom Menu, clears all the assigned actions
+    {
+        customizableMenu.SetActive(false);
+        customMenuScript.ClearAllAssignedActions();
+    }
+
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void MainMenu() // mode selection
+    {
+        SceneManager.LoadScene("GameSelect");
     }
 
     private void Awake()
@@ -98,6 +168,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+     
         // This is hacky. Remove later
         RoundManager.draw = false;
         
@@ -155,6 +226,13 @@ public class MenuManager : MonoBehaviour
 
     public void OnBackPressed()
     {
+        if (currentScreen == customizableMenu)
+        {
+            currentScreen.SetActive(false);
+            currentScreen = FindObjectOfType<SettingsScreen>().gameObject;
+            
+        }
+        
         if(Base.activeSelf && currentScreen.GetComponent<SettingsScreen>().previousPage != null)
             currentScreen.GetComponent<SettingsScreen>().Back();
         else if (currentScreen.GetComponent<SettingsScreen>().previousPage == null)
