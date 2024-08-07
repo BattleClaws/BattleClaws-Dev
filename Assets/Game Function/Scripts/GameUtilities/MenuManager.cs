@@ -91,24 +91,50 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void LaunchCustomMenu()
+    public void LaunchCustomMenu(string Context)
     {
-        // call me during EndGame after viewing the final scores
-        
         customizableMenu.SetActive(true);
         customMenuScript = customizableMenu.GetComponent<CustomMenu>();
-        // assign the menu header
-        customMenuScript.setCustomHeader("Game Complete!");
+
+        switch (Context)
+        {
+            case "EndGame": // After Pressing A when viewing the Final Scores in the End Game Scene
+
+            // hide any  unneeded button(s)
+            customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
+            customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
+            // assign the menu header
+            customMenuScript.setCustomHeaderAndSubHeader("Game Complete!", "");
+
+            // assign the primary button
+            customMenuScript.AssignAction1(() => Rematch(), "REMATCH");
+
+            // assign the secondary button
+            customMenuScript.AssignAction2(() => MainMenu(), "Main Menu");
+            
+            
+            break;
         
-        // assign the primary button
-        // Wrap Rematch in a lambda expression to match UnityAction
-        customMenuScript.AssignAction1(() => Rematch(), "REMATCH");
-        
-        // assign the secondary button
-        customMenuScript.AssignAction2(()=>MainMenu(), "Main Menu");
-        
-        // assign the tertiary button
-        customMenuScript.AssignAction3(() => QuitGame(), "Quit Game");
+            case "Quit": // After selecting the "Quit Game" option on the Settings/ Pause Menu
+                
+            SetCurrentScreen(customizableMenu);
+            // hide any  unneeded button(s)
+            customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
+            customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
+            
+            customMenuScript.setCustomHeaderAndSubHeader("Quit the Game?", "You will lose any current progress");
+            
+            // assign the Primary Button
+            customMenuScript.AssignAction1(()=> OnBackPressed(),"NO");
+            
+            // assign the Secondary button 
+            customMenuScript.AssignAction2(() => QuitGame(), "YES");
+            
+            
+            break;
+            
+        }
+
     }
 
     public void Rematch()
@@ -116,6 +142,12 @@ public class MenuManager : MonoBehaviour
         // this function should begin a new game with the same gamemode,
         // number of players, customization options and round settings. 
         SceneManager.LoadScene("Round");
+    }
+
+    public void CloseCustomMenu() // closes the Custom Menu, clears all the assigned actions
+    {
+        customizableMenu.SetActive(false);
+        customMenuScript.ClearAllAssignedActions();
     }
 
     public void QuitGame()
@@ -194,6 +226,13 @@ public class MenuManager : MonoBehaviour
 
     public void OnBackPressed()
     {
+        if (currentScreen == customizableMenu)
+        {
+            currentScreen.SetActive(false);
+            currentScreen = FindObjectOfType<SettingsScreen>().gameObject;
+            
+        }
+        
         if(Base.activeSelf && currentScreen.GetComponent<SettingsScreen>().previousPage != null)
             currentScreen.GetComponent<SettingsScreen>().Back();
         else if (currentScreen.GetComponent<SettingsScreen>().previousPage == null)

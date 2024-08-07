@@ -12,6 +12,7 @@ public class CustomMenu : MonoBehaviour
 {
     
     public TextMeshProUGUI customHeaderText; // header label
+    public TextMeshProUGUI customSubHeaderText;
     public Button action1; // top button
     public Button action2;// middle button
     public Button action3; // bottom button
@@ -23,9 +24,10 @@ public class CustomMenu : MonoBehaviour
         
     }
 
-    public void setCustomHeader(string MenuName)
+    public void setCustomHeaderAndSubHeader(string Header, string SubHeader)
     {
-        customHeaderText.text = MenuName;
+        customHeaderText.text = Header;
+        customSubHeaderText.text = SubHeader;
     }
 
     public void AssignAction1(UnityAction function, string buttonContext)
@@ -46,11 +48,18 @@ public class CustomMenu : MonoBehaviour
         action3.onClick.AddListener(function);   
     }
 
-    public void ClearAllAssignedActions() // does not remove the listener from the Return Button (Should It?)
+    public void AssignReturnAction(UnityAction function, string buttonContext)
+    {
+        returnButton.GetComponentInChildren<TMP_Text>().text = buttonContext;
+        returnButton.onClick.AddListener(function);   
+    }
+
+    public void ClearAllAssignedActions() // remove all currently assigned actions 
     {
         action1.onClick.RemoveAllListeners();
         action2.onClick.RemoveAllListeners();
         action3.onClick.RemoveAllListeners();
+        returnButton.onClick.RemoveAllListeners();
     }
     
 }
