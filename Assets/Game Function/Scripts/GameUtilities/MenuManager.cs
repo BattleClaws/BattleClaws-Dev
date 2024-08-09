@@ -107,31 +107,46 @@ public class MenuManager : MonoBehaviour
             customMenuScript.setCustomHeaderAndSubHeader("Game Complete!", "");
 
             // assign the primary button
-            customMenuScript.AssignAction1(() => Rematch(), "REMATCH");
+            customMenuScript.AssignAction(customMenuScript.action1,() => Rematch(), "REMATCH");
 
             // assign the secondary button
-            customMenuScript.AssignAction2(() => MainMenu(), "Main Menu");
+            customMenuScript.AssignAction(customMenuScript.action2,() => MainMenu(), "Main Menu");
             
             
             break;
         
-            case "Quit": // After selecting the "Quit Game" option on the Settings/ Pause Menu
+            case "MainMenu": // After selecting the "Main Menu" option on the Settings / Pause Menu
                 
             SetCurrentScreen(customizableMenu);
             // hide any  unneeded button(s)
             customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
             customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
             
-            customMenuScript.setCustomHeaderAndSubHeader("Quit the Game?", "You will lose any current progress");
+            customMenuScript.setCustomHeaderAndSubHeader("Quit to Main Menu?", "You will lose any current progress");
             
             // assign the Primary Button
-            customMenuScript.AssignAction1(()=> OnBackPressed(),"NO");
+            customMenuScript.AssignAction(customMenuScript.action1,()=> OnBackPressed(),"NO");
             
             // assign the Secondary button 
-            customMenuScript.AssignAction2(() => QuitGame(), "YES");
-            
+            customMenuScript.AssignAction(customMenuScript.action2,() => MainMenu(), "YES");
             
             break;
+            
+            case "QuitApp": // when the player chooses the Quit Button on the Game Selection Screen
+                
+                SetCurrentScreen(customizableMenu);
+                // hide any  unneeded button(s)
+                customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
+                customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
+            
+                customMenuScript.setCustomHeaderAndSubHeader("Exit the Game?", "The Claws will miss you");
+            
+                // assign the Primary Button
+                customMenuScript.AssignAction(customMenuScript.action1,()=> OnBackPressed(),"NO");
+            
+                // assign the Secondary button 
+                customMenuScript.AssignAction(customMenuScript.action2,() => QuitGame(), "YES");
+                break;
             
         }
 
@@ -144,11 +159,7 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Round");
     }
 
-    public void CloseCustomMenu() // closes the Custom Menu, clears all the assigned actions
-    {
-        customizableMenu.SetActive(false);
-        customMenuScript.ClearAllAssignedActions();
-    }
+  
 
     public void QuitGame()
     {
@@ -157,7 +168,8 @@ public class MenuManager : MonoBehaviour
 
     public void MainMenu() // mode selection
     {
-        SceneManager.LoadScene("GameSelect");
+        OnBackPressed();
+        SceneManager.LoadScene("Splash");
     }
 
     private void Awake()
@@ -228,8 +240,10 @@ public class MenuManager : MonoBehaviour
     {
         if (currentScreen == customizableMenu)
         {
+            customMenuScript.ClearAllAssignedActions();
             currentScreen.SetActive(false);
             currentScreen = FindObjectOfType<SettingsScreen>().gameObject;
+           
             
         }
         
