@@ -16,12 +16,6 @@ public class CustomMenu : MonoBehaviour
     public Button action3; // bottom button
     public Button returnButton; // the button that should close the menu 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void setCustomHeaderAndSubHeader(string Header, string SubHeader)
     {
         customHeaderText.text = Header;

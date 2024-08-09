@@ -122,7 +122,7 @@ public class MenuManager : MonoBehaviour
             customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
             customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
             
-            customMenuScript.setCustomHeaderAndSubHeader("Quit to Main Menu?", "You will lose any current progress");
+            customMenuScript.setCustomHeaderAndSubHeader("Quit to Main Menu?", "You will lose all current progress");
             
             // assign the Primary Button
             customMenuScript.AssignAction(customMenuScript.action1,()=> OnBackPressed(),"NO");
