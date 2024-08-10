@@ -103,10 +103,10 @@ public class MenuManager : MonoBehaviour
         {
             case "Quit": // initial quit button on the main settings menu 
                 
-                customMenuScript.setCustomHeaderAndSubHeader("Quit the Game?", "You will lose any current progress");
-                customMenuScript.AssignAction(() => QuitGameToMainMenu(), "Quit to Main Menu"); // Quits to Splash
-                customMenuScript.AssignAction(() => QuitGame(), "Quit the Game"); // Closes the Application
-                customMenuScript.AssignAction(()=> OnBackPressed(), "Back");
+                customMenuScript.setCustomHeaderAndSubHeader("Are you Sure?", "The claws will miss you!");
+                customMenuScript.AssignAction(()=> OnBackPressed(), "BACK");
+                customMenuScript.AssignAction(() => QuitGameToMainMenu(), "Main Menu"); // Quits to Splash
+                customMenuScript.AssignAction(() => QuitGame(), "Quit Game"); // Closes the Application
               
                 break;
         }
@@ -192,26 +192,33 @@ public class MenuManager : MonoBehaviour
 
     public void OnBackPressed()
     {
-        var settingsScreen = currentScreen.GetComponent<SettingsScreen>(); // get the right settings script for the currently active screen 
-    
-        if (settingsScreen != null && settingsScreen.previousPage != null)
+        if (currentScreen.GetComponent<SettingsScreen>() != null)
         {
-            settingsScreen.previousPage.SetActive(true); // activate the root settings menu screen 
-            currentScreen.SetActive(false); // set the custom menu object to false 
-            settingsScreen.previousPage = currentScreen; // root settings menu becomes current screen 
-           
+            var settingsScreen = currentScreen.GetComponent<SettingsScreen>();
+        
+            if (settingsScreen.previousPage != null)
+            {
+                // Activate the previous page (root menu)
+                settingsScreen.previousPage.SetActive(true);
 
+                // Deactivate the current screen (custom menu)
+                currentScreen.SetActive(false);
+
+                // Update current screen reference
+                SetCurrentScreen(settingsScreen.previousPage);
+
+                // Set the first selected object for the newly active screen
+                EventSystem.current.SetSelectedGameObject(settingsScreen.previousPage.GetComponent<SettingsScreen>().firstSelected);
+            }
+            else
+            {
+                // No previous page - close the menu
+                SetVisibility(false);
+            }
+
+            // Clear all assigned actions from custom menu and delete all the buttons
+            customMenuScript.ClearAllAssignedActions();
         }
-        else
-        {
-           // no previous page - close the menu 
-            SetVisibility(false);
-           
-        }
-        
-        customMenuScript.ClearAllAssignedActions(); // deletes the spawned custom buttons and their assigned actions
-  
-        
     }
     
     
