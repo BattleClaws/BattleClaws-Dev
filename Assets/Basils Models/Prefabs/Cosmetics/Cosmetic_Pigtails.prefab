@@ -185,4 +185,5 @@ MonoBehaviour:
   _defaultScale: {x: 0, y: 0, z: 0}
   _defaultPosition: {x: 0, y: 0, z: 0}
   GachaScale: {x: 0.65, y: 0.65, z: 0.65}
+  GachaLocation: {x: 0, y: 0.3, z: 0}
   mesh: {fileID: 1885746496728884726}

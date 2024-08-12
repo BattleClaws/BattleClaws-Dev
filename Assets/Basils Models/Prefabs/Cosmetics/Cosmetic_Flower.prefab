@@ -48,6 +48,7 @@ MonoBehaviour:
   _defaultScale: {x: 0, y: 0, z: 0}
   _defaultPosition: {x: 0, y: 0, z: 0}
   GachaScale: {x: 100, y: 100, z: 100}
+  GachaLocation: {x: 0, y: -0.2, z: 0}
   mesh: {fileID: 5953644276766384086}
 --- !u!1 &5471886398792102930
 GameObject:
