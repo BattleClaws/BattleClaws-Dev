@@ -94,71 +94,37 @@ public class MenuManager : MonoBehaviour
     public void LaunchCustomMenu(string Context)
     {
         customizableMenu.SetActive(true);
+        SetCurrentScreen(customizableMenu);
         customMenuScript = customizableMenu.GetComponent<CustomMenu>();
+        
+       
 
         switch (Context)
         {
-            case "EndGame": // After Pressing A when viewing the Final Scores in the End Game Scene
-
-            // hide any  unneeded button(s)
-            customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
-            customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
-            // assign the menu header
-            customMenuScript.setCustomHeaderAndSubHeader("Game Complete!", "");
-
-            // assign the primary button
-            customMenuScript.AssignAction1(() => Rematch(), "REMATCH");
-
-            // assign the secondary button
-            customMenuScript.AssignAction2(() => MainMenu(), "Main Menu");
-            
-            
-            break;
-        
-            case "Quit": // After selecting the "Quit Game" option on the Settings/ Pause Menu
+            case "Quit": // initial quit button on the main settings menu 
                 
-            SetCurrentScreen(customizableMenu);
-            // hide any  unneeded button(s)
-            customMenuScript.action3.gameObject.SetActive(false);   // hide action 3
-            customMenuScript.returnButton.gameObject.SetActive(false); // hide the return button
-            
-            customMenuScript.setCustomHeaderAndSubHeader("Quit the Game?", "You will lose any current progress");
-            
-            // assign the Primary Button
-            customMenuScript.AssignAction1(()=> OnBackPressed(),"NO");
-            
-            // assign the Secondary button 
-            customMenuScript.AssignAction2(() => QuitGame(), "YES");
-            
-            
-            break;
-            
+                customMenuScript.setCustomHeaderAndSubHeader("Are you Sure?", "The claws will miss you!");
+                customMenuScript.AssignAction(()=> OnBackPressed(), "BACK");
+                customMenuScript.AssignAction(() => QuitGameToMainMenu(), "Main Menu"); // Quits to Splash
+                customMenuScript.AssignAction(() => QuitGame(), "Quit Game"); // Closes the Application
+              
+                break;
         }
-
     }
-
-    public void Rematch()
-    {
-        // this function should begin a new game with the same gamemode,
-        // number of players, customization options and round settings. 
-        SceneManager.LoadScene("Round");
-    }
-
-    public void CloseCustomMenu() // closes the Custom Menu, clears all the assigned actions
-    {
-        customizableMenu.SetActive(false);
-        customMenuScript.ClearAllAssignedActions();
-    }
-
+    
+    
     public void QuitGame()
     {
         Application.Quit();
     }
 
-    public void MainMenu() // mode selection
+    public void QuitGameToMainMenu()
     {
-        SceneManager.LoadScene("GameSelect");
+        OnBackPressed();
+        SetVisibility(false);
+        SceneManager.LoadScene("Splash");
     }
+    
 
     private void Awake()
     {
@@ -226,20 +192,36 @@ public class MenuManager : MonoBehaviour
 
     public void OnBackPressed()
     {
-        if (currentScreen == customizableMenu)
+        if (currentScreen.GetComponent<SettingsScreen>() != null)
         {
-            currentScreen.SetActive(false);
-            currentScreen = FindObjectOfType<SettingsScreen>().gameObject;
-            
-        }
+            var settingsScreen = currentScreen.GetComponent<SettingsScreen>();
         
-        if(Base.activeSelf && currentScreen.GetComponent<SettingsScreen>().previousPage != null)
-            currentScreen.GetComponent<SettingsScreen>().Back();
-        else if (currentScreen.GetComponent<SettingsScreen>().previousPage == null)
-        {
-            SetVisibility(false);
+            if (settingsScreen.previousPage != null)
+            {
+                // Activate the previous page (root menu)
+                settingsScreen.previousPage.SetActive(true);
+
+                // Deactivate the current screen (custom menu)
+                currentScreen.SetActive(false);
+
+                // Update current screen reference
+                SetCurrentScreen(settingsScreen.previousPage);
+
+                // Set the first selected object for the newly active screen
+                EventSystem.current.SetSelectedGameObject(settingsScreen.previousPage.GetComponent<SettingsScreen>().firstSelected);
+            }
+            else
+            {
+                // No previous page - close the menu
+                SetVisibility(false);
+            }
+
+            // Clear all assigned actions from custom menu and delete all the buttons
+            customMenuScript.ClearAllAssignedActions();
         }
     }
+    
+    
 
     public void OnVolumeChange(System.Single value) 
     {

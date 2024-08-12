@@ -6,23 +6,19 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine.Events;
-
+using UnityEngine.EventSystems;
 
 public class CustomMenu : MonoBehaviour
 {
-    
     public TextMeshProUGUI customHeaderText; // header label
     public TextMeshProUGUI customSubHeaderText;
-    public Button action1; // top button
-    public Button action2;// middle button
-    public Button action3; // bottom button
+    public Button customButtonPrefab; // top button
     public Button returnButton; // the button that should close the menu 
+
+    public GameObject buttonContainer;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // List to keep track of all instantiated buttons
+    private List<Button> spawnedButtons = new List<Button>();
 
     public void setCustomHeaderAndSubHeader(string Header, string SubHeader)
     {
@@ -30,36 +26,64 @@ public class CustomMenu : MonoBehaviour
         customSubHeaderText.text = SubHeader;
     }
 
-    public void AssignAction1(UnityAction function, string buttonContext)
+    // Unified method to assign actions to buttons
+    public void AssignAction(UnityAction function, string buttonContext)
     {
-        action1.GetComponentInChildren<TMP_Text>().text = buttonContext;
-        action1.onClick.AddListener(function);
-    }
+        Debug.Log("AssignAction called");
+        // Instantiate the button from the prefab and add it to the container
+        Button newButton = Instantiate(customButtonPrefab, buttonContainer.transform);
+        
+        // Set the button text
+        newButton.GetComponentInChildren<TMP_Text>().text = buttonContext;
+        
+        // Add the action to the button's onClick event
+        newButton.onClick.AddListener(function);
+        
+        // Add the new button to the spawned buttons list
+        spawnedButtons.Add(newButton);
 
-    public void AssignAction2(UnityAction function, string buttonContext)
-    {
-        action2.GetComponentInChildren<TMP_Text>().text = buttonContext;
-        action2.onClick.AddListener(function);
+        Debug.Log("Button instantiated and ready");
+        SetFirstSelectedButton();
+        SetButtonNavigation();
     }
-
-    public void AssignAction3(UnityAction function, string buttonContext)
+    
+    public void SetFirstSelectedButton()
     {
-        action3.GetComponentInChildren<TMP_Text>().text = buttonContext;
-        action3.onClick.AddListener(function);   
+        if (spawnedButtons.Count > 0)
+        {
+            // Set the first button as selected
+            EventSystem.current.SetSelectedGameObject(spawnedButtons[0].gameObject);
+        }
     }
-
-    public void AssignReturnAction(UnityAction function, string buttonContext)
+    
+    private void SetButtonNavigation()
     {
-        returnButton.GetComponentInChildren<TMP_Text>().text = buttonContext;
-        returnButton.onClick.AddListener(function);   
+        // Update navigation for all buttons
+        for (int i = 0; i < spawnedButtons.Count; i++)
+        {
+            Button button = spawnedButtons[i];
+            Navigation nav = new Navigation
+            {
+                mode = Navigation.Mode.Explicit
+            };
+
+            // Set navigation for the button
+            nav.selectOnUp = i > 0 ? spawnedButtons[i - 1] : spawnedButtons[spawnedButtons.Count - 1];
+            nav.selectOnDown = i < spawnedButtons.Count - 1 ? spawnedButtons[i + 1] : spawnedButtons[0];
+
+            button.navigation = nav;
+        }
     }
 
     public void ClearAllAssignedActions() // remove all currently assigned actions 
     {
-        action1.onClick.RemoveAllListeners();
-        action2.onClick.RemoveAllListeners();
-        action3.onClick.RemoveAllListeners();
-        returnButton.onClick.RemoveAllListeners();
+        for (int i = spawnedButtons.Count - 1; i >= 0; i--)
+        {
+            Button customButton = spawnedButtons[i];
+            customButton.onClick.RemoveAllListeners();
+            spawnedButtons.RemoveAt(i);
+            Destroy(customButton.gameObject);
+        }
+        print("All buttons cleared and destroyed!");
     }
-    
 }

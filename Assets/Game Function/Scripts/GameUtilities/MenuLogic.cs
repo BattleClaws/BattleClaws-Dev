@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -75,11 +76,6 @@ public class MenuLogic : MonoBehaviour
         DefaultCustomOptions();
     }
     
-    public void QuitTheGame()
-    {
-        Application.Quit();
-    }
-
     public void SetDefaults()
     {
         PlayerPrefs.SetInt("RTime", 45);
