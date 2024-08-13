@@ -105,7 +105,7 @@ public class SceneChanger : MonoBehaviour
     {
         if (!String.IsNullOrEmpty(SceneName))
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.3f);
             destinationSceneName = SceneName;
             SceneManager.LoadScene(destinationSceneName);
             print("Changing to: " + destinationSceneName);
