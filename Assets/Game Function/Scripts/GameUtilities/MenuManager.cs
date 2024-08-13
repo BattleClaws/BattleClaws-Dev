@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -96,6 +97,8 @@ public class MenuManager : MonoBehaviour
         customizableMenu.SetActive(true);
         SetCurrentScreen(customizableMenu);
         customMenuScript = customizableMenu.GetComponent<CustomMenu>();
+        GameUtils.isMenuOpen = true;
+        SetVisibility(true);
         
        
 
@@ -109,6 +112,13 @@ public class MenuManager : MonoBehaviour
                 customMenuScript.AssignAction(() => QuitGame(), "Quit Game"); // Closes the Application
               
                 break;
+            
+            case "GameComplete":
+                customMenuScript.setCustomHeaderAndSubHeader("Game Complete!", "What Next?");
+                customMenuScript.AssignAction(() => QuitToGameSelect(), "Mode Select");
+                customMenuScript.AssignAction(() => Rematch(), "Rematch");
+                customMenuScript.AssignAction(() => QuitGameToMainMenu(), "Main Menu");
+                break;
         }
     }
     
@@ -118,11 +128,35 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void Rematch()
+    {
+        OnBackPressed();
+        SetVisibility(false);
+        SceneChanger sceneChangerScript = FindObjectOfType<SceneChanger>();
+        sceneChangerScript.ResetGame();
+        
+            sceneChangerScript.StartCoroutine(sceneChangerScript.loadChosenSceneWithDelay("PlayerSelect"));
+      
+    }
+
+    public void QuitToGameSelect()
+    {
+        
+        OnBackPressed();
+        SetVisibility(false);
+        SceneChanger sceneChangerScript = FindObjectOfType<SceneChanger>();
+        sceneChangerScript.ResetGame();
+        sceneChangerScript.StartCoroutine(sceneChangerScript.loadChosenSceneWithDelay("GameSelection"));
+    }
+
     public void QuitGameToMainMenu()
     {
         OnBackPressed();
         SetVisibility(false);
-        SceneManager.LoadScene("Splash");
+        SceneChanger sceneChangerScript = FindObjectOfType<SceneChanger>();
+        sceneChangerScript.ResetGame();
+        sceneChangerScript.StartCoroutine(sceneChangerScript.loadChosenSceneWithDelay("Splash"));
+   
     }
     
 
@@ -195,6 +229,7 @@ public class MenuManager : MonoBehaviour
         if (currentScreen.GetComponent<SettingsScreen>() != null)
         {
             var settingsScreen = currentScreen.GetComponent<SettingsScreen>();
+            customizableMenu.SetActive(false);
         
             if (settingsScreen.previousPage != null)
             {

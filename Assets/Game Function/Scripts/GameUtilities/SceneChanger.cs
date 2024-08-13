@@ -28,6 +28,9 @@ public class SceneChanger : MonoBehaviour
     private bool isGameOver = false;
     [Space]
     public PlayerController playerScripts;
+
+    public MenuManager menuManagerScript;
+    private bool isEndMenuOpen;
     private void Start()
     {
         if (delayInput && continuePrompt != null)
@@ -81,10 +84,18 @@ public class SceneChanger : MonoBehaviour
 
         if ((delayInput && delayTime <= 0 && Input.GetButtonDown("Submit")) || (!delayInput && Input.GetButtonDown("Submit")))
         {
-            //print("Changing to: " + destinationSceneName);
-            if(playSound)
-                GameUtils.instance.audioPlayer.PlayChosenClip(clipName);
-            StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+            if (!isEndMenuOpen && currentSceneName == "EndGame")
+            {
+                OpenEndGameMenu();
+            }
+
+            if (currentSceneName != "EndGame")
+            {
+                print("Changing to: " + destinationSceneName);
+                if(playSound)GameUtils.instance.audioPlayer.PlayChosenClip(clipName);
+                StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+            }
+
         }
 
 
@@ -95,7 +106,9 @@ public class SceneChanger : MonoBehaviour
         if (!String.IsNullOrEmpty(SceneName))
         {
             yield return new WaitForSeconds(1);
+            destinationSceneName = SceneName;
             SceneManager.LoadScene(destinationSceneName);
+            print("Changing to: " + destinationSceneName);
             destinationSceneName = null;
         }
     }
@@ -104,6 +117,16 @@ public class SceneChanger : MonoBehaviour
     {
         destinationSceneName = sceneString;
         StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+    }
+
+    public void OpenEndGameMenu()
+    {
+        menuManagerScript = FindObjectOfType<MenuManager>();
+        if (menuManagerScript != null)
+        {
+            menuManagerScript.LaunchCustomMenu("GameComplete");
+            isEndMenuOpen = true;
+        }
     }
 
    
