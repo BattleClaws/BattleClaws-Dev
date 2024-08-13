@@ -7,6 +7,7 @@ public class Cosmetic : MonoBehaviour
     public Vector3 _defaultScale;
     public Vector3 _defaultPosition;
     public Vector3 GachaScale;
+    public Vector3 GachaLocation;
     public GameObject mesh;
     
     void Awake()
@@ -36,7 +37,7 @@ public class Cosmetic : MonoBehaviour
             if(GetComponentInChildren<Animator>() != null)
                 GetComponentInChildren<Animator>().enabled = false;
             mesh.transform.localScale = GachaScale;
-            mesh.transform.localPosition = Vector3.zero;
+            mesh.transform.localPosition = GachaLocation;
         }
     }
 }
