@@ -4294,7 +4294,7 @@ PrefabInstance:
     - target: {fileID: 2255071317605838921, guid: bbd00d507db748f49a008bd3b8e7c38c, type: 3}
       propertyPath: startMesh
       value: 
-      objectReference: {fileID: 1616781299}
+      objectReference: {fileID: 0}
     - target: {fileID: 3963329062096143422, guid: bbd00d507db748f49a008bd3b8e7c38c, type: 3}
       propertyPath: m_Material
       value: 
@@ -6884,7 +6884,7 @@ MonoBehaviour:
   spawnCosmetics: 1
   spawnOffset: 0.5
   spawnAmount: 40
-  spawnRadius: 4
+  spawnRadius: 3
   zoneScale: {x: 3, y: 0.38, z: 2.8}
   dropZoneSpawns: []
   dropZoneHolograms: []
@@ -8247,6 +8247,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6381356175885465824, guid: 0381491213adb74458fa21be809dd5bc, type: 3}
+--- !u!4 &1877921282 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5036204713753325172, guid: bbd00d507db748f49a008bd3b8e7c38c, type: 3}
+  m_PrefabInstance: {fileID: 548985853}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1894461206
 GameObject:
   m_ObjectHideFlags: 0
@@ -9257,8 +9262,8 @@ Transform:
   m_Children:
   - {fileID: 276266656}
   - {fileID: 907547534}
-  - {fileID: 1560002801}
   - {fileID: 1750228801}
+  - {fileID: 1877921282}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2098204377
@@ -9457,7 +9462,7 @@ PrefabInstance:
     - target: {fileID: 2255071317605838921, guid: bbd00d507db748f49a008bd3b8e7c38c, type: 3}
       propertyPath: startMesh
       value: 
-      objectReference: {fileID: 446524086}
+      objectReference: {fileID: 0}
     - target: {fileID: 3963329062096143422, guid: bbd00d507db748f49a008bd3b8e7c38c, type: 3}
       propertyPath: m_Material
       value: 
