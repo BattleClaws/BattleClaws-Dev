@@ -206,6 +206,7 @@ public class GameUtils : MonoBehaviour
 
     public static void InitDropZones(bool isStart)
     {
+        _enteredColors = _enteredColors.OrderBy(_ => Guid.NewGuid()).ToList();
         if (!isStart)
         {
             GameObject.FindGameObjectsWithTag("DropZone").ToList().ForEach(Destroy);
