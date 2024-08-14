@@ -12,7 +12,6 @@ Material:
   m_Parent: {fileID: 2100000, guid: bfa386fc3cb14d64093620c45865878a, type: 2}
   m_ModifiedSerializedProperties: 18
   m_ValidKeywords:
-  - _ALPHABLEND_ON
   - _EMISSION
   - _METALLICGLOSSMAP
   - _NORMALMAP
@@ -20,9 +19,8 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -46,10 +44,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DstBlend: 10
-    - _Mode: 2
-    - _SrcBlend: 5
-    - _ZWrite: 0
+    - _BumpScale: 0.8
+    - _DstBlend: 0
+    - _GlossMapScale: 0.264
+    - _Mode: 0
+    - _SrcBlend: 1
+    - _ZWrite: 1
     m_Colors:
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.6392157}
+    - _EmissionColor: {r: 0.125, g: 0.125, b: 0.125, a: 1}
   m_BuildTextureStacks: []
