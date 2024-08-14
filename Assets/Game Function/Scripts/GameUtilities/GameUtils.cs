@@ -160,18 +160,20 @@ public class GameUtils : MonoBehaviour
     {
         if (!isShakeActive)
         {
+            var originalCamera = Camera.main;
             isShakeActive = true;
-            var originalPos = Camera.main.transform.localPosition;
-            while (shakeDuration > 0)
+            var originalPos = originalCamera.transform.localPosition;
+            while (shakeDuration > 0 && originalCamera != null)
             {
-                Camera.main.transform.localPosition = originalPos + UnityEngine.Random.insideUnitSphere * 0.23f;
+                originalCamera.transform.localPosition = originalPos + UnityEngine.Random.insideUnitSphere * 0.23f;
 
                 shakeDuration -= Time.deltaTime * 0.7f;
                 yield return new WaitForFixedUpdate();
             }
 
             shakeDuration = 0f;
-            Camera.main.transform.localPosition = originalPos;
+            if(originalCamera != null)
+                originalCamera.transform.localPosition = originalPos;
             isShakeActive = false;
         }
     }
