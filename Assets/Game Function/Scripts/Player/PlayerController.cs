@@ -254,6 +254,7 @@ public class PlayerController : MonoBehaviour
         {
             // Calculate the position change for this frame
             Vector3 positionChange = velocityChange;
+            positionChange.y = 0;
             var newPosition = _handle.GetComponent<Rigidbody>().position + positionChange;
             
             RaycastHit hit;
