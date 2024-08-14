@@ -63,6 +63,7 @@ public class Collectable : MonoBehaviour
     [Header("Cosmetics")] [SerializeField] private bool isCosmetic;
     [SerializeField] private List<GameObject> cosmeticModels;
     public MeshRenderer colourSphere;
+    public bool isVote;
     
     [Header("Special Settings")]
     [Tooltip("Percentage of special collectables: 0-100")]
@@ -175,12 +176,20 @@ public class Collectable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("DropZone"))
         {
             if (!Holder || Holder == null)
             {
                 GameUtils.instance.InitCollectables();
                 Destroy(gameObject);
+                return;
+            }
+
+            if (isVote)
+            {
+                
+                GameUtils.Repeat(GameUtils.instance.spawnAmount, GameUtils.instance.InitCollectables);
                 return;
             }
 
