@@ -33,6 +33,8 @@ public class GameUtils : MonoBehaviour
     public static bool isMenuOpen;
     public static GameUtils live;
 
+    private int cosmeticsSpawned;
+    public bool spawnCosmetics;
     public float spawnOffset;
     public int spawnAmount;
     public int spawnRadius;
@@ -109,7 +111,8 @@ public class GameUtils : MonoBehaviour
         UICanvas = GameObject.FindGameObjectWithTag("UI");
 
         InitDropZones(true);
-        Repeat(spawnAmount, InitCollectables);
+        if(!spawnCosmetics)
+            Repeat(spawnAmount, InitCollectables);
         
         /*if (!RoundManager.draw && SceneManager.GetActiveScene().name == "Round")
         {
@@ -128,9 +131,16 @@ public class GameUtils : MonoBehaviour
 
     public void InitCollectables()
     {
+        if(cosmeticsSpawned > spawnAmount)
+            return;
+        print("Spawn Collectable");
         var collectable = Resources.Load<GameObject>("Prefabs/Collectable");
-        if (SceneManager.GetActiveScene().name == "Cosmetics test")
+        if (spawnCosmetics)
+        {
             collectable = Resources.Load<GameObject>("Prefabs/CollectableTest");
+            cosmeticsSpawned ++;
+        }
+
         Vector3 randomLoc = Random.insideUnitCircle;
         randomLoc = new Vector3(randomLoc.x, spawnOffset, randomLoc.y) * spawnRadius;
         Instantiate(collectable, randomLoc, Quaternion.identity);
@@ -196,6 +206,7 @@ public class GameUtils : MonoBehaviour
 
     public static void InitDropZones(bool isStart)
     {
+        _enteredColors = _enteredColors.OrderBy(_ => Guid.NewGuid()).ToList();
         if (!isStart)
         {
             GameObject.FindGameObjectsWithTag("DropZone").ToList().ForEach(Destroy);
