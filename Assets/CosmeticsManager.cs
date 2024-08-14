@@ -17,6 +17,7 @@ public class CosmeticsManager : MonoBehaviour
     {
         var poofRef = Resources.Load<GameObject>("Prefabs/Poof");
         Instantiate(poofRef, GetComponent<Player>().Model.transform);
+        GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawCosmetic");
         if (_currentCosmetic != null)
         {
             Destroy(_currentCosmetic);
