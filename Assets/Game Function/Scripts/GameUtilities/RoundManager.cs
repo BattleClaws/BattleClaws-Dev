@@ -36,7 +36,7 @@ public class RoundManager : MonoBehaviour
     public GameObject Timer { get; private set; }
     private float secondsRemaining = 0;
 
-    private float endCameraDistance = 4f;
+    public float endCameraDistance = 4f;
 
     private void Start()
     {
