@@ -159,6 +159,7 @@ MonoBehaviour:
   uIScoreManager: {fileID: 0}
   playerAnnocementHandler: {fileID: 0}
   audioPlayer: {fileID: 0}
+  spawnCosmetics: 0
   spawnOffset: 0
   spawnAmount: 0
   spawnRadius: 0
@@ -1524,12 +1525,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationSceneName: GameSelection
   audioHolder: {fileID: 1597926872}
-  delayInput: 0
-  delayTime: 0
+  delayInput: 1
+  delayTime: 3
   continuePrompt: {fileID: 0}
   playSound: 1
   clipName: UI/ButtonSelect
   playerScripts: {fileID: 0}
+  menuManagerScript: {fileID: 0}
 --- !u!4 &1893424670
 Transform:
   m_ObjectHideFlags: 0

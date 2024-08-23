@@ -12112,6 +12112,7 @@ MonoBehaviour:
   uIScoreManager: {fileID: 0}
   playerAnnocementHandler: {fileID: 0}
   audioPlayer: {fileID: 0}
+  spawnCosmetics: 0
   spawnOffset: 0
   spawnAmount: 0
   spawnRadius: 0
@@ -12133,12 +12134,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationSceneName: 
   audioHolder: {fileID: 0}
-  delayInput: 0
-  delayTime: 0
+  delayInput: 1
+  delayTime: 1
   continuePrompt: {fileID: 0}
   playSound: 0
   clipName: 
   playerScripts: {fileID: 0}
+  menuManagerScript: {fileID: 0}
 --- !u!1 &1970408988
 GameObject:
   m_ObjectHideFlags: 0
