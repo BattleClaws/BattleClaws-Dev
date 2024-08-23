@@ -36,6 +36,8 @@ public class RoundManager : MonoBehaviour
     public GameObject Timer { get; private set; }
     private float secondsRemaining = 0;
 
+    private float endCameraDistance = 4f;
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "Round" || SceneManager.GetActiveScene().name == "Draw")
@@ -300,13 +302,17 @@ public class RoundManager : MonoBehaviour
     private IEnumerator ZoomToPlayer(PlayerController player)
     {
         var baseLoc = Camera.main.transform;
-        var goalLoc = player.Properties.CamAnchor.transform;
+        var goalLoc = player.Position;
+
+        var goalLocPositionPoint = goalLoc + (baseLoc.position - goalLoc).normalized * endCameraDistance;
+
+        var goalLocRotationTowards = Quaternion.LookRotation(goalLoc - baseLoc.position);
         
         for(float i = 0; i < 1.1f; i += 0.17f)
         {
-            var newPosition = Vector3.Lerp(baseLoc.position, goalLoc.position, i);
+            var newPosition = Vector3.Lerp(baseLoc.position, goalLocPositionPoint, i);
             Camera.main.transform.position = newPosition;
-            var newRotation = Quaternion.Lerp(baseLoc.rotation, goalLoc.rotation, i);
+            var newRotation = Quaternion.Lerp(baseLoc.rotation, goalLocRotationTowards, i);
             Camera.main.transform.rotation = newRotation;
             
             yield return new WaitForSeconds(0.02f);
