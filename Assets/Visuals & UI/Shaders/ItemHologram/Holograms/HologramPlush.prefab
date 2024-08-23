@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4931026773267832320}
   - component: {fileID: 3935920501655737780}
-  - component: {fileID: -6476398133523969141}
   m_Layer: 0
   m_Name: HologramPlush
   m_TagString: Untagged
@@ -47,19 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 1
---- !u!114 &-6476398133523969141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3598135447389936435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca73d5e0e670b84fb75969e7a82ab44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  countDown: 30
 --- !u!1 &8481712860167448960
 GameObject:
   m_ObjectHideFlags: 0
