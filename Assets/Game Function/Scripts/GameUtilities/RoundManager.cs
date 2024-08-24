@@ -274,7 +274,7 @@ public class RoundManager : MonoBehaviour
                 }
                 else
                 {
-                    highestScoring.ForEach(x => x.Properties.sessionWins++);
+                    //highestScoring.ForEach(x => x.Properties.sessionWins++);
                     var drawingPlayers = "| ";
                     lowestScoring.ForEach(x=> drawingPlayers += "Player " + x.Properties.PlayerNum + " | ");
 
