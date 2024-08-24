@@ -116,8 +116,12 @@ public class SceneChanger : MonoBehaviour
     public void changeSceneViaUI(string sceneString)
     {
         if (GameUtils.isMenuOpen && sceneString != "Credits") return;
-        destinationSceneName = sceneString;
-        StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+        if (delayInput && delayTime <= 0)
+        {
+            destinationSceneName = sceneString;
+            StartCoroutine(loadChosenSceneWithDelay(destinationSceneName));
+        }
+        
     }
 
     public void OpenEndGameMenu()
