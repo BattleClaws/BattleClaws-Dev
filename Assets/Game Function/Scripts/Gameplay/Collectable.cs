@@ -230,7 +230,7 @@ public class Collectable : MonoBehaviour
             //print(other.GetComponent<Renderer>().material.color + " | " + Color);
         }
          // for readying up 
-        if (other.CompareTag("ReadyZone"))
+        if (other.CompareTag("ReadyZone") && !isCosmetic)
         {
             if (Holder != null)
             {
