@@ -235,6 +235,8 @@ public class PlayerController : MonoBehaviour
         
         if (Properties.heldObject != Properties.gameObject)
             DropCollectable();
+        
+        Properties.heldObject = Properties.gameObject;
 
         Instantiate(particles, Position, Quaternion.identity);
         // Then i just force it away :3
