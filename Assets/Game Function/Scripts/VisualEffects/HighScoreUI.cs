@@ -21,9 +21,9 @@ public class HighScoreUI : MonoBehaviour
         
         // the winning player text 
         LeanTween.moveX( winnerText, screenWidth * (560f/1920f), 1.5f).setEase( LeanTweenType.easeInQuad ).setDelay(5f).setEase( LeanTweenType.easeInOutBack);
-        LeanTween.scaleY(winnerText,3f,1.4f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
-        LeanTween.scaleX(winnerText,3f,1.2f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
-        LeanTween.scaleZ(winnerText,3f,1.2f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.scaleY(winnerText,1.5f,1.4f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.scaleX(winnerText,1.5f,1.2f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
+        LeanTween.scaleZ(winnerText,1.5f,1.2f).setEase( LeanTweenType.easeInQuad ).setDelay(6).setEase( LeanTweenType.easeInOutBack );
         
         //final scores subheader
         LeanTween.moveX(finalScoresSubHeader, screenWidth * (1415f/1920f), 1.3f).setEase( LeanTweenType.easeInQuad ).setDelay(2f).setEase( LeanTweenType.easeInOutBack );

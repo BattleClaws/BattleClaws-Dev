@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -28,6 +29,7 @@ public class GameUtils : MonoBehaviour
     public UIScoreManager uIScoreManager;
     public PlayerAnnocementHandler playerAnnocementHandler;
     public AudioManager audioPlayer;
+    public InputActionProperty defaultContinueAction;
 
     public static GameUtils instance;
     public static bool isMenuOpen;
@@ -82,6 +84,10 @@ public class GameUtils : MonoBehaviour
         menuManager = GameObject.FindObjectOfType<MenuManager>();
         playerAnnocementHandler = FindObjectOfType<PlayerAnnocementHandler>();
         audioPlayer = FindObjectOfType<AudioManager>();
+        //set defaults
+        PlayerPrefs.SetInt("RTime", 60);
+        PlayerPrefs.SetInt("RAmount", 3);
+        RoundManager.gameStyle = GameType.BestOf;
 
         live = this;
     }

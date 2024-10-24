@@ -41,6 +41,7 @@ public class Collectable : MonoBehaviour
         {
             if(currentMesh)
                 Destroy(currentMesh);
+            if (value == null) return;
             var newMesh = Instantiate(value, currentMesh.transform.parent);
             newMesh.transform.localPosition = Vector3.zero;
             if (newMesh.TryGetComponent<Cosmetic>(out Cosmetic newCosmetic))
@@ -96,6 +97,14 @@ public class Collectable : MonoBehaviour
 
         if (isCosmetic)
         {
+            if (isVote)
+            {
+                Mesh = null;
+                var sparkle = Resources.Load("Prefabs/sparkle");
+                var newsparkle = Instantiate(sparkle, transform);
+                return;
+            }
+
             Mesh = RandomCosmetic();
             //_currentCosmetic = Mesh;
             if (colourSphere)
@@ -181,15 +190,22 @@ public class Collectable : MonoBehaviour
         {
             if (!Holder || Holder == null)
             {
-                GameUtils.instance.InitCollectables();
-                Destroy(gameObject);
+                GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/Claw/ClawIncorrect");
+                var rb = GetComponent<Rigidbody>();
+                rb.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //get vector between this object and the rejectDirection object
+                Vector3 rejectDirection = new Vector3(0,2,0) - transform.position;
+                //launch the object toward the reject direction with reject force
+                rb.AddForce(rejectDirection * 8.2f, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * 9, ForceMode.Impulse);
                 return;
             }
 
-            if (isVote)
+            if (isCosmetic && isVote)
             {
                 
                 GameUtils.Repeat(GameUtils.instance.spawnAmount, GameUtils.instance.InitCollectables);
+                Destroy(gameObject);
                 return;
             }
 
@@ -230,8 +246,20 @@ public class Collectable : MonoBehaviour
             //print(other.GetComponent<Renderer>().material.color + " | " + Color);
         }
          // for readying up 
-        if (other.CompareTag("ReadyZone") && !isCosmetic)
+        if (other.CompareTag("ReadyZone"))
         {
+            if (isCosmetic)
+            {
+                var rb = GetComponent<Rigidbody>();
+                rb.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //get vector between this object and the rejectDirection object
+                Vector3 rejectDirection = new Vector3(0,2,1) - transform.position;
+                //launch the object toward the reject direction with reject force
+                rb.AddForce(rejectDirection * 32.2f, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * 4, ForceMode.Impulse);
+                return;
+            }
+            
             if (Holder != null)
             {
                 // need to identify the holder here
@@ -266,8 +294,8 @@ public class Collectable : MonoBehaviour
                 GameUtils.instance.audioPlayer.PlayChosenClip("Gameplay/SpecialEffects/SpecialIce");
                 for(int i = 0; i < otherPlayers.Count; i++)
                 {
-                    otherPlayers[i].Properties.ApplySpeed(1,2);
-                    GameUtils.instance.uIScoreManager.SetCornerStateForTime(otherPlayers[i].Properties.PlayerNum-1, CornerStates.freeze, 2);
+                    otherPlayers[i].Properties.ApplySpeed(1,5);
+                    GameUtils.instance.uIScoreManager.SetCornerStateForTime(otherPlayers[i].Properties.PlayerNum-1, CornerStates.freeze, 5);
                 }
                 break;
             case SpecialCollectableType.Bomb:
@@ -278,14 +306,14 @@ public class Collectable : MonoBehaviour
                 explosionInstance.GetComponent<ParticleSystem>().Play();
                 GameUtils.instance.LockZone(zone);
                 Collider[] collidingPlayers = new Collider[10];
-                Physics.OverlapSphereNonAlloc(user.Position, blastRadius, collidingPlayers, 6);
+                Physics.OverlapSphereNonAlloc(user.Position, 10, collidingPlayers, 6);
                 foreach (var collidingPlayer in collidingPlayers)
                 {
                     if (collidingPlayer == null)
                         return;
                     //print(collidingPlayer.name);
                     var playerData = collidingPlayer.GetComponentInParent<PlayerController>();
-                    playerData.Properties.ApplySpeed(1, stunTime);
+                    playerData.Properties.ApplySpeed(1, 4);
                 }
                 break;
         }

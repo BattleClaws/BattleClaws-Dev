@@ -102,8 +102,8 @@ public class MenuLogic : MonoBehaviour
         // apply settings
         // transition into player customization scene
         
-        PlayerPrefs.SetInt("RTime", customTimerLength);
-        PlayerPrefs.SetInt("RAmount", customNumberOfRounds);
+        PlayerPrefs.SetInt("RTime", 60);
+        PlayerPrefs.SetInt("RAmount", 3);
         RoundManager.gameStyle = GameType.BestOf;
     }
 

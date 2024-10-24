@@ -159,6 +159,34 @@ MonoBehaviour:
   uIScoreManager: {fileID: 0}
   playerAnnocementHandler: {fileID: 0}
   audioPlayer: {fileID: 0}
+  defaultContinueAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Default Continue
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 59c12ec8-3655-426e-8a4d-95ef714c54bf
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 1d2e25e6-0f60-4144-8791-9c54afd705ff
+        m_Path: <Keyboard>/space
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Default Continue
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 818d4f16-1c3c-410d-96e9-b8e47bdbb241
+        m_Path: <Gamepad>/buttonSouth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Default Continue
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   spawnCosmetics: 0
   spawnOffset: 0
   spawnAmount: 0
@@ -1523,7 +1551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de08dc865f16654458882ebd4cab442e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destinationSceneName: GameSelection
+  destinationSceneName: PlayerSelect
   audioHolder: {fileID: 1597926872}
   delayInput: 1
   delayTime: 3
@@ -1532,6 +1560,42 @@ MonoBehaviour:
   clipName: UI/ButtonSelect
   playerScripts: {fileID: 0}
   menuManagerScript: {fileID: 0}
+  continueAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Continue
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 100edfb3-159d-490d-92fd-d887f6134f69
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 23116e7e-909b-4046-9a61-db3eafbc7ae9
+        m_Path: <Gamepad>/buttonSouth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Continue
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 42fb4533-edeb-486f-9c3e-6202cfee8c3b
+        m_Path: <Keyboard>/space
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Continue
+        m_Flags: 0
+      - m_Name: 
+        m_Id: e90568a6-13d2-4269-b3b6-b83141357e2c
+        m_Path: <Keyboard>/enter
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Continue
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!4 &1893424670
 Transform:
   m_ObjectHideFlags: 0

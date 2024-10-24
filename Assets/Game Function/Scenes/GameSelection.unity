@@ -12112,6 +12112,18 @@ MonoBehaviour:
   uIScoreManager: {fileID: 0}
   playerAnnocementHandler: {fileID: 0}
   audioPlayer: {fileID: 0}
+  defaultContinueAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Default Continue
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 4b20c506-ecaa-4bec-840c-05710b631c8a
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   spawnCosmetics: 0
   spawnOffset: 0
   spawnAmount: 0
@@ -12141,6 +12153,18 @@ MonoBehaviour:
   clipName: 
   playerScripts: {fileID: 0}
   menuManagerScript: {fileID: 0}
+  continueAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Continue
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 029f25e3-45f8-4eec-a385-f27a9b5a1dc7
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!1 &1970408988
 GameObject:
   m_ObjectHideFlags: 0

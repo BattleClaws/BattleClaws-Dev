@@ -31,6 +31,8 @@ public class SceneChanger : MonoBehaviour
 
     public MenuManager menuManagerScript;
     private bool isEndMenuOpen;
+
+    public InputActionProperty continueAction;
     private void Start()
     {
         if (delayInput && continuePrompt != null)
@@ -48,7 +50,19 @@ public class SceneChanger : MonoBehaviour
         {
             audioScript = audioHolder.GetComponent<AudioManager>();
         }
+    }
 
+    private void OnEnable()
+    {
+        if(continueAction.action == null)
+            continueAction = GameUtils.instance.defaultContinueAction;
+        
+        continueAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        continueAction.action.Disable();
     }
 
     public void OnDrop(InputAction.CallbackContext ctx)
@@ -82,7 +96,12 @@ public class SceneChanger : MonoBehaviour
             continuePrompt.SetActive(true);
         }
 
-        if ((delayInput && delayTime <= 0 && Input.GetButtonDown("Submit")) || (!delayInput && Input.GetButtonDown("Submit")))
+        
+
+        var isContinuePressed = (continueAction.action != null && continueAction.action.triggered);
+        
+        
+        if ((delayInput && delayTime <= 0 && isContinuePressed || (!delayInput && isContinuePressed)))
         {
             if (!isEndMenuOpen && currentSceneName == "EndGame")
             {
@@ -99,6 +118,11 @@ public class SceneChanger : MonoBehaviour
         }
 
 
+    }
+
+    public void testFunction()
+    {
+        print("Action performed");
     }
 
     public IEnumerator loadChosenSceneWithDelay(string SceneName)

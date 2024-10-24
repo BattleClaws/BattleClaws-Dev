@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using Unity.VisualScripting;
@@ -35,12 +36,12 @@ public class MenuManager : MonoBehaviour
     public TMP_Text textSliderLabel;
     public TMP_Text contrastSliderLabel;
 
+    private float _timeOutTimer = 120;
+
     private GameObject previousHighlightedItem;
 
     [Header("Misc.")] public GameObject currentScreen;
-
-
- 
+    
     private void OnApplicationFocus(bool hasFocus)
     {
         //print("Focused");
@@ -88,8 +89,17 @@ public class MenuManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(currentScreen.GetComponent<SettingsScreen>().firstSelected);
         }
+        
+        _timeOutTimer -= Time.deltaTime;
 
-
+        if (Input.anyKeyDown)
+        {
+            _timeOutTimer = 120;
+        }
+        else if (SceneManager.GetActiveScene().name != "Splash" && _timeOutTimer < 0)
+        {
+            SceneManager.LoadScene("Splash");
+        }
     }
 
     public void LaunchCustomMenu(string Context)
@@ -109,13 +119,11 @@ public class MenuManager : MonoBehaviour
                 customMenuScript.setCustomHeaderAndSubHeader("Are you Sure?", "The claws will miss you!");
                 customMenuScript.AssignAction(()=> OnBackPressed(), "BACK");
                 customMenuScript.AssignAction(() => QuitGameToMainMenu(), "Main Menu"); // Quits to Splash
-                customMenuScript.AssignAction(() => QuitGame(), "Quit Game"); // Closes the Application
               
                 break;
             
             case "GameComplete":
                 customMenuScript.setCustomHeaderAndSubHeader("Game Complete!", "What Next?");
-                customMenuScript.AssignAction(() => QuitToGameSelect(), "Mode Select");
                 customMenuScript.AssignAction(() => Rematch(), "Rematch");
                 customMenuScript.AssignAction(() => QuitGameToMainMenu(), "Main Menu");
                 break;
